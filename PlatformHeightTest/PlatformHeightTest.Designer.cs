@@ -30,13 +30,10 @@
         {
             this.FilePath = new System.Windows.Forms.Label();
             this.WatchPathBtn = new System.Windows.Forms.Button();
-            this.ScaleCB = new System.Windows.Forms.CheckBox();
             this.LastUpdateTime = new System.Windows.Forms.Label();
             this.StopWatchBtn = new System.Windows.Forms.Button();
             this.checkWatch = new System.Windows.Forms.CheckBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.OrisModecheckBox = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -58,23 +55,11 @@
             this.WatchPathBtn.Location = new System.Drawing.Point(9, 10);
             this.WatchPathBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.WatchPathBtn.Name = "WatchPathBtn";
-            this.WatchPathBtn.Size = new System.Drawing.Size(96, 32);
+            this.WatchPathBtn.Size = new System.Drawing.Size(141, 32);
             this.WatchPathBtn.TabIndex = 2;
             this.WatchPathBtn.Text = "Watch";
             this.WatchPathBtn.UseVisualStyleBackColor = true;
             this.WatchPathBtn.Click += new System.EventHandler(this.WatchPathBtn_Click);
-            // 
-            // ScaleCB
-            // 
-            this.ScaleCB.AutoSize = true;
-            this.ScaleCB.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.ScaleCB.Location = new System.Drawing.Point(81, 74);
-            this.ScaleCB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ScaleCB.Name = "ScaleCB";
-            this.ScaleCB.Size = new System.Drawing.Size(96, 23);
-            this.ScaleCB.TabIndex = 4;
-            this.ScaleCB.Text = "um / mm";
-            this.ScaleCB.UseVisualStyleBackColor = true;
             // 
             // LastUpdateTime
             // 
@@ -88,10 +73,10 @@
             // 
             // StopWatchBtn
             // 
-            this.StopWatchBtn.Location = new System.Drawing.Point(282, 10);
+            this.StopWatchBtn.Location = new System.Drawing.Point(197, 11);
             this.StopWatchBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StopWatchBtn.Name = "StopWatchBtn";
-            this.StopWatchBtn.Size = new System.Drawing.Size(96, 32);
+            this.StopWatchBtn.Size = new System.Drawing.Size(141, 32);
             this.StopWatchBtn.TabIndex = 6;
             this.StopWatchBtn.Text = "Stop Watch";
             this.StopWatchBtn.UseVisualStyleBackColor = true;
@@ -101,7 +86,7 @@
             // 
             this.checkWatch.AutoSize = true;
             this.checkWatch.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.checkWatch.Location = new System.Drawing.Point(197, 74);
+            this.checkWatch.Location = new System.Drawing.Point(367, 16);
             this.checkWatch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.checkWatch.Name = "checkWatch";
             this.checkWatch.Size = new System.Drawing.Size(132, 23);
@@ -123,34 +108,11 @@
             this.comboBox1.TabIndex = 3;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // OrisModecheckBox
-            // 
-            this.OrisModecheckBox.AutoSize = true;
-            this.OrisModecheckBox.Checked = true;
-            this.OrisModecheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.OrisModecheckBox.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.OrisModecheckBox.Location = new System.Drawing.Point(121, 15);
-            this.OrisModecheckBox.Name = "OrisModecheckBox";
-            this.OrisModecheckBox.Size = new System.Drawing.Size(140, 23);
-            this.OrisModecheckBox.TabIndex = 8;
-            this.OrisModecheckBox.Text = "Easy Oris Mode";
-            this.OrisModecheckBox.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label1.Location = new System.Drawing.Point(364, 181);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 25);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Average:";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label2.Location = new System.Drawing.Point(362, 221);
+            this.label2.Location = new System.Drawing.Point(362, 78);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(57, 25);
             this.label2.TabIndex = 10;
@@ -160,7 +122,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label3.Location = new System.Drawing.Point(362, 262);
+            this.label3.Location = new System.Drawing.Point(362, 119);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 25);
             this.label3.TabIndex = 11;
@@ -170,7 +132,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label4.Location = new System.Drawing.Point(362, 297);
+            this.label4.Location = new System.Drawing.Point(362, 154);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(108, 25);
             this.label4.TabIndex = 12;
@@ -184,12 +146,9 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.OrisModecheckBox);
             this.Controls.Add(this.checkWatch);
             this.Controls.Add(this.StopWatchBtn);
             this.Controls.Add(this.LastUpdateTime);
-            this.Controls.Add(this.ScaleCB);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.WatchPathBtn);
             this.Controls.Add(this.FilePath);
@@ -208,13 +167,10 @@
         #endregion
         private System.Windows.Forms.Label FilePath;
         private System.Windows.Forms.Button WatchPathBtn;
-        private System.Windows.Forms.CheckBox ScaleCB;
         private System.Windows.Forms.Label LastUpdateTime;
         private System.Windows.Forms.Button StopWatchBtn;
         private System.Windows.Forms.CheckBox checkWatch;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.CheckBox OrisModecheckBox;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;

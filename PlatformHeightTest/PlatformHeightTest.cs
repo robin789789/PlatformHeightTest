@@ -19,7 +19,6 @@ namespace PlatformHeightTest
         #region Announce
         private FileSystemWatcher watcher;
         private const string v2kPathFolder = @".\HeightRecognition";
-        private double avg = 0;
         private double[] data = new double[9];
         private int[] way = new int[9];//Z+S        
         private string lastData = "";
@@ -30,6 +29,7 @@ namespace PlatformHeightTest
             Button.CheckForIllegalCrossThreadCalls = false;
             CenterToScreen();
             comboBox1.SelectedIndex = 0;
+
             try
             {
                 startWatchHeight(v2kPathFolder);
@@ -43,9 +43,11 @@ namespace PlatformHeightTest
 
         private void WatchPathBtn_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.ShowNewFolderButton = false;
-            fbd.RootFolder = Environment.SpecialFolder.DesktopDirectory;
+            FolderBrowserDialog fbd = new FolderBrowserDialog
+            {
+                ShowNewFolderButton = false,
+                RootFolder = Environment.SpecialFolder.DesktopDirectory
+            };
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 startWatchHeight(fbd.SelectedPath);
@@ -93,10 +95,21 @@ namespace PlatformHeightTest
             data = results(lastData);
             if (data != null)
             {
-                avg = getAvg(data);
-                label2.Text = "Max: " + getMaxMin(data, "Max").ToString()+" mm" ;
-                label3.Text = "Min: " + getMaxMin(data ,"Min").ToString()+" mm";
-                label4.Text = "Tolerance: " + (getMaxMin(data, "Max")-getMaxMin(data, "Min")).ToString()+ " mm";
+                decimal min, max, tolerance;
+                try
+                {
+                    min = Convert.ToDecimal(getMaxMin(data, "Min"));
+                    max = Convert.ToDecimal(getMaxMin(data, "Max"));
+                    tolerance = max - min;
+                    label2.Text = "Max: " + max.ToString() + " mm";
+                    label3.Text = "Min: " + min.ToString() + " mm";
+                    label4.Text = "Tolerance: " + tolerance.ToString() + " mm";
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Data Error.");
+                }
+
                 foreach (Control bt in this.Controls)
                 {
                     if (bt is Button)
@@ -104,8 +117,7 @@ namespace PlatformHeightTest
                         if (bt.Name != "WatchPathBtn" && bt.Name != "StopWatchBtn")
                         {
                             int index = int.Parse(bt.Name);
-                            bt.Text = compareToAvg(data[way[index] - 1], avg, ScaleCB.Checked,OrisModecheckBox.Checked);
-                            
+                            bt.Text = setValueToBtn(data[way[index] - 1]);
                         }
                     }
                 }
@@ -145,104 +157,32 @@ namespace PlatformHeightTest
 
         #region Function
 
-        private string getTimeFormatCsvFile()
-        {
-            DateTime time = DateTime.Now;
-            string[] t = time.Date.ToShortDateString().Split('/');
-            string format = "";
-            if (int.Parse(t[1]) < 10)
-            {
-                t[1] = "0" + t[1];
-            }
-            for (int i = 0; i < t.Length; i++)
-            {
-                format += t[i];
-            }
-            format = "HeightRecognition_" + format + ".csv";
-            return format;
-        } //抓日期格式
-
-        private string lastLine(string path) //讀路徑抓最後行
-        {
-            string line;
-            string[] each;
-            StreamReader streamReader = new StreamReader(path);
-            string all = streamReader.ReadToEnd();
-            each = all.Split(new string[1] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            line = each[each.Length - 1];
-            streamReader.Close();
-            return line;
-        }
-
         private double[] results(string latestData)//最後行轉九點高度
         {
             double[] results;
             string[] buf = latestData.Split(',');
-            results = new double[buf.Length - 5];
-            try
+            if (buf.Length == 14)
             {
+                results = new double[buf.Length - 5];
+
                 for (int i = 5; i < buf.Length; i++)
                 {
                     results[i - 5] = double.Parse(buf[i]);
                 }
                 return results;
             }
-            catch
+            else
             {
+                MessageBox.Show("Out of 9 points", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
 
-        private double getAvg(double[] data)//輸入九點轉平均
+        private string setValueToBtn(double r)
         {
-            int l = data.Length;
-            double d = 0;
-            for (int i = 0; i < l; i++)
-            {
-                d += data[i];
-            }
-            return d / l;
-        }
-
-        private string compareToAvg(double r, double avg, bool scale,bool OrisMode)
-        {
-            int _um;
-            string _scale;
-            if (scale)
-            {
-                _um = 1000;
-                _scale = " um";
-            }
-            else
-            {
-                _um = 1;
-                _scale = " mm";
-            }
-            if (!OrisMode)
-            {
-                double result = r - avg;
-                int d = result.ToString().Length;
-                if (result > 0)
-                {
-                    if (d > 6)
-                        return "低" + (result * _um).ToString().Remove(6) + _scale;
-                    else
-                        return "低" + (result * _um).ToString() + _scale;
-                }
-                else
-                {
-                    if (d > 6)
-                        return "高" + (result * _um).ToString().Remove(6) + _scale;
-                    else
-                        return "高" + (result * _um).ToString() + _scale;
-                }
-            }
-            else
-            {
-                label1.Text = ("Average: " + (avg*_um).ToString()+_scale);
-               
-                return (r * _um).ToString()+ _scale;
-            }
+            int _mm = 1;
+            string _scale = " mm";
+            return (r * _mm).ToString() + _scale;
         }
 
         private void createButtons()
@@ -269,17 +209,18 @@ namespace PlatformHeightTest
 
         private void dataChanged()
         {
-            foreach (Control bt in this.Controls)
-            {
-                if (bt is Button)
+            if (data != null)
+                foreach (Control bt in this.Controls)
                 {
-                    if (bt.Name != "WatchPathBtn" && bt.Name != "StopWatchBtn")
+                    if (bt is Button)
                     {
-                        int index = int.Parse(bt.Name);
-                        bt.Text = compareToAvg(data[way[index] - 1], avg, ScaleCB.Checked, OrisModecheckBox.Checked);
+                        if (bt.Name != "WatchPathBtn" && bt.Name != "StopWatchBtn")
+                        {
+                            int index = int.Parse(bt.Name);
+                            bt.Text = setValueToBtn(data[way[index] - 1]);
+                        }
                     }
                 }
-            }
         }
 
         private int[] ZS(string type)
@@ -322,7 +263,5 @@ namespace PlatformHeightTest
         }
 
         #endregion
-
-       
     }
 }
