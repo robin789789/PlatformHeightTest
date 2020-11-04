@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlatformHeightTest));
             this.FilePath = new System.Windows.Forms.Label();
             this.WatchPathBtn = new System.Windows.Forms.Button();
             this.LastUpdateTime = new System.Windows.Forms.Label();
@@ -37,6 +38,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.OKpictureBox = new System.Windows.Forms.PictureBox();
+            this.NGpictureBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // FilePath
@@ -137,12 +142,36 @@
             this.label4.Size = new System.Drawing.Size(108, 25);
             this.label4.TabIndex = 12;
             this.label4.Text = "Tolerance:";
+            this.label4.TextChanged += new System.EventHandler(this.label4_TextChanged);
+            // 
+            // OKpictureBox
+            // 
+            this.OKpictureBox.Image = ((System.Drawing.Image)(resources.GetObject("OKpictureBox.Image")));
+            this.OKpictureBox.Location = new System.Drawing.Point(367, 213);
+            this.OKpictureBox.Name = "OKpictureBox";
+            this.OKpictureBox.Size = new System.Drawing.Size(200, 200);
+            this.OKpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.OKpictureBox.TabIndex = 13;
+            this.OKpictureBox.TabStop = false;
+            // 
+            // NGpictureBox
+            // 
+            this.NGpictureBox.Image = ((System.Drawing.Image)(resources.GetObject("NGpictureBox.Image")));
+            this.NGpictureBox.Location = new System.Drawing.Point(367, 213);
+            this.NGpictureBox.Name = "NGpictureBox";
+            this.NGpictureBox.Size = new System.Drawing.Size(200, 200);
+            this.NGpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.NGpictureBox.TabIndex = 14;
+            this.NGpictureBox.TabStop = false;
             // 
             // PlatformHeightTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(611, 480);
+            this.Controls.Add(this.NGpictureBox);
+            this.Controls.Add(this.OKpictureBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -152,13 +181,15 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.WatchPathBtn);
             this.Controls.Add(this.FilePath);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PlatformHeightTest";
-            this.ShowIcon = false;
             this.Text = "HeightTest";
             this.Load += new System.EventHandler(this.PlatformHeightTest_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,5 +205,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox OKpictureBox;
+        private System.Windows.Forms.PictureBox NGpictureBox;
     }
 }

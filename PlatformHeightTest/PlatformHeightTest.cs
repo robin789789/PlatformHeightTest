@@ -29,7 +29,8 @@ namespace PlatformHeightTest
             Button.CheckForIllegalCrossThreadCalls = false;
             CenterToScreen();
             comboBox1.SelectedIndex = 0;
-
+            OKpictureBox.Visible = false;
+            NGpictureBox.Visible = false;
             try
             {
                 startWatchHeight(v2kPathFolder);
@@ -103,7 +104,7 @@ namespace PlatformHeightTest
                     tolerance = max - min;
                     label2.Text = "Max: " + max.ToString() + " mm";
                     label3.Text = "Min: " + min.ToString() + " mm";
-                    label4.Text = "Tolerance: " + tolerance.ToString() + " mm";
+                    label4.Text = "Tolerance: " + tolerance.ToString() + " mm";                    
                 }
                 catch (Exception)
                 {
@@ -263,5 +264,24 @@ namespace PlatformHeightTest
         }
 
         #endregion
+
+        private void label4_TextChanged(object sender, EventArgs e)
+        {
+            string buffer = label4.Text;
+            buffer = buffer.Replace("mm", "");
+            buffer = buffer.Replace("Tolerance:", "");
+
+            string _tolerance = buffer.Trim();
+            if (decimal.Parse(_tolerance) < Convert.ToDecimal(0.05))
+            {
+                OKpictureBox.Visible = true;
+                NGpictureBox.Visible = false;
+            }
+            else
+            {
+                OKpictureBox.Visible = false;
+                NGpictureBox.Visible = true;
+            }
+        }
     }
 }
