@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using System.IO;
 using System.Threading;
 
-
 namespace PlatformHeightTest
 {
     public partial class PlatformHeightTest : Form
@@ -34,13 +33,59 @@ namespace PlatformHeightTest
             try
             {
                 startWatchHeight(v2kPathFolder);
-                FilePath.Text = v2kPathFolder;
+                FilePath.Text = "Path:" + v2kPathFolder;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + Environment.NewLine + "請手動添加測高資料夾位址", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void createButtons()
+        {
+            Button[] bt = new Button[9];
+            int size = 80;
+            int[] location = new int[2] { 10, 120 };
+            int gap = 5;
+
+            for (int i = 0; i < bt.Length; i++)
+            {
+                bt[i] = new Button();
+                bt[i].Name = i.ToString();
+                bt[i].Size = new Size(size, size);
+                if (i < 3)
+                    bt[i].Location = new Point(location[0] + i * (gap + size), location[1]);
+                if (i >= 3 && i < 6)
+                    bt[i].Location = new Point(location[0] + (i - 3) * (gap + size), location[1] + size + gap);
+                if (i >= 6)
+                    bt[i].Location = new Point(location[0] + (i - 6) * (gap + size), location[1] + 2 * (size + gap));
+                this.Controls.Add(bt[i]);
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            way = ZS(comboBox1.Text);
+            if (watcher != null)
+            {
+                dataChanged();
+            }
+            else
+            {
+                foreach (Control bt in this.Controls)
+                {
+                    if (bt is Button)
+                    {
+                        if (bt.Name != "WatchPathBtn" && bt.Name != "StopWatchBtn")
+                        {
+                            bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
+                        }
+                    }
+                }
+            }
+        }
+
+        #region FileWatch
 
         private void WatchPathBtn_Click(object sender, EventArgs e)
         {
@@ -52,9 +97,18 @@ namespace PlatformHeightTest
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 startWatchHeight(fbd.SelectedPath);
-                FilePath.Text = fbd.SelectedPath;
+                FilePath.Text = "Path:" + fbd.SelectedPath;
             }
-        }//choose folder to watch
+        }//choose folder to watch        
+
+        private void StopWatchBtn_Click(object sender, EventArgs e)
+        {
+            if (watcher != null)
+            {
+                watcher.EnableRaisingEvents = false;
+                watcher.Dispose();
+            }
+        }//stop the watcher 
 
         private void startWatchHeight(string watchFolder)
         {
@@ -70,15 +124,6 @@ namespace PlatformHeightTest
             watcher.EnableRaisingEvents = true;
         } //start watch heightTest folder
 
-        private void StopWatchBtn_Click(object sender, EventArgs e)
-        {
-            if (watcher != null)
-            {
-                watcher.EnableRaisingEvents = false;
-                watcher.Dispose();
-            }
-        }//stop the watcher 
-
         private void _Watch_Changed(object sender, FileSystemEventArgs e)//if change heighttest
         {
             var dirInfo = new DirectoryInfo(e.FullPath);
@@ -89,7 +134,7 @@ namespace PlatformHeightTest
                     + "檔案所在位址為" + e.FullPath.Replace(e.Name, "")
                     , "數據更新通知", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            LastUpdateTime.Text = "最後更新:" + dirInfo.LastWriteTime;
+            LastUpdateTime.Text = "Latest updated:" + dirInfo.LastWriteTime;
             Thread.Sleep(1000);
             lastData = File.ReadLines(e.FullPath).Last();
 
@@ -104,7 +149,17 @@ namespace PlatformHeightTest
                     tolerance = max - min;
                     label2.Text = "Max: " + max.ToString() + " mm";
                     label3.Text = "Min: " + min.ToString() + " mm";
-                    label4.Text = "Tolerance: " + tolerance.ToString() + " mm";                    
+                    label4.Text = "Tolerance: " + tolerance.ToString() + " mm";
+                    if (tolerance <= Convert.ToDecimal(SpecNumericUpDown.Value))
+                    {
+                        OKpictureBox.Visible = true;
+                        NGpictureBox.Visible = false;
+                    }
+                    else
+                    {
+                        OKpictureBox.Visible = false;
+                        NGpictureBox.Visible = true;
+                    }
                 }
                 catch (Exception)
                 {
@@ -134,27 +189,7 @@ namespace PlatformHeightTest
             MessageBox.Show("請重新選擇測高資料夾.", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }//exception     
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            way = ZS(comboBox1.Text);
-            if (watcher != null)
-            {
-                dataChanged();
-            }
-            else
-            {
-                foreach (Control bt in this.Controls)
-                {
-                    if (bt is Button)
-                    {
-                        if (bt.Name != "WatchPathBtn" && bt.Name != "StopWatchBtn")
-                        {
-                            bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
-                        }
-                    }
-                }
-            }
-        }
+        #endregion       
 
         #region Function
 
@@ -184,28 +219,6 @@ namespace PlatformHeightTest
             int _mm = 1;
             string _scale = " mm";
             return (r * _mm).ToString() + _scale;
-        }
-
-        private void createButtons()
-        {
-            Button[] bt = new Button[9];
-            int size = 80;
-            int[] location = new int[2] { 10, 120 };
-            int gap = 5;
-
-            for (int i = 0; i < bt.Length; i++)
-            {
-                bt[i] = new Button();
-                bt[i].Name = i.ToString();
-                bt[i].Size = new Size(size, size);
-                if (i < 3)
-                    bt[i].Location = new Point(location[0] + i * (gap + size), location[1]);
-                if (i >= 3 && i < 6)
-                    bt[i].Location = new Point(location[0] + (i - 3) * (gap + size), location[1] + size + gap);
-                if (i >= 6)
-                    bt[i].Location = new Point(location[0] + (i - 6) * (gap + size), location[1] + 2 * (size + gap));
-                this.Controls.Add(bt[i]);
-            }
         }
 
         private void dataChanged()
@@ -265,23 +278,5 @@ namespace PlatformHeightTest
 
         #endregion
 
-        private void label4_TextChanged(object sender, EventArgs e)
-        {
-            string buffer = label4.Text;
-            buffer = buffer.Replace("mm", "");
-            buffer = buffer.Replace("Tolerance:", "");
-
-            string _tolerance = buffer.Trim();
-            if (decimal.Parse(_tolerance) <=Convert.ToDecimal(SpecNumericUpDown.Value))
-            {
-                OKpictureBox.Visible = true;
-                NGpictureBox.Visible = false;
-            }
-            else
-            {
-                OKpictureBox.Visible = false;
-                NGpictureBox.Visible = true;
-            }
-        }
     }
 }

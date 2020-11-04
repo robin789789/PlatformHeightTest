@@ -51,16 +51,17 @@
             // FilePath
             // 
             this.FilePath.AutoSize = true;
-            this.FilePath.Font = new System.Drawing.Font("微軟正黑體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.FilePath.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.FilePath.ForeColor = System.Drawing.Color.Red;
-            this.FilePath.Location = new System.Drawing.Point(8, 46);
+            this.FilePath.Location = new System.Drawing.Point(8, 52);
             this.FilePath.Name = "FilePath";
-            this.FilePath.Size = new System.Drawing.Size(46, 22);
+            this.FilePath.Size = new System.Drawing.Size(40, 19);
             this.FilePath.TabIndex = 1;
-            this.FilePath.Text = "path";
+            this.FilePath.Text = "Path";
             // 
             // WatchPathBtn
             // 
+            this.WatchPathBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.WatchPathBtn.Location = new System.Drawing.Point(9, 10);
             this.WatchPathBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.WatchPathBtn.Name = "WatchPathBtn";
@@ -74,14 +75,15 @@
             // 
             this.LastUpdateTime.AutoSize = true;
             this.LastUpdateTime.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.LastUpdateTime.Location = new System.Drawing.Point(8, 109);
+            this.LastUpdateTime.Location = new System.Drawing.Point(8, 114);
             this.LastUpdateTime.Name = "LastUpdateTime";
-            this.LastUpdateTime.Size = new System.Drawing.Size(93, 19);
+            this.LastUpdateTime.Size = new System.Drawing.Size(95, 19);
             this.LastUpdateTime.TabIndex = 5;
-            this.LastUpdateTime.Text = "update time";
+            this.LastUpdateTime.Text = "Update time";
             // 
             // StopWatchBtn
             // 
+            this.StopWatchBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.StopWatchBtn.Location = new System.Drawing.Point(197, 11);
             this.StopWatchBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StopWatchBtn.Name = "StopWatchBtn";
@@ -95,7 +97,7 @@
             // 
             this.checkWatch.AutoSize = true;
             this.checkWatch.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.checkWatch.Location = new System.Drawing.Point(367, 16);
+            this.checkWatch.Location = new System.Drawing.Point(362, 16);
             this.checkWatch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.checkWatch.Name = "checkWatch";
             this.checkWatch.Size = new System.Drawing.Size(132, 23);
@@ -110,7 +112,7 @@
             this.comboBox1.Items.AddRange(new object[] {
             "Z",
             "S"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 74);
+            this.comboBox1.Location = new System.Drawing.Point(12, 80);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(55, 23);
@@ -146,7 +148,6 @@
             this.label4.Size = new System.Drawing.Size(108, 25);
             this.label4.TabIndex = 12;
             this.label4.Text = "Tolerance:";
-            this.label4.TextChanged += new System.EventHandler(this.label4_TextChanged);
             // 
             // OKpictureBox
             // 
@@ -171,6 +172,7 @@
             // SpecNumericUpDown
             // 
             this.SpecNumericUpDown.DecimalPlaces = 4;
+            this.SpecNumericUpDown.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.SpecNumericUpDown.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.SpecNumericUpDown.Increment = new decimal(new int[] {
             1,
@@ -184,7 +186,7 @@
             0,
             0});
             this.SpecNumericUpDown.Name = "SpecNumericUpDown";
-            this.SpecNumericUpDown.Size = new System.Drawing.Size(72, 25);
+            this.SpecNumericUpDown.Size = new System.Drawing.Size(81, 27);
             this.SpecNumericUpDown.TabIndex = 15;
             this.SpecNumericUpDown.Value = new decimal(new int[] {
             50,
@@ -206,7 +208,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label5.Location = new System.Drawing.Point(512, 54);
+            this.label5.Location = new System.Drawing.Point(519, 54);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(50, 25);
             this.label5.TabIndex = 17;
@@ -232,6 +234,7 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.WatchPathBtn);
             this.Controls.Add(this.FilePath);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
