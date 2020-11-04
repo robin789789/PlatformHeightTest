@@ -272,7 +272,7 @@ namespace PlatformHeightTest
             buffer = buffer.Replace("Tolerance:", "");
 
             string _tolerance = buffer.Trim();
-            if (decimal.Parse(_tolerance) < Convert.ToDecimal(0.05))
+            if (decimal.Parse(_tolerance) <=Convert.ToDecimal(SpecNumericUpDown.Value))
             {
                 OKpictureBox.Visible = true;
                 NGpictureBox.Visible = false;

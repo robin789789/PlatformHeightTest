@@ -7,3 +7,12 @@ D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Debug\P
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csproj.CoreCompileInputs.cache
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.exe
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.pdb
+C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\PlatformHeightTest.exe.config
+C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\PlatformHeightTest.exe
+C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\PlatformHeightTest.pdb
+C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csprojAssemblyReference.cache
+C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.PlatformHeightTest.resources
+C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.Properties.Resources.resources
+C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csproj.GenerateResource.cache
+C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.exe
+C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.pdb
