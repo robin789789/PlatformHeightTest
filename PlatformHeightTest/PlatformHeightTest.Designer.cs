@@ -125,9 +125,9 @@
             this.label2.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label2.Location = new System.Drawing.Point(362, 87);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 25);
+            this.label2.Size = new System.Drawing.Size(125, 25);
             this.label2.TabIndex = 10;
-            this.label2.Text = "Max:";
+            this.label2.Text = "Corner Max:";
             // 
             // label3
             // 
@@ -135,9 +135,9 @@
             this.label3.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label3.Location = new System.Drawing.Point(362, 120);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 25);
+            this.label3.Size = new System.Drawing.Size(121, 25);
             this.label3.TabIndex = 11;
-            this.label3.Text = "Min:";
+            this.label3.Text = "Corner Min:";
             // 
             // label4
             // 
@@ -152,9 +152,9 @@
             // OKpictureBox
             // 
             this.OKpictureBox.Image = ((System.Drawing.Image)(resources.GetObject("OKpictureBox.Image")));
-            this.OKpictureBox.Location = new System.Drawing.Point(367, 213);
+            this.OKpictureBox.Location = new System.Drawing.Point(367, 181);
             this.OKpictureBox.Name = "OKpictureBox";
-            this.OKpictureBox.Size = new System.Drawing.Size(200, 200);
+            this.OKpictureBox.Size = new System.Drawing.Size(230, 230);
             this.OKpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.OKpictureBox.TabIndex = 13;
             this.OKpictureBox.TabStop = false;
@@ -162,9 +162,9 @@
             // NGpictureBox
             // 
             this.NGpictureBox.Image = ((System.Drawing.Image)(resources.GetObject("NGpictureBox.Image")));
-            this.NGpictureBox.Location = new System.Drawing.Point(367, 213);
+            this.NGpictureBox.Location = new System.Drawing.Point(367, 181);
             this.NGpictureBox.Name = "NGpictureBox";
-            this.NGpictureBox.Size = new System.Drawing.Size(200, 200);
+            this.NGpictureBox.Size = new System.Drawing.Size(230, 230);
             this.NGpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.NGpictureBox.TabIndex = 14;
             this.NGpictureBox.TabStop = false;
@@ -219,7 +219,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(611, 480);
+            this.ClientSize = new System.Drawing.Size(640, 480);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SpecNumericUpDown);
@@ -238,7 +238,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "PlatformHeightTest";
             this.Text = "HeightTest";
             this.Load += new System.EventHandler(this.PlatformHeightTest_Load);

@@ -1,0 +1,10 @@
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\bin\Release\PlatformHeightTest.exe.config
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\bin\Release\PlatformHeightTest.exe
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\bin\Release\PlatformHeightTest.pdb
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.csprojAssemblyReference.cache
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.PlatformHeightTest.resources
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.Properties.Resources.resources
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.csproj.GenerateResource.cache
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.csproj.CoreCompileInputs.cache
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.exe
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.pdb

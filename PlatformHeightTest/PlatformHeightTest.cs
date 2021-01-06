@@ -21,6 +21,9 @@ namespace PlatformHeightTest
         private double[] data = new double[9];
         private int[] way = new int[9];//Z+S        
         private string lastData = "";
+        private Color MaxColor = Color.Red;
+        private Color MinColor = Color.LimeGreen;
+        private Color InitColor = Color.White;
         #endregion
 
         private void PlatformHeightTest_Load(object sender, EventArgs e)
@@ -66,6 +69,7 @@ namespace PlatformHeightTest
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             way = ZS(comboBox1.Text);
+            
             if (watcher != null)
             {
                 dataChanged();
@@ -79,6 +83,7 @@ namespace PlatformHeightTest
                         if (bt.Name != "WatchPathBtn" && bt.Name != "StopWatchBtn")
                         {
                             bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
+                            bt.BackColor =InitColor;
                         }
                     }
                 }
@@ -119,6 +124,7 @@ namespace PlatformHeightTest
                 Filter = "*.csv",
                 IncludeSubdirectories = false
             };
+            watcher.Created += _Watch_Changed;
             watcher.Changed += _Watch_Changed;
             watcher.Error += _Watch_Error;
             watcher.EnableRaisingEvents = true;
@@ -142,13 +148,16 @@ namespace PlatformHeightTest
             if (data != null)
             {
                 decimal min, max, tolerance;
+                int maxIndex=-1, minIndex=-1;
                 try
                 {
                     min = Convert.ToDecimal(getMaxMin(data, "Min"));
                     max = Convert.ToDecimal(getMaxMin(data, "Max"));
+                    maxIndex = getAllMaxMin(data, "Max");
+                    minIndex = getAllMaxMin(data, "Min");
                     tolerance = max - min;
-                    label2.Text = "Max: " + max.ToString() + " mm";
-                    label3.Text = "Min: " + min.ToString() + " mm";
+                    label2.Text = "Corner Max: " + max.ToString() + " mm";
+                    label3.Text = "Corner Min: " + min.ToString() + " mm";
                     label4.Text = "Tolerance: " + tolerance.ToString() + " mm";
                     if (tolerance <= Convert.ToDecimal(SpecNumericUpDown.Value))
                     {
@@ -174,6 +183,12 @@ namespace PlatformHeightTest
                         {
                             int index = int.Parse(bt.Name);
                             bt.Text = setValueToBtn(data[way[index] - 1]);
+                            if (bt.Name == (way[maxIndex] - 1).ToString())
+                            { bt.BackColor = MaxColor; }
+                            else if (bt.Name == (way[minIndex] - 1).ToString())
+                            { bt.BackColor = MinColor; }
+                            else
+                            { bt.BackColor = InitColor; }
                         }
                     }
                 }
@@ -223,6 +238,9 @@ namespace PlatformHeightTest
 
         private void dataChanged()
         {
+            
+            int maxIndex = getAllMaxMin(data, "Max");
+            int minIndex = getAllMaxMin(data, "Min");
             if (data != null)
                 foreach (Control bt in this.Controls)
                 {
@@ -232,6 +250,12 @@ namespace PlatformHeightTest
                         {
                             int index = int.Parse(bt.Name);
                             bt.Text = setValueToBtn(data[way[index] - 1]);
+                            if (bt.Name == (way[maxIndex] - 1).ToString())
+                            { bt.BackColor = MaxColor; }
+                            else if (bt.Name == (way[minIndex] - 1).ToString())
+                            { bt.BackColor = MinColor; }
+                            else
+                            { bt.BackColor = InitColor; }
                         }
                     }
                 }
@@ -276,7 +300,39 @@ namespace PlatformHeightTest
             return answer;
         }
 
-        #endregion
+        private int getAllMaxMin(double[] datastring, string MaxorMin)
+        {
+            int answer = 0;
+            double temp = 0;
+            double[] sortarray = new double[9];
 
+            for (int i = 0; i < 9; i++)
+            {
+                sortarray[i] = datastring[i];
+            }
+            Array.Sort(sortarray);
+
+            if (MaxorMin == "Min")
+            {
+                temp = sortarray[0];
+                for (int i = 0; i < 9; i++)
+                {
+                    if (temp == datastring[i])
+                        answer = i;
+                }
+            }
+            else if (MaxorMin == "Max")
+            {
+                temp = sortarray[sortarray.Length - 1];
+                for (int i = 0; i < 9; i++)
+                {
+                    if (temp == datastring[i])
+                        answer = i;
+                }
+            }
+            return answer;
+        }
+
+        #endregion
     }
 }
