@@ -23,7 +23,11 @@ namespace PlatformHeightTest
         private string lastData = "";
         private Color MaxColor = Color.Red;
         private Color MinColor = Color.LimeGreen;
+        private Color NGColor = Color.Red;
+        private Color OKColor = Color.LimeGreen;
         private Color InitColor = Color.White;
+        private bool extendForm = false;
+
         #endregion
 
         private void PlatformHeightTest_Load(object sender, EventArgs e)
@@ -33,6 +37,10 @@ namespace PlatformHeightTest
             comboBox1.SelectedIndex = 0;
             OKpictureBox.Visible = false;
             NGpictureBox.Visible = false;
+            ExtendBtn.MouseHover += btn_MouseHover;
+            ExtendBtn.MouseLeave += btn_MouseLeave;
+            SetBtnStyle(ExtendBtn);
+            initListView(AllListView);
             try
             {
                 startWatchHeight(v2kPathFolder);
@@ -159,13 +167,23 @@ namespace PlatformHeightTest
                     label2.Text = "Corner Max: " + max.ToString() + " mm";
                     label3.Text = "Corner Min: " + min.ToString() + " mm";
                     label4.Text = "Tolerance: " + tolerance.ToString() + " mm";
+
+                    int index=AllListView.Items.Count+1;
                     if (tolerance <= Convert.ToDecimal(SpecNumericUpDown.Value))
                     {
+                        var item = new ListViewItem(index.ToString());
+                        item.SubItems.AddRange(new string[3] { max.ToString(), min.ToString(), "O" });
+                        item.ForeColor = OKColor;
+                        AllListView.Items.Add(item);
                         OKpictureBox.Visible = true;
                         NGpictureBox.Visible = false;
                     }
                     else
                     {
+                        var item = new ListViewItem(index.ToString());
+                        item.SubItems.AddRange(new string[3] { max.ToString(), min.ToString(), "X" });
+                        item.ForeColor = NGColor;
+                        AllListView.Items.Add(item);
                         OKpictureBox.Visible = false;
                         NGpictureBox.Visible = true;
                     }
@@ -334,5 +352,89 @@ namespace PlatformHeightTest
         }
 
         #endregion
+
+        #region Extend
+        private void ExtendBtn_Click(object sender, EventArgs e)
+        {
+            if (!extendForm)
+            {
+                extendForm = true;
+                this.Size = new Size(780, 423);
+                
+            }
+            else
+            {
+                extendForm = false;
+                this.Size = new Size(477, 423);
+            }
+        }
+        private void SetBtnStyle(Button btn)
+        {
+            btn.FlatStyle = FlatStyle.Flat;//樣式
+            btn.ForeColor = Color.Transparent;//前景
+            btn.BackColor = Color.Transparent;//去背景
+            btn.FlatAppearance.BorderSize = 1;//去邊線
+            btn.FlatAppearance.MouseOverBackColor = Color.OrangeRed;//滑鼠經過
+            btn.FlatAppearance.MouseDownBackColor = Color.Transparent;//滑鼠按下
+        }
+        private void btn_MouseHover(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            btn.FlatAppearance.BorderSize = 1;
+        }
+        private void btn_MouseLeave(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            btn.FlatAppearance.BorderSize = 0;
+        }
+        #endregion
+
+        #region ListBox
+        private void initListView(ListView listView)
+        {
+            if (listView.Items.Count > 0)
+                listView.Items.Clear();
+            listView.View = View.Details;
+            listView.GridLines = true;
+            listView.LabelEdit = false;
+            listView.FullRowSelect = true;           
+        }
+        private void SelectBtn_Click(object sender, EventArgs e)
+        {
+            OKListView.Items.Clear();
+            int i = 0;
+            foreach (ListViewItem okItem in AllListView.Items)
+            {
+                if (okItem.ForeColor == OKColor)
+                {
+                    if (i < 5)
+                    {
+                        i++;
+                    }
+                    else
+                    { i = 5; }
+                }
+            }
+            if (i != 0)
+            {
+                ListViewItem[] listViewItems = new ListViewItem[i];
+                int loop = 0;
+                foreach (ListViewItem okItem in AllListView.Items)
+                {
+                    if (okItem.ForeColor == OKColor && loop < 5)
+                    {
+                        listViewItems[loop] = (ListViewItem)okItem.Clone();
+                        loop++;
+                    }
+                }
+                OKListView.Items.AddRange(listViewItems);
+            }
+        }
+        #endregion
+
+        private void ExportBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
