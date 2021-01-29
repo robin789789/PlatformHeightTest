@@ -44,6 +44,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ListViewPanel = new System.Windows.Forms.Panel();
+            this.ExportBtn = new System.Windows.Forms.Button();
             this.OKListView = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -57,7 +58,7 @@
             this.SelectBtn = new System.Windows.Forms.Button();
             this.ExtendBtn = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.ExportBtn = new System.Windows.Forms.Button();
+            this.DeleteBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -234,6 +235,7 @@
             // ListViewPanel
             // 
             this.ListViewPanel.BackColor = System.Drawing.Color.White;
+            this.ListViewPanel.Controls.Add(this.DeleteBtn);
             this.ListViewPanel.Controls.Add(this.ExportBtn);
             this.ListViewPanel.Controls.Add(this.OKListView);
             this.ListViewPanel.Controls.Add(this.AllListView);
@@ -242,6 +244,17 @@
             this.ListViewPanel.Name = "ListViewPanel";
             this.ListViewPanel.Size = new System.Drawing.Size(387, 394);
             this.ListViewPanel.TabIndex = 18;
+            // 
+            // ExportBtn
+            // 
+            this.ExportBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.ExportBtn.Location = new System.Drawing.Point(194, 178);
+            this.ExportBtn.Name = "ExportBtn";
+            this.ExportBtn.Size = new System.Drawing.Size(187, 35);
+            this.ExportBtn.TabIndex = 3;
+            this.ExportBtn.Text = "Export to HWCTQ";
+            this.ExportBtn.UseVisualStyleBackColor = true;
+            this.ExportBtn.Click += new System.EventHandler(this.ExportBtn_Click);
             // 
             // OKListView
             // 
@@ -301,7 +314,6 @@
             this.AllListView.HideSelection = false;
             this.AllListView.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.AllListView.Location = new System.Drawing.Point(3, 3);
-            this.AllListView.MultiSelect = false;
             this.AllListView.Name = "AllListView";
             this.AllListView.Size = new System.Drawing.Size(381, 168);
             this.AllListView.TabIndex = 2;
@@ -358,23 +370,23 @@
             this.panel2.Size = new System.Drawing.Size(80, 55);
             this.panel2.TabIndex = 20;
             // 
-            // ExportBtn
+            // DeleteBtn
             // 
-            this.ExportBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.ExportBtn.Location = new System.Drawing.Point(194, 178);
-            this.ExportBtn.Name = "ExportBtn";
-            this.ExportBtn.Size = new System.Drawing.Size(187, 35);
-            this.ExportBtn.TabIndex = 3;
-            this.ExportBtn.Text = "Export to HWCTQ";
-            this.ExportBtn.UseVisualStyleBackColor = true;
-            this.ExportBtn.Click += new System.EventHandler(this.ExportBtn_Click);
+            this.DeleteBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.DeleteBtn.Location = new System.Drawing.Point(102, 178);
+            this.DeleteBtn.Name = "DeleteBtn";
+            this.DeleteBtn.Size = new System.Drawing.Size(75, 35);
+            this.DeleteBtn.TabIndex = 4;
+            this.DeleteBtn.Text = "Delete";
+            this.DeleteBtn.UseVisualStyleBackColor = true;
+            this.DeleteBtn.Click += new System.EventHandler(this.DeleteBtn_Click);
             // 
             // PlatformHeightTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1020, 480);
+            this.ClientSize = new System.Drawing.Size(1023, 480);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.ListViewPanel);
             this.Controls.Add(this.label5);
@@ -438,5 +450,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.Button ExportBtn;
+        private System.Windows.Forms.Button DeleteBtn;
     }
 }

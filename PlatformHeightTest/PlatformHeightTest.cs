@@ -4,6 +4,10 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading;
+using Microsoft.Office.Interop.Excel;
+using System.Reflection;
+using Button = System.Windows.Forms.Button;
+using Point = System.Drawing.Point;
 
 namespace PlatformHeightTest
 {
@@ -27,12 +31,18 @@ namespace PlatformHeightTest
         private Color OKColor = Color.LimeGreen;
         private Color InitColor = Color.White;
         private bool extendForm = false;
+        private Size unExtend = new Size(477,423);
+        private Size extend = new Size(780,423);
+        private  string leftTop = "B56";//左上起始點
+        private  string rightBottm = "C60";//右下結束點
+        private string sheetOfCTQ = "工作表1";
 
         #endregion
 
         private void PlatformHeightTest_Load(object sender, EventArgs e)
         {
             Button.CheckForIllegalCrossThreadCalls = false;
+            this.Size = unExtend;
             CenterToScreen();
             comboBox1.SelectedIndex = 0;
             OKpictureBox.Visible = false;
@@ -95,6 +105,53 @@ namespace PlatformHeightTest
                         }
                     }
                 }
+            }
+        }
+
+        private void ExportBtn_Click(object sender, EventArgs e)
+        {
+            setExcel();
+        }
+
+        private void setExcel()
+        {
+            if (OKListView.Items.Count == 5)
+            {
+                double[,] result = new double[5, 2];
+                for (int i = 0; i < OKListView.Items.Count; i++)
+                {
+                    result[i, 0] = double.Parse(OKListView.Items[i].SubItems[1].Text);
+                    result[i, 1] = double.Parse(OKListView.Items[i].SubItems[2].Text);
+                }
+
+                OpenFileDialog dialog = new OpenFileDialog()
+                {
+                    RestoreDirectory = true,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    Filter = "Excel Work|*.xlsx",
+                    Title = "Open 檢核表.xlsx File"
+                };
+                dialog.ShowDialog();
+                Microsoft.Office.Interop.Excel.Application App = new Microsoft.Office.Interop.Excel.Application();
+
+                if (!string.IsNullOrEmpty(dialog.FileName))
+                {
+                    Microsoft.Office.Interop.Excel.Workbook Wbook = App.Workbooks.Open(dialog.FileName);
+                    System.IO.FileInfo xlsAttribute = new FileInfo(dialog.FileName);
+                    xlsAttribute.Attributes = FileAttributes.Normal;
+                    Microsoft.Office.Interop.Excel.Worksheet Wsheet = (Microsoft.Office.Interop.Excel.Worksheet)Wbook.Sheets[sheetOfCTQ];
+                    Microsoft.Office.Interop.Excel.Range aRangeChange = Wsheet.get_Range(leftTop, rightBottm);
+                    aRangeChange.Value2 = result;
+                    aRangeChange.NumberFormat = "0.000";
+
+                    Wbook.Save();
+                    Wbook.Close();
+                    App.Quit();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Data null.");
             }
         }
 
@@ -396,7 +453,7 @@ namespace PlatformHeightTest
                 listView.Items.Clear();
             listView.View = View.Details;
             listView.GridLines = true;
-            listView.LabelEdit = false;
+            listView.LabelEdit = false;          
             listView.FullRowSelect = true;           
         }
         private void SelectBtn_Click(object sender, EventArgs e)
@@ -432,9 +489,18 @@ namespace PlatformHeightTest
         }
         #endregion
 
-        private void ExportBtn_Click(object sender, EventArgs e)
+        private void DeleteBtn_Click(object sender, EventArgs e)
         {
-
+            if (AllListView.SelectedItems.Count != 0)
+            {
+                foreach (ListViewItem item in this.AllListView.SelectedItems)
+                {
+                    if (item.Selected)
+                    {
+                        item.Remove();
+                    }
+                }
+            }
         }
     }
 }
