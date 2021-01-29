@@ -8,6 +8,8 @@ using Microsoft.Office.Interop.Excel;
 using System.Reflection;
 using Button = System.Windows.Forms.Button;
 using Point = System.Drawing.Point;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 
 namespace PlatformHeightTest
 {
@@ -33,10 +35,16 @@ namespace PlatformHeightTest
         private bool extendForm = false;
         private Size unExtend = new Size(477,423);
         private Size extend = new Size(780,423);
-        private  string leftTop = "B56";//左上起始點
-        private  string rightBottm = "C60";//右下結束點
-        private string sheetOfCTQ = "工作表1";
 
+
+        #region NPOI Excel
+        private string sheetOfCTQ = "工作表1";
+        private string startColumn = "B";
+        private int startRow = 56;
+        private string endColumn = "C";
+        private int endRow = 60;
+
+        #endregion
         #endregion
 
         private void PlatformHeightTest_Load(object sender, EventArgs e)
@@ -110,7 +118,8 @@ namespace PlatformHeightTest
 
         private void ExportBtn_Click(object sender, EventArgs e)
         {
-            setExcel();
+            //setExcel();
+            npoiSetExcel();
         }
 
         private void setExcel()
@@ -136,6 +145,8 @@ namespace PlatformHeightTest
 
                 if (!string.IsNullOrEmpty(dialog.FileName))
                 {
+                    string leftTop = startColumn+startRow.ToString();
+                    string rightBottm = endColumn + endRow.ToString();
                     Microsoft.Office.Interop.Excel.Workbook Wbook = App.Workbooks.Open(dialog.FileName);
                     System.IO.FileInfo xlsAttribute = new FileInfo(dialog.FileName);
                     xlsAttribute.Attributes = FileAttributes.Normal;
@@ -446,7 +457,7 @@ namespace PlatformHeightTest
         }
         #endregion
 
-        #region ListBox
+        #region ListView
         private void initListView(ListView listView)
         {
             if (listView.Items.Count > 0)
@@ -487,8 +498,6 @@ namespace PlatformHeightTest
                 OKListView.Items.AddRange(listViewItems);
             }
         }
-        #endregion
-
         private void DeleteBtn_Click(object sender, EventArgs e)
         {
             if (AllListView.SelectedItems.Count != 0)
@@ -507,6 +516,7 @@ namespace PlatformHeightTest
         {
             Clipboard.SetData(DataFormats.Text, clipboardString());
         }
+
         private string clipboardString()
         {
             string paste = "";
@@ -524,6 +534,114 @@ namespace PlatformHeightTest
                 MessageBox.Show("Data null.");
             }
             return paste;
+        }
+        #endregion
+        private void npoiSetExcel()
+        {
+            if (OKListView.Items.Count == 5)
+            {
+                OpenFileDialog dialog = new OpenFileDialog()
+                {
+                    RestoreDirectory = true,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    Filter = "Excel Work|*.xlsx",
+                    Title = "Open 檢核表.xlsx File"
+                };
+                dialog.ShowDialog();
+
+                double[,] result = new double[5, 2];
+                for (int i = 0; i < OKListView.Items.Count; i++)
+                {
+                    result[i, 0] = double.Parse(OKListView.Items[i].SubItems[1].Text);
+                    result[i, 1] = double.Parse(OKListView.Items[i].SubItems[2].Text);
+                }
+
+                if (!string.IsNullOrEmpty(dialog.FileName))
+                {
+                    IWorkbook templateWorkbook;
+                    try
+                    {
+                        if (isOpen(dialog.FileName))
+                        {
+                            using (FileStream fs = new FileStream(dialog.FileName, FileMode.Open, FileAccess.Read))
+                            {
+                                templateWorkbook = new XSSFWorkbook(fs);
+                            }
+                            XSSFCellStyle cellStyle = (XSSFCellStyle)templateWorkbook.CreateCellStyle();
+                            XSSFDataFormat format = (XSSFDataFormat)templateWorkbook.CreateDataFormat();
+                            cellStyle.DataFormat = format.GetFormat("0.000");
+                            string sheetName = sheetOfCTQ;
+                            ISheet sheet = templateWorkbook.GetSheet(sheetName) ?? templateWorkbook.CreateSheet(sheetName);
+
+                            int _startCloumn = NumberFromExcelColumn(startColumn) - 1;//from [0] start first
+                            int _endColumn = NumberFromExcelColumn(endColumn) - 1;
+                            int cloumnQTY = _endColumn - _startCloumn;
+                            int rowQTY = endRow - startRow;
+                            for (int i = 0; i < rowQTY + 1; i++)
+                            {
+                                IRow dataRow = sheet.GetRow(i + startRow - 1) ?? sheet.CreateRow(i + startRow - 1);//-1 cause from [0] start first
+                                for (int j = 0; j < cloumnQTY + 1; j++)
+                                {
+                                    ICell cell = dataRow.GetCell(j + _startCloumn) ?? dataRow.CreateCell(j + _startCloumn);
+                                    cell.SetCellValue(result[i, j]);
+                                    cell.CellStyle = cellStyle;
+                                }
+                            }
+                            using (FileStream fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
+                            {
+                                templateWorkbook.Write(fs);
+                                fs.Close();
+                                templateWorkbook.Close();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    } 
+                }
+            }
+            else
+            {
+                MessageBox.Show("At least five records are required.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public static int NumberFromExcelColumn(string column)
+        {
+            int retVal = 0;
+            string col = column.ToUpper();
+            for (int iChar = col.Length - 1; iChar >= 0; iChar--)
+            {
+                char colPiece = col[iChar];
+                int colNum = colPiece - 64;
+                retVal = retVal + colNum * (int)Math.Pow(26, col.Length - (iChar + 1));
+            }
+            return retVal;
+        }
+
+        private bool isOpen(string filename)
+        {
+            IWorkbook templateWorkbook;
+            bool isOpen = true;
+            while (isOpen)
+            {
+                try
+                {
+                    using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                    {
+                        templateWorkbook = new XSSFWorkbook(fs);
+                        isOpen = false;
+                        fs.Close();
+                        templateWorkbook.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            return true;
         }
     }
 }
