@@ -44,6 +44,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ListViewPanel = new System.Windows.Forms.Panel();
+            this.DeleteBtn = new System.Windows.Forms.Button();
             this.ExportBtn = new System.Windows.Forms.Button();
             this.OKListView = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -58,7 +59,7 @@
             this.SelectBtn = new System.Windows.Forms.Button();
             this.ExtendBtn = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.DeleteBtn = new System.Windows.Forms.Button();
+            this.CopyBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -235,6 +236,7 @@
             // ListViewPanel
             // 
             this.ListViewPanel.BackColor = System.Drawing.Color.White;
+            this.ListViewPanel.Controls.Add(this.CopyBtn);
             this.ListViewPanel.Controls.Add(this.DeleteBtn);
             this.ListViewPanel.Controls.Add(this.ExportBtn);
             this.ListViewPanel.Controls.Add(this.OKListView);
@@ -245,14 +247,25 @@
             this.ListViewPanel.Size = new System.Drawing.Size(387, 394);
             this.ListViewPanel.TabIndex = 18;
             // 
+            // DeleteBtn
+            // 
+            this.DeleteBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.DeleteBtn.Location = new System.Drawing.Point(80, 178);
+            this.DeleteBtn.Name = "DeleteBtn";
+            this.DeleteBtn.Size = new System.Drawing.Size(75, 35);
+            this.DeleteBtn.TabIndex = 4;
+            this.DeleteBtn.Text = "Delete";
+            this.DeleteBtn.UseVisualStyleBackColor = true;
+            this.DeleteBtn.Click += new System.EventHandler(this.DeleteBtn_Click);
+            // 
             // ExportBtn
             // 
             this.ExportBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.ExportBtn.Location = new System.Drawing.Point(194, 178);
+            this.ExportBtn.Location = new System.Drawing.Point(296, 178);
             this.ExportBtn.Name = "ExportBtn";
-            this.ExportBtn.Size = new System.Drawing.Size(187, 35);
+            this.ExportBtn.Size = new System.Drawing.Size(85, 35);
             this.ExportBtn.TabIndex = 3;
-            this.ExportBtn.Text = "Export to HWCTQ";
+            this.ExportBtn.Text = "Excel";
             this.ExportBtn.UseVisualStyleBackColor = true;
             this.ExportBtn.Click += new System.EventHandler(this.ExportBtn_Click);
             // 
@@ -370,16 +383,15 @@
             this.panel2.Size = new System.Drawing.Size(80, 55);
             this.panel2.TabIndex = 20;
             // 
-            // DeleteBtn
+            // CopyBtn
             // 
-            this.DeleteBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.DeleteBtn.Location = new System.Drawing.Point(102, 178);
-            this.DeleteBtn.Name = "DeleteBtn";
-            this.DeleteBtn.Size = new System.Drawing.Size(75, 35);
-            this.DeleteBtn.TabIndex = 4;
-            this.DeleteBtn.Text = "Delete";
-            this.DeleteBtn.UseVisualStyleBackColor = true;
-            this.DeleteBtn.Click += new System.EventHandler(this.DeleteBtn_Click);
+            this.CopyBtn.Location = new System.Drawing.Point(191, 178);
+            this.CopyBtn.Name = "CopyBtn";
+            this.CopyBtn.Size = new System.Drawing.Size(75, 35);
+            this.CopyBtn.TabIndex = 5;
+            this.CopyBtn.Text = "Copy";
+            this.CopyBtn.UseVisualStyleBackColor = true;
+            this.CopyBtn.Click += new System.EventHandler(this.CopyBtn_Click);
             // 
             // PlatformHeightTest
             // 
@@ -451,5 +463,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.Button ExportBtn;
         private System.Windows.Forms.Button DeleteBtn;
+        private System.Windows.Forms.Button CopyBtn;
     }
 }

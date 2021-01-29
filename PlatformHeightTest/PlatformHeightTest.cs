@@ -502,5 +502,28 @@ namespace PlatformHeightTest
                 }
             }
         }
+
+        private void CopyBtn_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetData(DataFormats.Text, clipboardString());
+        }
+        private string clipboardString()
+        {
+            string paste = "";
+            if (OKListView.Items.Count == 5)
+            {
+                for (int i = 0; i < OKListView.Items.Count; i++)
+                {
+                    string max = OKListView.Items[i].SubItems[1].Text;
+                    string min = OKListView.Items[i].SubItems[2].Text;
+                    paste += max + "\t" + min + "\r\n";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Data null.");
+            }
+            return paste;
+        }
     }
 }
