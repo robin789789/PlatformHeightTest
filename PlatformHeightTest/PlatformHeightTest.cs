@@ -573,11 +573,11 @@ namespace PlatformHeightTest
                             XSSFCellStyle cellStyle = (XSSFCellStyle)templateWorkbook.CreateCellStyle();
                             XSSFDataFormat format = (XSSFDataFormat)templateWorkbook.CreateDataFormat();
                             XSSFFont font = (XSSFFont)templateWorkbook.CreateFont();
-                          
+
                             cellStyle.DataFormat = format.GetFormat("0.000");
                             font.FontName = "Calibri";
                             font.FontHeightInPoints = 12;
-                            cellStyle.SetFont ( font);
+                            cellStyle.SetFont(font);
                             cellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
                             cellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
                             cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
@@ -613,7 +613,11 @@ namespace PlatformHeightTest
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    } 
+                        if (ex is FileNotFoundException)
+                        {
+                            MessageBox.Show("請確認NPOI資料夾位於mcconf內，或是缺乏Dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }                    
                 }
             }
             else
@@ -654,6 +658,11 @@ namespace PlatformHeightTest
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (ex is FileNotFoundException)
+                    {
+                        MessageBox.Show("請確認NPOI資料夾位於mcconf內，或是缺乏Dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    return false;
                 }
             }
             return true;

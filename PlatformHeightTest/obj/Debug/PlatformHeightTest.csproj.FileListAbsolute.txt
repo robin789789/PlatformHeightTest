@@ -18,15 +18,4 @@ C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\P
 C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.pdb
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csprojAssemblyReference.cache
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csproj.ResolveComReference.cache
-C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\ICSharpCode.SharpZipLib.dll
-C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\NPOI.dll
-C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\NPOI.OOXML.dll
-C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\NPOI.OpenXmlFormats.dll
-C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\ICSharpCode.SharpZipLib.pdb
-C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\ICSharpCode.SharpZipLib.xml
-C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\NPOI.xml
-C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\NPOI.OOXML.xml
-C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\NPOI.OpenXml4Net.xml
 C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csproj.ResolveComReference.cache
-C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csproj.CopyComplete
-C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\bin\Debug\NPOI.OpenXml4Net.dll
