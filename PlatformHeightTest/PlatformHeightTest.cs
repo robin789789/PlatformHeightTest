@@ -567,9 +567,24 @@ namespace PlatformHeightTest
                             {
                                 templateWorkbook = new XSSFWorkbook(fs);
                             }
+
+                            #region setting style
+
                             XSSFCellStyle cellStyle = (XSSFCellStyle)templateWorkbook.CreateCellStyle();
                             XSSFDataFormat format = (XSSFDataFormat)templateWorkbook.CreateDataFormat();
+                            XSSFFont font = (XSSFFont)templateWorkbook.CreateFont();
+                          
                             cellStyle.DataFormat = format.GetFormat("0.000");
+                            font.FontName = "Calibri";
+                            font.FontHeightInPoints = 12;
+                            cellStyle.SetFont ( font);
+                            cellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                            cellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                            cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                            cellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+
+                            #endregion
+
                             string sheetName = sheetOfCTQ;
                             ISheet sheet = templateWorkbook.GetSheet(sheetName) ?? templateWorkbook.CreateSheet(sheetName);
 
