@@ -33,8 +33,8 @@ namespace PlatformHeightTest
         private Color OKColor = Color.LimeGreen;
         private Color InitColor = Color.White;
         private bool extendForm = false;
-        private Size unExtend = new Size(477,423);
-        private Size extend = new Size(780,423);
+        private Size unExtend = new Size(477, 423);
+        private Size extend = new Size(780, 423);
 
 
         #region NPOI Excel
@@ -95,7 +95,7 @@ namespace PlatformHeightTest
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             way = ZS(comboBox1.Text);
-            
+
             if (watcher != null)
             {
                 dataChanged();
@@ -109,7 +109,7 @@ namespace PlatformHeightTest
                         if (bt.Name != "WatchPathBtn" && bt.Name != "StopWatchBtn")
                         {
                             bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
-                            bt.BackColor =InitColor;
+                            bt.BackColor = InitColor;
                         }
                     }
                 }
@@ -145,7 +145,7 @@ namespace PlatformHeightTest
 
                 if (!string.IsNullOrEmpty(dialog.FileName))
                 {
-                    string leftTop = startColumn+startRow.ToString();
+                    string leftTop = startColumn + startRow.ToString();
                     string rightBottm = endColumn + endRow.ToString();
                     Microsoft.Office.Interop.Excel.Workbook Wbook = App.Workbooks.Open(dialog.FileName);
                     System.IO.FileInfo xlsAttribute = new FileInfo(dialog.FileName);
@@ -217,14 +217,14 @@ namespace PlatformHeightTest
                     , "數據更新通知", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             LastUpdateTime.Text = "Latest updated:" + dirInfo.LastWriteTime;
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             lastData = File.ReadLines(e.FullPath).Last();
 
             data = results(lastData);
             if (data != null)
             {
                 decimal min, max, tolerance;
-                int maxIndex=-1, minIndex=-1;
+                int maxIndex = -1, minIndex = -1;
                 try
                 {
                     min = Convert.ToDecimal(getMaxMin(data, "Min"));
@@ -236,7 +236,7 @@ namespace PlatformHeightTest
                     label3.Text = "Corner Min: " + min.ToString() + " mm";
                     label4.Text = "Tolerance: " + tolerance.ToString() + " mm";
 
-                    int index=AllListView.Items.Count+1;
+                    int index = AllListView.Items.Count + 1;
                     if (tolerance <= Convert.ToDecimal(SpecNumericUpDown.Value))
                     {
                         var item = new ListViewItem(index.ToString());
@@ -324,7 +324,7 @@ namespace PlatformHeightTest
 
         private void dataChanged()
         {
-            
+
             int maxIndex = getAllMaxMin(data, "Max");
             int minIndex = getAllMaxMin(data, "Min");
             if (data != null)
@@ -428,7 +428,7 @@ namespace PlatformHeightTest
             {
                 extendForm = true;
                 this.Size = new Size(780, 423);
-                
+
             }
             else
             {
@@ -464,8 +464,8 @@ namespace PlatformHeightTest
                 listView.Items.Clear();
             listView.View = View.Details;
             listView.GridLines = true;
-            listView.LabelEdit = false;          
-            listView.FullRowSelect = true;           
+            listView.LabelEdit = false;
+            listView.FullRowSelect = true;
         }
         private void SelectBtn_Click(object sender, EventArgs e)
         {
@@ -563,50 +563,56 @@ namespace PlatformHeightTest
                     {
                         if (isOpen(dialog.FileName))
                         {
-                            using (FileStream fs = new FileStream(dialog.FileName, FileMode.Open, FileAccess.Read))
+                            if (MessageBox.Show("Writing to the" + dialog.SafeFileName + "?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                             {
-                                templateWorkbook = new XSSFWorkbook(fs);
-                            }
-
-                            #region setting style
-
-                            XSSFCellStyle cellStyle = (XSSFCellStyle)templateWorkbook.CreateCellStyle();
-                            XSSFDataFormat format = (XSSFDataFormat)templateWorkbook.CreateDataFormat();
-                            XSSFFont font = (XSSFFont)templateWorkbook.CreateFont();
-
-                            cellStyle.DataFormat = format.GetFormat("0.000");
-                            font.FontName = "Calibri";
-                            font.FontHeightInPoints = 12;
-                            cellStyle.SetFont(font);
-                            cellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                            cellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                            cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                            cellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-
-                            #endregion
-
-                            string sheetName = sheetOfCTQ;
-                            ISheet sheet = templateWorkbook.GetSheet(sheetName) ?? templateWorkbook.CreateSheet(sheetName);
-
-                            int _startCloumn = NumberFromExcelColumn(startColumn) - 1;//from [0] start first
-                            int _endColumn = NumberFromExcelColumn(endColumn) - 1;
-                            int cloumnQTY = _endColumn - _startCloumn;
-                            int rowQTY = endRow - startRow;
-                            for (int i = 0; i < rowQTY + 1; i++)
-                            {
-                                IRow dataRow = sheet.GetRow(i + startRow - 1) ?? sheet.CreateRow(i + startRow - 1);//-1 cause from [0] start first
-                                for (int j = 0; j < cloumnQTY + 1; j++)
+                                using (FileStream fs = new FileStream(dialog.FileName, FileMode.Open, FileAccess.Read))
                                 {
-                                    ICell cell = dataRow.GetCell(j + _startCloumn) ?? dataRow.CreateCell(j + _startCloumn);
-                                    cell.SetCellValue(result[i, j]);
-                                    cell.CellStyle = cellStyle;
+                                    templateWorkbook = new XSSFWorkbook(fs);
                                 }
-                            }
-                            using (FileStream fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
-                            {
-                                templateWorkbook.Write(fs);
-                                fs.Close();
-                                templateWorkbook.Close();
+
+                                #region setting style
+
+                                XSSFCellStyle cellStyle = (XSSFCellStyle)templateWorkbook.CreateCellStyle();
+                                XSSFDataFormat format = (XSSFDataFormat)templateWorkbook.CreateDataFormat();
+                                XSSFFont font = (XSSFFont)templateWorkbook.CreateFont();
+
+                                cellStyle.DataFormat = format.GetFormat("0.000");
+                                font.FontName = "Calibri";
+                                font.FontHeightInPoints = 12;
+                                cellStyle.SetFont(font);
+                                cellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                                cellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                                cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                                cellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+
+                                #endregion
+
+                                string sheetName = sheetOfCTQ;
+                                ISheet sheet = templateWorkbook.GetSheet(sheetName) ?? templateWorkbook.CreateSheet(sheetName);
+
+                                int _startCloumn = NumberFromExcelColumn(startColumn) - 1;//from [0] start first
+                                int _endColumn = NumberFromExcelColumn(endColumn) - 1;
+                                int cloumnQTY = _endColumn - _startCloumn;
+                                int rowQTY = endRow - startRow;
+                                for (int i = 0; i < rowQTY + 1; i++)
+                                {
+                                    IRow dataRow = sheet.GetRow(i + startRow - 1) ?? sheet.CreateRow(i + startRow - 1);//-1 cause from [0] start first
+                                    for (int j = 0; j < cloumnQTY + 1; j++)
+                                    {
+                                        ICell cell = dataRow.GetCell(j + _startCloumn) ?? dataRow.CreateCell(j + _startCloumn);
+                                        cell.SetCellValue(result[i, j]);
+                                        cell.CellStyle = cellStyle;
+                                    }
+                                }
+
+                                sheet.ForceFormulaRecalculation = true;///強制重新計算公式
+
+                                using (FileStream fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
+                                {
+                                    templateWorkbook.Write(fs);
+                                    fs.Close();
+                                    templateWorkbook.Close();
+                                }
                             }
                         }
                     }
@@ -617,7 +623,7 @@ namespace PlatformHeightTest
                         {
                             MessageBox.Show("請確認NPOI資料夾位於mcconf內，或是缺乏Dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                    }                    
+                    }
                 }
             }
             else
@@ -661,8 +667,8 @@ namespace PlatformHeightTest
                     if (ex is FileNotFoundException)
                     {
                         MessageBox.Show("請確認NPOI資料夾位於mcconf內，或是缺乏Dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return true;
                     }
-                    return false;
                 }
             }
             return true;
