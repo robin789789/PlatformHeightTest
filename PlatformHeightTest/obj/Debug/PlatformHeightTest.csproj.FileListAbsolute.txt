@@ -16,6 +16,6 @@ C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\P
 C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csproj.GenerateResource.cache
 C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.exe
 C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.pdb
-D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csprojAssemblyReference.cache
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csproj.ResolveComReference.cache
 C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csproj.ResolveComReference.cache
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Debug\PlatformHeightTest.csprojAssemblyReference.cache

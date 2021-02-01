@@ -33,15 +33,14 @@ namespace PlatformHeightTest
         private Color OKColor = Color.LimeGreen;
         private Color InitColor = Color.White;
         private bool extendForm = false;
-        private Size unExtend = new Size(477, 423);
-        private Size extend = new Size(780, 423);
-
+        private Size unExtend = new Size(480, 425);
+        private Size extend = new Size(840, 425);
 
         #region NPOI Excel
         private string sheetOfCTQ = "工作表1";
         private string startColumn = "B";
         private int startRow = 56;
-        private string endColumn = "C";
+        private string endColumn = "D";
         private int endRow = 60;
 
         #endregion
@@ -179,11 +178,12 @@ namespace PlatformHeightTest
                 };
                 dialog.ShowDialog();
 
-                double[,] result = new double[5, 2];
+                double[,] result = new double[5, 3];
                 for (int i = 0; i < OKListView.Items.Count; i++)
                 {
                     result[i, 0] = double.Parse(OKListView.Items[i].SubItems[1].Text);
                     result[i, 1] = double.Parse(OKListView.Items[i].SubItems[2].Text);
+                    result[i, 2] = double.Parse(OKListView.Items[i].SubItems[3].Text);
                 }
 
                 if (!string.IsNullOrEmpty(dialog.FileName))
@@ -348,7 +348,7 @@ namespace PlatformHeightTest
             data = results(lastData);
             if (data != null)
             {
-                decimal min, max, tolerance;
+                decimal min, max, tolerance,ninePointTolerance, ninePointMax, ninePointMin;
                 int maxIndex = -1, minIndex = -1;
                 try
                 {
@@ -356,7 +356,10 @@ namespace PlatformHeightTest
                     max = Convert.ToDecimal(getMaxMin(data, "Max"));
                     maxIndex = getAllMaxMin(data, "Max");
                     minIndex = getAllMaxMin(data, "Min");
-                    tolerance = max - min;
+                    tolerance = max - min;//4pt
+                    ninePointMax = Convert.ToDecimal(data[maxIndex]);
+                    ninePointMin = Convert.ToDecimal(data[minIndex]);
+                    ninePointTolerance = (ninePointMax - ninePointMin )* 1000;//9pt um*1000
                     label2.Text = "Corner Max: " + max.ToString() + " mm";
                     label3.Text = "Corner Min: " + min.ToString() + " mm";
                     label4.Text = "Tolerance: " + tolerance.ToString() + " mm";
@@ -365,7 +368,7 @@ namespace PlatformHeightTest
                     if (tolerance <= Convert.ToDecimal(SpecNumericUpDown.Value))
                     {
                         var item = new ListViewItem(index.ToString());
-                        item.SubItems.AddRange(new string[3] { data[maxIndex].ToString(), data[minIndex].ToString(), "O" });
+                        item.SubItems.AddRange(new string[4] { ninePointMax.ToString(), ninePointMin.ToString(), ninePointTolerance.ToString(), "O" });
                         item.ForeColor = OKColor;
                         AllListView.Items.Add(item);
                         OKpictureBox.Visible = true;
@@ -374,7 +377,7 @@ namespace PlatformHeightTest
                     else
                     {
                         var item = new ListViewItem(index.ToString());
-                        item.SubItems.AddRange(new string[3] { data[maxIndex].ToString(), data[minIndex].ToString(), "X" });
+                        item.SubItems.AddRange(new string[4] { ninePointMax.ToString(), ninePointMin.ToString(), ninePointTolerance.ToString(), "X" });
                         item.ForeColor = NGColor;
                         AllListView.Items.Add(item);
                         OKpictureBox.Visible = false;
@@ -557,7 +560,6 @@ namespace PlatformHeightTest
             return retVal;
         }
 
-
         #endregion
 
         #region Extend
@@ -566,13 +568,13 @@ namespace PlatformHeightTest
             if (!extendForm)
             {
                 extendForm = true;
-                this.Size = new Size(780, 423);
+                this.Size = extend;
 
             }
             else
             {
                 extendForm = false;
-                this.Size = new Size(477, 423);
+                this.Size = unExtend;
             }
         }
         private void SetBtnStyle(Button btn)
@@ -665,7 +667,8 @@ namespace PlatformHeightTest
                 {
                     string max = OKListView.Items[i].SubItems[1].Text;
                     string min = OKListView.Items[i].SubItems[2].Text;
-                    paste += max + "\t" + min + "\r\n";
+                    string tolerance = OKListView.Items[i].SubItems[3].Text;
+                    paste += max + "\t" + min + "\t" + tolerance + "\r\n";
                 }
             }
             else

@@ -44,22 +44,24 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ListViewPanel = new System.Windows.Forms.Panel();
+            this.CopyBtn = new System.Windows.Forms.Button();
             this.DeleteBtn = new System.Windows.Forms.Button();
             this.ExportBtn = new System.Windows.Forms.Button();
             this.OKListView = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AllListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Maximum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Minimum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Tolerance = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Remark = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SelectBtn = new System.Windows.Forms.Button();
             this.ExtendBtn = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.CopyBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -244,13 +246,23 @@
             this.ListViewPanel.Controls.Add(this.SelectBtn);
             this.ListViewPanel.Location = new System.Drawing.Point(624, 17);
             this.ListViewPanel.Name = "ListViewPanel";
-            this.ListViewPanel.Size = new System.Drawing.Size(387, 394);
+            this.ListViewPanel.Size = new System.Drawing.Size(464, 432);
             this.ListViewPanel.TabIndex = 18;
+            // 
+            // CopyBtn
+            // 
+            this.CopyBtn.Location = new System.Drawing.Point(191, 236);
+            this.CopyBtn.Name = "CopyBtn";
+            this.CopyBtn.Size = new System.Drawing.Size(75, 35);
+            this.CopyBtn.TabIndex = 5;
+            this.CopyBtn.Text = "Copy";
+            this.CopyBtn.UseVisualStyleBackColor = true;
+            this.CopyBtn.Click += new System.EventHandler(this.CopyBtn_Click);
             // 
             // DeleteBtn
             // 
             this.DeleteBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.DeleteBtn.Location = new System.Drawing.Point(80, 178);
+            this.DeleteBtn.Location = new System.Drawing.Point(80, 236);
             this.DeleteBtn.Name = "DeleteBtn";
             this.DeleteBtn.Size = new System.Drawing.Size(75, 35);
             this.DeleteBtn.TabIndex = 4;
@@ -261,7 +273,7 @@
             // ExportBtn
             // 
             this.ExportBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.ExportBtn.Location = new System.Drawing.Point(296, 178);
+            this.ExportBtn.Location = new System.Drawing.Point(296, 236);
             this.ExportBtn.Name = "ExportBtn";
             this.ExportBtn.Size = new System.Drawing.Size(85, 35);
             this.ExportBtn.TabIndex = 3;
@@ -276,6 +288,7 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
+            this.columnHeader6,
             this.columnHeader5});
             this.OKListView.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.OKListView.ForeColor = System.Drawing.Color.Lime;
@@ -283,11 +296,11 @@
             this.OKListView.GridLines = true;
             this.OKListView.HideSelection = false;
             this.OKListView.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.OKListView.Location = new System.Drawing.Point(3, 219);
+            this.OKListView.Location = new System.Drawing.Point(3, 277);
             this.OKListView.MultiSelect = false;
             this.OKListView.Name = "OKListView";
             this.OKListView.Scrollable = false;
-            this.OKListView.Size = new System.Drawing.Size(381, 168);
+            this.OKListView.Size = new System.Drawing.Size(458, 152);
             this.OKListView.TabIndex = 2;
             this.OKListView.UseCompatibleStateImageBehavior = false;
             this.OKListView.View = System.Windows.Forms.View.Details;
@@ -307,6 +320,11 @@
             this.columnHeader4.Text = "Minimum";
             this.columnHeader4.Width = 80;
             // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Tolerance";
+            this.columnHeader6.Width = 80;
+            // 
             // columnHeader5
             // 
             this.columnHeader5.Text = "OK/NG";
@@ -319,6 +337,7 @@
             this.columnHeader1,
             this.Maximum,
             this.Minimum,
+            this.Tolerance,
             this.Remark});
             this.AllListView.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.AllListView.ForeColor = System.Drawing.Color.Red;
@@ -328,7 +347,7 @@
             this.AllListView.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.AllListView.Location = new System.Drawing.Point(3, 3);
             this.AllListView.Name = "AllListView";
-            this.AllListView.Size = new System.Drawing.Size(381, 168);
+            this.AllListView.Size = new System.Drawing.Size(458, 226);
             this.AllListView.TabIndex = 2;
             this.AllListView.UseCompatibleStateImageBehavior = false;
             this.AllListView.View = System.Windows.Forms.View.Details;
@@ -348,6 +367,11 @@
             this.Minimum.Text = "Minimum";
             this.Minimum.Width = 80;
             // 
+            // Tolerance
+            // 
+            this.Tolerance.Text = "Tolerance";
+            this.Tolerance.Width = 80;
+            // 
             // Remark
             // 
             this.Remark.Text = "OK/NG";
@@ -356,7 +380,7 @@
             // SelectBtn
             // 
             this.SelectBtn.Font = new System.Drawing.Font("新細明體", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.SelectBtn.Location = new System.Drawing.Point(3, 177);
+            this.SelectBtn.Location = new System.Drawing.Point(3, 235);
             this.SelectBtn.Name = "SelectBtn";
             this.SelectBtn.Size = new System.Drawing.Size(68, 36);
             this.SelectBtn.TabIndex = 1;
@@ -383,22 +407,12 @@
             this.panel2.Size = new System.Drawing.Size(80, 55);
             this.panel2.TabIndex = 20;
             // 
-            // CopyBtn
-            // 
-            this.CopyBtn.Location = new System.Drawing.Point(191, 178);
-            this.CopyBtn.Name = "CopyBtn";
-            this.CopyBtn.Size = new System.Drawing.Size(75, 35);
-            this.CopyBtn.TabIndex = 5;
-            this.CopyBtn.Text = "Copy";
-            this.CopyBtn.UseVisualStyleBackColor = true;
-            this.CopyBtn.Click += new System.EventHandler(this.CopyBtn_Click);
-            // 
             // PlatformHeightTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1023, 480);
+            this.ClientSize = new System.Drawing.Size(1131, 480);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.ListViewPanel);
             this.Controls.Add(this.label5);
@@ -464,5 +478,7 @@
         private System.Windows.Forms.Button ExportBtn;
         private System.Windows.Forms.Button DeleteBtn;
         private System.Windows.Forms.Button CopyBtn;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader Tolerance;
     }
 }
