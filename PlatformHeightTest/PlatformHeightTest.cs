@@ -166,6 +166,131 @@ namespace PlatformHeightTest
             }
         }
 
+        private void npoiSetExcel()
+        {
+            if (OKListView.Items.Count == 5)
+            {
+                OpenFileDialog dialog = new OpenFileDialog()
+                {
+                    RestoreDirectory = true,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    Filter = "Excel Work|*.xlsx",
+                    Title = "Open 檢核表.xlsx File"
+                };
+                dialog.ShowDialog();
+
+                double[,] result = new double[5, 2];
+                for (int i = 0; i < OKListView.Items.Count; i++)
+                {
+                    result[i, 0] = double.Parse(OKListView.Items[i].SubItems[1].Text);
+                    result[i, 1] = double.Parse(OKListView.Items[i].SubItems[2].Text);
+                }
+
+                if (!string.IsNullOrEmpty(dialog.FileName))
+                {
+                    IWorkbook templateWorkbook;
+                    try
+                    {
+                        if (isOpen(dialog.FileName))
+                        {
+                            if (MessageBox.Show("Writing to the" + dialog.SafeFileName + "?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                            {
+                                using (FileStream fs = new FileStream(dialog.FileName, FileMode.Open, FileAccess.Read))
+                                {
+                                    templateWorkbook = new XSSFWorkbook(fs);
+                                }
+
+                                #region setting style
+
+                                XSSFCellStyle cellStyle = (XSSFCellStyle)templateWorkbook.CreateCellStyle();
+                                XSSFDataFormat format = (XSSFDataFormat)templateWorkbook.CreateDataFormat();
+                                XSSFFont font = (XSSFFont)templateWorkbook.CreateFont();
+
+                                cellStyle.DataFormat = format.GetFormat("0.000");
+                                font.FontName = "Calibri";
+                                font.FontHeightInPoints = 12;
+                                cellStyle.SetFont(font);
+                                cellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                                cellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                                cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                                cellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+
+                                #endregion
+
+                                string sheetName = sheetOfCTQ;
+                                ISheet sheet = templateWorkbook.GetSheet(sheetName) ?? templateWorkbook.CreateSheet(sheetName);
+
+                                int _startCloumn = NumberFromExcelColumn(startColumn) - 1;//from [0] start first
+                                int _endColumn = NumberFromExcelColumn(endColumn) - 1;
+                                int cloumnQTY = _endColumn - _startCloumn;
+                                int rowQTY = endRow - startRow;
+                                for (int i = 0; i < rowQTY + 1; i++)
+                                {
+                                    IRow dataRow = sheet.GetRow(i + startRow - 1) ?? sheet.CreateRow(i + startRow - 1);//-1 cause from [0] start first
+                                    for (int j = 0; j < cloumnQTY + 1; j++)
+                                    {
+                                        ICell cell = dataRow.GetCell(j + _startCloumn) ?? dataRow.CreateCell(j + _startCloumn);
+                                        cell.SetCellValue(result[i, j]);
+                                        cell.CellStyle = cellStyle;
+                                    }
+                                }
+
+                                sheet.ForceFormulaRecalculation = true;///強制重新計算公式
+
+                                using (FileStream fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
+                                {
+                                    templateWorkbook.Write(fs);
+                                    fs.Close();
+                                    templateWorkbook.Close();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (ex is FileNotFoundException)
+                        {
+                            MessageBox.Show("請確認NPOI資料夾位於mcconf內，或是缺乏Dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("At least five records are required.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool isOpen(string filename)
+        {
+            IWorkbook templateWorkbook;
+            bool isOpen = true;
+            while (isOpen)
+            {
+                try
+                {
+                    using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                    {
+                        templateWorkbook = new XSSFWorkbook(fs);
+                        isOpen = false;
+                        fs.Close();
+                        templateWorkbook.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (ex is FileNotFoundException)
+                    {
+                        MessageBox.Show("請確認NPOI資料夾位於mcconf內，或是缺乏Dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return true;
+                    }
+                }
+            }
+            return true;
+        }
+
         #region FileWatch
 
         private void WatchPathBtn_Click(object sender, EventArgs e)
@@ -240,7 +365,7 @@ namespace PlatformHeightTest
                     if (tolerance <= Convert.ToDecimal(SpecNumericUpDown.Value))
                     {
                         var item = new ListViewItem(index.ToString());
-                        item.SubItems.AddRange(new string[3] { max.ToString(), min.ToString(), "O" });
+                        item.SubItems.AddRange(new string[3] { data[maxIndex].ToString(), data[minIndex].ToString(), "O" });
                         item.ForeColor = OKColor;
                         AllListView.Items.Add(item);
                         OKpictureBox.Visible = true;
@@ -249,7 +374,7 @@ namespace PlatformHeightTest
                     else
                     {
                         var item = new ListViewItem(index.ToString());
-                        item.SubItems.AddRange(new string[3] { max.ToString(), min.ToString(), "X" });
+                        item.SubItems.AddRange(new string[3] { data[maxIndex].ToString(), data[minIndex].ToString(), "X" });
                         item.ForeColor = NGColor;
                         AllListView.Items.Add(item);
                         OKpictureBox.Visible = false;
@@ -419,6 +544,20 @@ namespace PlatformHeightTest
             return answer;
         }
 
+        public static int NumberFromExcelColumn(string column)
+        {
+            int retVal = 0;
+            string col = column.ToUpper();
+            for (int iChar = col.Length - 1; iChar >= 0; iChar--)
+            {
+                char colPiece = col[iChar];
+                int colNum = colPiece - 64;
+                retVal = retVal + colNum * (int)Math.Pow(26, col.Length - (iChar + 1));
+            }
+            return retVal;
+        }
+
+
         #endregion
 
         #region Extend
@@ -536,142 +675,7 @@ namespace PlatformHeightTest
             return paste;
         }
         #endregion
-        private void npoiSetExcel()
-        {
-            if (OKListView.Items.Count == 5)
-            {
-                OpenFileDialog dialog = new OpenFileDialog()
-                {
-                    RestoreDirectory = true,
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                    Filter = "Excel Work|*.xlsx",
-                    Title = "Open 檢核表.xlsx File"
-                };
-                dialog.ShowDialog();
 
-                double[,] result = new double[5, 2];
-                for (int i = 0; i < OKListView.Items.Count; i++)
-                {
-                    result[i, 0] = double.Parse(OKListView.Items[i].SubItems[1].Text);
-                    result[i, 1] = double.Parse(OKListView.Items[i].SubItems[2].Text);
-                }
-
-                if (!string.IsNullOrEmpty(dialog.FileName))
-                {
-                    IWorkbook templateWorkbook;
-                    try
-                    {
-                        if (isOpen(dialog.FileName))
-                        {
-                            if (MessageBox.Show("Writing to the" + dialog.SafeFileName + "?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                            {
-                                using (FileStream fs = new FileStream(dialog.FileName, FileMode.Open, FileAccess.Read))
-                                {
-                                    templateWorkbook = new XSSFWorkbook(fs);
-                                }
-
-                                #region setting style
-
-                                XSSFCellStyle cellStyle = (XSSFCellStyle)templateWorkbook.CreateCellStyle();
-                                XSSFDataFormat format = (XSSFDataFormat)templateWorkbook.CreateDataFormat();
-                                XSSFFont font = (XSSFFont)templateWorkbook.CreateFont();
-
-                                cellStyle.DataFormat = format.GetFormat("0.000");
-                                font.FontName = "Calibri";
-                                font.FontHeightInPoints = 12;
-                                cellStyle.SetFont(font);
-                                cellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                                cellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                                cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                                cellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-
-                                #endregion
-
-                                string sheetName = sheetOfCTQ;
-                                ISheet sheet = templateWorkbook.GetSheet(sheetName) ?? templateWorkbook.CreateSheet(sheetName);
-
-                                int _startCloumn = NumberFromExcelColumn(startColumn) - 1;//from [0] start first
-                                int _endColumn = NumberFromExcelColumn(endColumn) - 1;
-                                int cloumnQTY = _endColumn - _startCloumn;
-                                int rowQTY = endRow - startRow;
-                                for (int i = 0; i < rowQTY + 1; i++)
-                                {
-                                    IRow dataRow = sheet.GetRow(i + startRow - 1) ?? sheet.CreateRow(i + startRow - 1);//-1 cause from [0] start first
-                                    for (int j = 0; j < cloumnQTY + 1; j++)
-                                    {
-                                        ICell cell = dataRow.GetCell(j + _startCloumn) ?? dataRow.CreateCell(j + _startCloumn);
-                                        cell.SetCellValue(result[i, j]);
-                                        cell.CellStyle = cellStyle;
-                                    }
-                                }
-
-                                sheet.ForceFormulaRecalculation = true;///強制重新計算公式
-
-                                using (FileStream fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
-                                {
-                                    templateWorkbook.Write(fs);
-                                    fs.Close();
-                                    templateWorkbook.Close();
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        if (ex is FileNotFoundException)
-                        {
-                            MessageBox.Show("請確認NPOI資料夾位於mcconf內，或是缺乏Dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("At least five records are required.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        public static int NumberFromExcelColumn(string column)
-        {
-            int retVal = 0;
-            string col = column.ToUpper();
-            for (int iChar = col.Length - 1; iChar >= 0; iChar--)
-            {
-                char colPiece = col[iChar];
-                int colNum = colPiece - 64;
-                retVal = retVal + colNum * (int)Math.Pow(26, col.Length - (iChar + 1));
-            }
-            return retVal;
-        }
-
-        private bool isOpen(string filename)
-        {
-            IWorkbook templateWorkbook;
-            bool isOpen = true;
-            while (isOpen)
-            {
-                try
-                {
-                    using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
-                    {
-                        templateWorkbook = new XSSFWorkbook(fs);
-                        isOpen = false;
-                        fs.Close();
-                        templateWorkbook.Close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    if (ex is FileNotFoundException)
-                    {
-                        MessageBox.Show("請確認NPOI資料夾位於mcconf內，或是缺乏Dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return true;
-                    }
-                }
-            }
-            return true;
-        }
+       
     }
 }
