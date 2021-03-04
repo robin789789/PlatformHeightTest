@@ -1,15 +1,13 @@
-﻿using System;
+﻿using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
 using System.IO;
+using System.Linq;
 using System.Threading;
-using Microsoft.Office.Interop.Excel;
-using System.Reflection;
+using System.Windows.Forms;
 using Button = System.Windows.Forms.Button;
 using Point = System.Drawing.Point;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 
 namespace PlatformHeightTest
 {
@@ -22,10 +20,11 @@ namespace PlatformHeightTest
         }
 
         #region Announce
+
         private FileSystemWatcher watcher;
         private const string v2kPathFolder = @".\HeightRecognition";
         private double[] data = new double[9];
-        private int[] way = new int[9];//Z+S        
+        private int[] way = new int[9];//Z+S
         private string lastData = "";
         private Color MaxColor = Color.Red;
         private Color MinColor = Color.LimeGreen;
@@ -37,14 +36,16 @@ namespace PlatformHeightTest
         private Size extend = new Size(840, 425);
 
         #region NPOI Excel
+
         private string sheetOfCTQ = "工作表1";
         private string startColumn = "B";
         private int startRow = 56;
         private string endColumn = "D";
         private int endRow = 60;
 
-        #endregion
-        #endregion
+        #endregion NPOI Excel
+
+        #endregion Announce
 
         private void PlatformHeightTest_Load(object sender, EventArgs e)
         {
@@ -215,7 +216,7 @@ namespace PlatformHeightTest
                                 cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
                                 cellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
 
-                                #endregion
+                                #endregion setting style
 
                                 string sheetName = sheetOfCTQ;
                                 ISheet sheet = templateWorkbook.GetSheet(sheetName) ?? templateWorkbook.CreateSheet(sheetName);
@@ -305,7 +306,7 @@ namespace PlatformHeightTest
                 startWatchHeight(fbd.SelectedPath);
                 FilePath.Text = "Path:" + fbd.SelectedPath;
             }
-        }//choose folder to watch        
+        }//choose folder to watch
 
         private void StopWatchBtn_Click(object sender, EventArgs e)
         {
@@ -314,7 +315,7 @@ namespace PlatformHeightTest
                 watcher.EnableRaisingEvents = false;
                 watcher.Dispose();
             }
-        }//stop the watcher 
+        }//stop the watcher
 
         private void startWatchHeight(string watchFolder)
         {
@@ -348,7 +349,7 @@ namespace PlatformHeightTest
             data = results(lastData);
             if (data != null)
             {
-                decimal min, max, tolerance,ninePointTolerance, ninePointMax, ninePointMin;
+                decimal min, max, tolerance, ninePointTolerance, ninePointMax, ninePointMin;
                 int maxIndex = -1, minIndex = -1;
                 try
                 {
@@ -359,7 +360,7 @@ namespace PlatformHeightTest
                     tolerance = max - min;//4pt
                     ninePointMax = Convert.ToDecimal(data[maxIndex]);
                     ninePointMin = Convert.ToDecimal(data[minIndex]);
-                    ninePointTolerance = (ninePointMax - ninePointMin )* 1000;//9pt um*1000
+                    ninePointTolerance = (ninePointMax - ninePointMin) * 1000;//9pt um*1000
                     label2.Text = "Corner Max: " + max.ToString() + " mm";
                     label3.Text = "Corner Min: " + min.ToString() + " mm";
                     label4.Text = "Tolerance: " + tolerance.ToString() + " mm";
@@ -416,9 +417,9 @@ namespace PlatformHeightTest
         private void _Watch_Error(object sender, ErrorEventArgs e)
         {
             MessageBox.Show("請重新選擇測高資料夾.", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }//exception     
+        }//exception
 
-        #endregion       
+        #endregion FileWatch
 
         #region Function
 
@@ -452,7 +453,6 @@ namespace PlatformHeightTest
 
         private void dataChanged()
         {
-
             int maxIndex = getAllMaxMin(data, "Max");
             int minIndex = getAllMaxMin(data, "Min");
             if (data != null)
@@ -560,16 +560,16 @@ namespace PlatformHeightTest
             return retVal;
         }
 
-        #endregion
+        #endregion Function
 
         #region Extend
+
         private void ExtendBtn_Click(object sender, EventArgs e)
         {
             if (!extendForm)
             {
                 extendForm = true;
                 this.Size = extend;
-
             }
             else
             {
@@ -577,6 +577,7 @@ namespace PlatformHeightTest
                 this.Size = unExtend;
             }
         }
+
         private void SetBtnStyle(Button btn)
         {
             btn.FlatStyle = FlatStyle.Flat;//樣式
@@ -586,19 +587,23 @@ namespace PlatformHeightTest
             btn.FlatAppearance.MouseOverBackColor = Color.OrangeRed;//滑鼠經過
             btn.FlatAppearance.MouseDownBackColor = Color.Transparent;//滑鼠按下
         }
+
         private void btn_MouseHover(object sender, EventArgs e)
         {
             Button btn = sender as Button;
             btn.FlatAppearance.BorderSize = 1;
         }
+
         private void btn_MouseLeave(object sender, EventArgs e)
         {
             Button btn = sender as Button;
             btn.FlatAppearance.BorderSize = 0;
         }
-        #endregion
+
+        #endregion Extend
 
         #region ListView
+
         private void initListView(ListView listView)
         {
             if (listView.Items.Count > 0)
@@ -608,6 +613,7 @@ namespace PlatformHeightTest
             listView.LabelEdit = false;
             listView.FullRowSelect = true;
         }
+
         private void SelectBtn_Click(object sender, EventArgs e)
         {
             OKListView.Items.Clear();
@@ -639,6 +645,7 @@ namespace PlatformHeightTest
                 OKListView.Items.AddRange(listViewItems);
             }
         }
+
         private void DeleteBtn_Click(object sender, EventArgs e)
         {
             if (AllListView.SelectedItems.Count != 0)
@@ -677,8 +684,7 @@ namespace PlatformHeightTest
             }
             return paste;
         }
-        #endregion
 
-       
+        #endregion ListView
     }
 }
