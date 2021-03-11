@@ -366,7 +366,7 @@ namespace PlatformHeightTest
                     label4.Text = "Tolerance: " + tolerance.ToString() + " mm";
 
                     int index = AllListView.Items.Count + 1;
-                    if (ninePointTolerance <= Convert.ToDecimal(SpecNumericUpDown.Value))
+                    if (ninePointTolerance / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value))
                     {
                         var item = new ListViewItem(index.ToString());
                         item.SubItems.AddRange(new string[4] { ninePointMax.ToString(), ninePointMin.ToString(), ninePointTolerance.ToString(), "O" });
