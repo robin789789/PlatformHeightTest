@@ -21,7 +21,7 @@ namespace PlatformHeightTest
 
         #region Announce
 
-        private const int points= 9;
+        private const int points= 16;
         private FileSystemWatcher watcher;
         private const string v2kPathFolder = @".\HeightRecognition";
         private Button[] btns;
@@ -363,27 +363,27 @@ namespace PlatformHeightTest
             data = results(lastData);
             if (data != null)
             {
-                decimal min, max, tolerance, ninePointTolerance, ninePointMax, ninePointMin;
+                decimal edgeMin, edgeMax, edgeTolerance, allPointTolerance, allPointMax, allPointMin;
                 int maxIndex = -1, minIndex = -1;
                 try
                 {
-                    min = Convert.ToDecimal(getMaxMin(data, "Min"));
-                    max = Convert.ToDecimal(getMaxMin(data, "Max"));
+                    edgeMin = Convert.ToDecimal(getMaxMin(data, "Min"));
+                    edgeMax = Convert.ToDecimal(getMaxMin(data, "Max"));
                     maxIndex = getAllMaxMin(data, "Max");
                     minIndex = getAllMaxMin(data, "Min");
-                    tolerance = max - min;//4pt
-                    ninePointMax = Convert.ToDecimal(data[maxIndex]);
-                    ninePointMin = Convert.ToDecimal(data[minIndex]);
-                    ninePointTolerance = (ninePointMax - ninePointMin) * 1000;//9pt um*1000
-                    label2.Text = "Corner Max: " + max.ToString() + " mm";
-                    label3.Text = "Corner Min: " + min.ToString() + " mm";
-                    label4.Text = "Tolerance: " + tolerance.ToString() + " mm";
+                    edgeTolerance = edgeMax - edgeMin;//4pt
+                    allPointMax = Convert.ToDecimal(data[maxIndex]);
+                    allPointMin = Convert.ToDecimal(data[minIndex]);
+                    allPointTolerance = (allPointMax - allPointMin) * 1000;//9pt um*1000
+                    label2.Text = "Corner Max: " + edgeMax.ToString() + " mm";
+                    label3.Text = "Corner Min: " + edgeMin.ToString() + " mm";
+                    label4.Text = "Tolerance: " + edgeTolerance.ToString() + " mm";
 
                     int index = AllListView.Items.Count + 1;
-                    if (ninePointTolerance / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value))
+                    if (allPointTolerance / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value))
                     {
                         var item = new ListViewItem(index.ToString());
-                        item.SubItems.AddRange(new string[4] { ninePointMax.ToString(), ninePointMin.ToString(), ninePointTolerance.ToString(), "O" });
+                        item.SubItems.AddRange(new string[4] { allPointMax.ToString(), allPointMin.ToString(), allPointTolerance.ToString(), "O" });
                         item.ForeColor = oKColor;
                         AllListView.Items.Add(item);
                         OKpictureBox.Visible = true;
@@ -392,7 +392,7 @@ namespace PlatformHeightTest
                     else
                     {
                         var item = new ListViewItem(index.ToString());
-                        item.SubItems.AddRange(new string[4] { ninePointMax.ToString(), ninePointMin.ToString(), ninePointTolerance.ToString(), "X" });
+                        item.SubItems.AddRange(new string[4] { allPointMax.ToString(), allPointMin.ToString(), allPointTolerance.ToString(), "X" });
                         item.ForeColor = nGColor;
                         AllListView.Items.Add(item);
                         OKpictureBox.Visible = false;
@@ -449,7 +449,7 @@ namespace PlatformHeightTest
         {
             double[] results;
             string[] buf = latestData.Split(',');
-            if (buf.Length == 14)
+            if (buf.Length == 5+points)
             {
                 results = new double[buf.Length - 5];
 
@@ -559,10 +559,11 @@ namespace PlatformHeightTest
             double answer = 0, temp = 0;
             double[] sortarray = new double[4];
 
-            sortarray[0] = datastring[0];
-            sortarray[1] = datastring[2];
-            sortarray[2] = datastring[6];
-            sortarray[3] = datastring[8];// edge 4 points
+            int edgeParameters = Convert.ToInt32(Math.Sqrt(points));
+            sortarray[0] = datastring[0];                           
+            sortarray[1] = datastring[0+ edgeParameters-1];
+            sortarray[2] = datastring[points-edgeParameters+1];
+            sortarray[3] = datastring[points-1];// edge 4 points
             Array.Sort(sortarray);
 
             if (MaxorMin == "Min")
