@@ -26,14 +26,16 @@ namespace PlatformHeightTest
         private double[] data = new double[9];
         private int[] way = new int[9];//Z+S
         private string lastData = "";
-        private Color MaxColor = Color.Red;
-        private Color MinColor = Color.LimeGreen;
-        private Color NGColor = Color.Red;
-        private Color OKColor = Color.LimeGreen;
-        private Color InitColor = Color.White;
+        private Color maxColor = Color.Red;
+        private Color minColor = Color.LimeGreen;
+        private Color nGColor = Color.Red;
+        private Color oKColor = Color.LimeGreen;
+        private Color initColor = Color.White;
         private bool extendForm = false;
         private Size unExtend = new Size(480, 425);
         private Size extend = new Size(840, 425);
+
+        private bool paintType; private double[] sortAryForColor;
 
         #region NPOI Excel
 
@@ -62,12 +64,25 @@ namespace PlatformHeightTest
             try
             {
                 startWatchHeight(v2kPathFolder);
-                FilePath.Text = "Path:" + v2kPathFolder;
+                this.Text = "HeightTest " + "Path:" + v2kPathFolder;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + Environment.NewLine + "請手動添加測高資料夾位址", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            #region tooltip
+
+            toolTip.ToolTipIcon = ToolTipIcon.Info;
+            toolTip.ForeColor = Color.Blue;
+            toolTip.BackColor = Color.Gray;
+            toolTip.AutoPopDelay = 4000;
+            toolTip.ToolTipTitle = "Tips";
+
+            toolTip.RemoveAll();
+            tips(paintType);
+
+            #endregion tooltip
         }
 
         private void createButtons()
@@ -109,7 +124,7 @@ namespace PlatformHeightTest
                         if (bt.Name != "WatchPathBtn" && bt.Name != "StopWatchBtn")
                         {
                             bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
-                            bt.BackColor = InitColor;
+                            bt.BackColor = initColor;
                         }
                     }
                 }
@@ -304,7 +319,7 @@ namespace PlatformHeightTest
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 startWatchHeight(fbd.SelectedPath);
-                FilePath.Text = "Path:" + fbd.SelectedPath;
+                this.Text = "HeightTest " + "Path:" + fbd.SelectedPath;
             }
         }//choose folder to watch
 
@@ -343,7 +358,7 @@ namespace PlatformHeightTest
                     , "數據更新通知", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             LastUpdateTime.Text = "Latest updated:" + dirInfo.LastWriteTime;
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             lastData = File.ReadLines(e.FullPath).Last();
 
             data = results(lastData);
@@ -370,7 +385,7 @@ namespace PlatformHeightTest
                     {
                         var item = new ListViewItem(index.ToString());
                         item.SubItems.AddRange(new string[4] { ninePointMax.ToString(), ninePointMin.ToString(), ninePointTolerance.ToString(), "O" });
-                        item.ForeColor = OKColor;
+                        item.ForeColor = oKColor;
                         AllListView.Items.Add(item);
                         OKpictureBox.Visible = true;
                         NGpictureBox.Visible = false;
@@ -379,7 +394,7 @@ namespace PlatformHeightTest
                     {
                         var item = new ListViewItem(index.ToString());
                         item.SubItems.AddRange(new string[4] { ninePointMax.ToString(), ninePointMin.ToString(), ninePointTolerance.ToString(), "X" });
-                        item.ForeColor = NGColor;
+                        item.ForeColor = nGColor;
                         AllListView.Items.Add(item);
                         OKpictureBox.Visible = false;
                         NGpictureBox.Visible = true;
@@ -398,12 +413,26 @@ namespace PlatformHeightTest
                         {
                             int index = int.Parse(bt.Name);
                             bt.Text = setValueToBtn(data[way[index] - 1]);
-                            if (bt.Name == (way[maxIndex] - 1).ToString())
-                            { bt.BackColor = MaxColor; }
-                            else if (bt.Name == (way[minIndex] - 1).ToString())
-                            { bt.BackColor = MinColor; }
+                            if (paintType)
+                            {
+                                if (bt.Name == (way[maxIndex] - 1).ToString())
+                                { bt.BackColor = maxColor; }
+                                else if (bt.Name == (way[minIndex] - 1).ToString())
+                                { bt.BackColor = minColor; }
+                                else
+                                { bt.BackColor = initColor; }
+                            }
                             else
-                            { bt.BackColor = InitColor; }
+                            {
+                                colorSort(out int[] colorInt);
+                                for (int i = 0; i < 9; i++)
+                                {
+                                    if (bt.Text == sortAryForColor[i].ToString() + " mm")
+                                    {
+                                        bt.BackColor = Color.FromArgb(colorInt[i], 255, colorInt[i]);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -455,6 +484,7 @@ namespace PlatformHeightTest
         {
             int maxIndex = getAllMaxMin(data, "Max");
             int minIndex = getAllMaxMin(data, "Min");
+
             if (data != null)
                 foreach (Control bt in this.Controls)
                 {
@@ -464,12 +494,27 @@ namespace PlatformHeightTest
                         {
                             int index = int.Parse(bt.Name);
                             bt.Text = setValueToBtn(data[way[index] - 1]);
-                            if (bt.Name == (way[maxIndex] - 1).ToString())
-                            { bt.BackColor = MaxColor; }
-                            else if (bt.Name == (way[minIndex] - 1).ToString())
-                            { bt.BackColor = MinColor; }
+
+                            if (paintType)
+                            {
+                                if (bt.Name == (way[maxIndex] - 1).ToString())
+                                { bt.BackColor = maxColor; }
+                                else if (bt.Name == (way[minIndex] - 1).ToString())
+                                { bt.BackColor = minColor; }
+                                else
+                                { bt.BackColor = initColor; }
+                            }
                             else
-                            { bt.BackColor = InitColor; }
+                            {
+                                colorSort(out int[] colorInt);
+                                for (int i = 0; i < 9; i++)
+                                {
+                                    if (bt.Text == sortAryForColor[i].ToString() + " mm")
+                                    {
+                                        bt.BackColor = Color.FromArgb(colorInt[i], 255, colorInt[i]);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -519,12 +564,14 @@ namespace PlatformHeightTest
             int answer = 0;
             double temp = 0;
             double[] sortarray = new double[9];
-
+            sortAryForColor = new double[9];
             for (int i = 0; i < 9; i++)
             {
                 sortarray[i] = datastring[i];
             }
             Array.Sort(sortarray);
+
+            sortAryForColor = sortarray;
 
             if (MaxorMin == "Min")
             {
@@ -620,7 +667,7 @@ namespace PlatformHeightTest
             int i = 0;
             foreach (ListViewItem okItem in AllListView.Items)
             {
-                if (okItem.ForeColor == OKColor)
+                if (okItem.ForeColor == oKColor)
                 {
                     if (i < 5)
                     {
@@ -636,7 +683,7 @@ namespace PlatformHeightTest
                 int loop = 0;
                 foreach (ListViewItem okItem in AllListView.Items)
                 {
-                    if (okItem.ForeColor == OKColor && loop < 5)
+                    if (okItem.ForeColor == oKColor && loop < 5)
                     {
                         listViewItems[loop] = (ListViewItem)okItem.Clone();
                         loop++;
@@ -686,5 +733,71 @@ namespace PlatformHeightTest
         }
 
         #endregion ListView
+
+        #region ColorRGB
+
+        private void colorSort(out int[] percentage)
+        {
+            int rangeInColor = 230;
+            int colorOffset = 0;
+            var max = sortAryForColor[sortAryForColor.Length - 1];
+            var min = sortAryForColor[0];
+            var tolerence = max - min;
+            percentage = new int[sortAryForColor.Length];
+            for (int i = 0; i < sortAryForColor.Length; i++)
+            {
+                if (tolerence != 0)
+                {
+                    var percent = (sortAryForColor[i] - min) / tolerence;
+                    if ((percent * rangeInColor).ToString().Contains('.'))
+                    {
+                        string[] temp = (percent * rangeInColor).ToString().Split('.');
+                        percentage[i] = int.Parse(temp[0]) + colorOffset;
+                    }
+                    else
+                    {
+                        percentage[i] = int.Parse((percent * rangeInColor).ToString()) + colorOffset;
+                    }
+                }
+            }
+        }
+
+        private void PaintTypeCkb_CheckedChanged(object sender, EventArgs e)
+        {
+            paintType = !PaintTypeCkb.Checked;
+            if (watcher != null)
+            {
+                if (sortAryForColor != null)
+                    dataChanged();
+            }
+            tips(paintType);
+        }
+
+        #endregion ColorRGB
+
+        #region tips
+
+        private void tips(bool paintType)
+        {
+            foreach (Control bt in this.Controls)
+            {
+                if (bt is Button)
+                {
+                    if (bt.Name != "WatchPathBtn" && bt.Name != "StopWatchBtn")
+                    {
+                        if (!paintType)
+                        {
+                            toolTip.SetToolTip(bt, "顏色越深，單點高度越高。" + Environment.NewLine + "顏色越淺，單點高度越低。");
+                        }
+                        else
+                        {
+                            toolTip.SetToolTip(bt, "紅色為平面最低點。" + Environment.NewLine + "綠色為平面最高點。");
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion tips
     }
 }

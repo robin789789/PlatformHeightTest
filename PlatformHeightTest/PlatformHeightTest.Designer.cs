@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlatformHeightTest));
-            this.FilePath = new System.Windows.Forms.Label();
             this.WatchPathBtn = new System.Windows.Forms.Button();
             this.LastUpdateTime = new System.Windows.Forms.Label();
             this.StopWatchBtn = new System.Windows.Forms.Button();
@@ -62,23 +62,14 @@
             this.SelectBtn = new System.Windows.Forms.Button();
             this.ExtendBtn = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.PaintTypeCkb = new System.Windows.Forms.CheckBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
             this.ListViewPanel.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // FilePath
-            // 
-            this.FilePath.AutoSize = true;
-            this.FilePath.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.FilePath.ForeColor = System.Drawing.Color.Red;
-            this.FilePath.Location = new System.Drawing.Point(8, 52);
-            this.FilePath.Name = "FilePath";
-            this.FilePath.Size = new System.Drawing.Size(40, 19);
-            this.FilePath.TabIndex = 1;
-            this.FilePath.Text = "Path";
             // 
             // WatchPathBtn
             // 
@@ -96,7 +87,7 @@
             // 
             this.LastUpdateTime.AutoSize = true;
             this.LastUpdateTime.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.LastUpdateTime.Location = new System.Drawing.Point(8, 114);
+            this.LastUpdateTime.Location = new System.Drawing.Point(8, 93);
             this.LastUpdateTime.Name = "LastUpdateTime";
             this.LastUpdateTime.Size = new System.Drawing.Size(95, 19);
             this.LastUpdateTime.TabIndex = 5;
@@ -133,7 +124,7 @@
             this.comboBox1.Items.AddRange(new object[] {
             "Z",
             "S"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 80);
+            this.comboBox1.Location = new System.Drawing.Point(12, 55);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(55, 23);
@@ -173,7 +164,7 @@
             // OKpictureBox
             // 
             this.OKpictureBox.Image = ((System.Drawing.Image)(resources.GetObject("OKpictureBox.Image")));
-            this.OKpictureBox.Location = new System.Drawing.Point(367, 181);
+            this.OKpictureBox.Location = new System.Drawing.Point(368, 220);
             this.OKpictureBox.Name = "OKpictureBox";
             this.OKpictureBox.Size = new System.Drawing.Size(230, 230);
             this.OKpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -183,7 +174,7 @@
             // NGpictureBox
             // 
             this.NGpictureBox.Image = ((System.Drawing.Image)(resources.GetObject("NGpictureBox.Image")));
-            this.NGpictureBox.Location = new System.Drawing.Point(367, 181);
+            this.NGpictureBox.Location = new System.Drawing.Point(368, 220);
             this.NGpictureBox.Name = "NGpictureBox";
             this.NGpictureBox.Size = new System.Drawing.Size(230, 230);
             this.NGpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -313,17 +304,17 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Maximum";
-            this.columnHeader3.Width = 80;
+            this.columnHeader3.Width = 70;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Minimum";
-            this.columnHeader4.Width = 80;
+            this.columnHeader4.Width = 70;
             // 
             // columnHeader6
             // 
-            this.columnHeader6.Text = "Tolerance";
-            this.columnHeader6.Width = 80;
+            this.columnHeader6.Text = "Tolerance(um)";
+            this.columnHeader6.Width = 95;
             // 
             // columnHeader5
             // 
@@ -360,17 +351,17 @@
             // Maximum
             // 
             this.Maximum.Text = "Maximum";
-            this.Maximum.Width = 80;
+            this.Maximum.Width = 70;
             // 
             // Minimum
             // 
             this.Minimum.Text = "Minimum";
-            this.Minimum.Width = 80;
+            this.Minimum.Width = 70;
             // 
             // Tolerance
             // 
-            this.Tolerance.Text = "Tolerance";
-            this.Tolerance.Width = 80;
+            this.Tolerance.Text = "Tolerance(um)";
+            this.Tolerance.Width = 95;
             // 
             // Remark
             // 
@@ -407,12 +398,27 @@
             this.panel2.Size = new System.Drawing.Size(80, 55);
             this.panel2.TabIndex = 20;
             // 
+            // PaintTypeCkb
+            // 
+            this.PaintTypeCkb.AutoSize = true;
+            this.PaintTypeCkb.Checked = true;
+            this.PaintTypeCkb.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.PaintTypeCkb.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.PaintTypeCkb.Location = new System.Drawing.Point(90, 56);
+            this.PaintTypeCkb.Name = "PaintTypeCkb";
+            this.PaintTypeCkb.Size = new System.Drawing.Size(141, 23);
+            this.PaintTypeCkb.TabIndex = 21;
+            this.PaintTypeCkb.Text = "Gradient Colors";
+            this.PaintTypeCkb.UseVisualStyleBackColor = true;
+            this.PaintTypeCkb.CheckedChanged += new System.EventHandler(this.PaintTypeCkb_CheckedChanged);
+            // 
             // PlatformHeightTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1131, 480);
+            this.Controls.Add(this.PaintTypeCkb);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.ListViewPanel);
             this.Controls.Add(this.label5);
@@ -428,7 +434,6 @@
             this.Controls.Add(this.LastUpdateTime);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.WatchPathBtn);
-            this.Controls.Add(this.FilePath);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -447,7 +452,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label FilePath;
         private System.Windows.Forms.Button WatchPathBtn;
         private System.Windows.Forms.Label LastUpdateTime;
         private System.Windows.Forms.Button StopWatchBtn;
@@ -480,5 +484,7 @@
         private System.Windows.Forms.Button CopyBtn;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader Tolerance;
+        private System.Windows.Forms.CheckBox PaintTypeCkb;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
