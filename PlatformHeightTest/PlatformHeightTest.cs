@@ -117,7 +117,8 @@ namespace PlatformHeightTest
 
             if (watcher != null)
             {
-                dataChanged();
+                if (data != null)
+                    dataChanged();
             }
             else
             {
@@ -510,12 +511,44 @@ namespace PlatformHeightTest
         {
             if (type == "Z")
             {
-                int[] results = new int[points] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+                int[] results = new int[points];
+                int row = Convert.ToInt32(Math.Sqrt(points));
+                int column = row;
+                int totalCnt = 0;
+
+                for (int i = 1; i <= row; i++)
+                {
+                    for (int j = 0; j < column; j++)
+                    {
+                        totalCnt += 1;
+                        results[totalCnt - 1] = totalCnt;
+                    }
+                }
                 return results;
             }
             if (type == "S")
             {
-                int[] results = new int[points] { 1, 2, 3, 6, 5, 4, 7, 8, 9 };
+                int[] results = new int[points];
+                int row = Convert.ToInt32(Math.Sqrt(points));
+                int column = row;
+                
+                int totalCnt = 0;
+
+                for (int i = 1; i <= row; i++)
+                {
+                    for (int j = 0; j < column; j++)
+                    {
+                        totalCnt += 1;
+                        if (i % 2 != 0)
+                        {
+                            results[totalCnt - 1] = totalCnt;
+                        }
+                        else
+                        {
+                            results[totalCnt - 1] = (i * column) - j;
+                        }
+                    }
+                }
                 return results;
             }
             return null;
@@ -753,7 +786,7 @@ namespace PlatformHeightTest
             paintType = !PaintTypeCkb.Checked;
             if (watcher != null)
             {
-                if (sortAryForColor != null)
+                if (data != null)
                     dataChanged();
             }
             tips(paintType);
