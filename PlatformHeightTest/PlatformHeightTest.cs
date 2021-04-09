@@ -21,7 +21,7 @@ namespace PlatformHeightTest
 
         #region Announce
 
-        private const int points= 16;
+        private int points= 9;
         private FileSystemWatcher watcher;
         private const string v2kPathFolder = @".\HeightRecognition";
         private Button[] btns;
@@ -89,25 +89,82 @@ namespace PlatformHeightTest
 
         private void createButtons()
         {
+            this.flowLayoutPanel1.Controls.Clear();
             btns = new Button[points];
-            int size = 80;
-            int[] location = new int[2] { 10, 120 };
-            int gap = 5;
+            int size = newSize(Convert.ToInt32(Math.Sqrt(points)));
 
             for (int i = 0; i < btns.Length; i++)
             {
                 btns[i] = new Button();
                 btns[i].Name = i.ToString();
                 btns[i].Size = new Size(size, size);
-                if (i < 3)
-                    btns[i].Location = new Point(location[0] + i * (gap + size), location[1]);
-                if (i >= 3 && i < 6)
-                    btns[i].Location = new Point(location[0] + (i - 3) * (gap + size), location[1] + size + gap);
-                if (i >= 6)
-                    btns[i].Location = new Point(location[0] + (i - 6) * (gap + size), location[1] + 2 * (size + gap));
-                // this.Controls.Add(btns[i]);
-                this.Controls.AddRange(btns);
+                btns[i].Margin = new Padding(0,0,0,0);
+                btns[i].Click += eachPointBtn_Click;
             }
+
+            this.flowLayoutPanel1.Controls.AddRange(btns);
+
+        }
+
+        private void eachPointBtn_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            MessageBox.Show(button.Text);     
+        }
+
+        private int newSize(int sideLengthOfSquare)
+        {
+            int result = 0;
+            switch (sideLengthOfSquare)
+            {
+                case 2:
+                    result = 120;
+                    break;
+                case 3:
+                    result = 80;
+                    break;
+                case 4:
+                    result = 60;
+
+                    break;
+                case 5:
+                    result = 45;
+
+                    break;
+                case 6:
+                    result = 40;
+
+                    break;
+                case 7:
+                    result = 35;
+
+                    break;
+                case 8:
+                    result = 30;
+
+                    break;
+                case 9:
+                    result = 25;
+
+                    break;
+                case 10:
+                    result = 24;
+
+                    break;
+                case 11:
+                    result = 22;
+
+                    break;
+                case 12:
+                    result = 20;
+
+                    break;
+                default:
+                    result = 24;
+
+                    break;
+            }
+            return result;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -118,7 +175,8 @@ namespace PlatformHeightTest
             if (watcher != null)
             {
                 if (data != null)
-                    dataChanged();
+                    if(data.Length>=points)
+                    dataChanged();             
             }
             else
             {
@@ -813,5 +871,18 @@ namespace PlatformHeightTest
         }
 
         #endregion tips
+
+        private void pointsCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            points= int.Parse( pointsCB.SelectedItem.ToString());
+            way = ZS(comboBox1.Text);
+            createButtons();
+            tips(paintType);
+            foreach (var bt in btns)
+            {
+                bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
+                bt.BackColor = initColor;
+            }
+        }
     }
 }
