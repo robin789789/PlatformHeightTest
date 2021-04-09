@@ -34,7 +34,7 @@
             this.LastUpdateTime = new System.Windows.Forms.Label();
             this.StopWatchBtn = new System.Windows.Forms.Button();
             this.checkWatch = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.PathTypeCB = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -123,19 +123,19 @@
             this.checkWatch.Text = "check Watcher";
             this.checkWatch.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // PathTypeCB
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.PathTypeCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.PathTypeCB.FormattingEnabled = true;
+            this.PathTypeCB.Items.AddRange(new object[] {
             "Z",
             "S"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 55);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(55, 23);
-            this.comboBox1.TabIndex = 3;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.PathTypeCB.Location = new System.Drawing.Point(12, 55);
+            this.PathTypeCB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.PathTypeCB.Name = "PathTypeCB";
+            this.PathTypeCB.Size = new System.Drawing.Size(55, 23);
+            this.PathTypeCB.TabIndex = 3;
+            this.PathTypeCB.SelectedIndexChanged += new System.EventHandler(this.PathTypeCB_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -503,7 +503,7 @@
             this.Controls.Add(this.checkWatch);
             this.Controls.Add(this.StopWatchBtn);
             this.Controls.Add(this.LastUpdateTime);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.PathTypeCB);
             this.Controls.Add(this.WatchPathBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -529,7 +529,7 @@
         private System.Windows.Forms.Label LastUpdateTime;
         private System.Windows.Forms.Button StopWatchBtn;
         private System.Windows.Forms.CheckBox checkWatch;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox PathTypeCB;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
