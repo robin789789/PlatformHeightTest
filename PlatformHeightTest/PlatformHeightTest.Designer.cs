@@ -65,13 +65,16 @@
             this.PaintTypeCkb = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pointsCB = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.LengthNUD = new System.Windows.Forms.NumericUpDown();
+            this.WidthNUD = new System.Windows.Forms.NumericUpDown();
+            this.GenerateBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
             this.ListViewPanel.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LengthNUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WidthNUD)).BeginInit();
             this.SuspendLayout();
             // 
             // WatchPathBtn
@@ -90,7 +93,7 @@
             // 
             this.LastUpdateTime.AutoSize = true;
             this.LastUpdateTime.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.LastUpdateTime.Location = new System.Drawing.Point(8, 93);
+            this.LastUpdateTime.Location = new System.Drawing.Point(8, 453);
             this.LastUpdateTime.Name = "LastUpdateTime";
             this.LastUpdateTime.Size = new System.Drawing.Size(95, 19);
             this.LastUpdateTime.TabIndex = 5;
@@ -407,7 +410,7 @@
             this.PaintTypeCkb.Checked = true;
             this.PaintTypeCkb.CheckState = System.Windows.Forms.CheckState.Checked;
             this.PaintTypeCkb.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.PaintTypeCkb.Location = new System.Drawing.Point(9, 456);
+            this.PaintTypeCkb.Location = new System.Drawing.Point(12, 91);
             this.PaintTypeCkb.Name = "PaintTypeCkb";
             this.PaintTypeCkb.Size = new System.Drawing.Size(141, 23);
             this.PaintTypeCkb.TabIndex = 21;
@@ -417,41 +420,64 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.AutoScrollMargin = new System.Drawing.Size(1, 1);
+            this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 120);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(329, 330);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(334, 330);
             this.flowLayoutPanel1.TabIndex = 22;
             // 
-            // pointsCB
+            // LengthNUD
             // 
-            this.pointsCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.pointsCB.FormattingEnabled = true;
-            this.pointsCB.Items.AddRange(new object[] {
-            "4",
-            "9",
-            "16",
-            "25",
-            "36",
-            "49",
-            "64",
-            "81",
-            "100",
-            "121",
-            "144"});
-            this.pointsCB.Location = new System.Drawing.Point(274, 54);
-            this.pointsCB.Name = "pointsCB";
-            this.pointsCB.Size = new System.Drawing.Size(64, 23);
-            this.pointsCB.TabIndex = 23;
-            this.pointsCB.SelectedIndexChanged += new System.EventHandler(this.pointsCB_SelectedIndexChanged);
+            this.LengthNUD.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.LengthNUD.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.LengthNUD.Location = new System.Drawing.Point(92, 54);
+            this.LengthNUD.Maximum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            this.LengthNUD.Name = "LengthNUD";
+            this.LengthNUD.ReadOnly = true;
+            this.LengthNUD.Size = new System.Drawing.Size(48, 27);
+            this.LengthNUD.TabIndex = 25;
+            this.LengthNUD.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             // 
-            // label6
+            // WidthNUD
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(222, 57);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(46, 15);
-            this.label6.TabIndex = 24;
-            this.label6.Text = "Points:";
+            this.WidthNUD.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.WidthNUD.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.WidthNUD.Location = new System.Drawing.Point(157, 55);
+            this.WidthNUD.Maximum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            this.WidthNUD.Name = "WidthNUD";
+            this.WidthNUD.ReadOnly = true;
+            this.WidthNUD.Size = new System.Drawing.Size(48, 27);
+            this.WidthNUD.TabIndex = 25;
+            this.WidthNUD.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // GenerateBtn
+            // 
+            this.GenerateBtn.Font = new System.Drawing.Font("微軟正黑體", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.GenerateBtn.Location = new System.Drawing.Point(221, 54);
+            this.GenerateBtn.Name = "GenerateBtn";
+            this.GenerateBtn.Size = new System.Drawing.Size(117, 60);
+            this.GenerateBtn.TabIndex = 26;
+            this.GenerateBtn.Text = "Calculate";
+            this.GenerateBtn.UseVisualStyleBackColor = true;
+            this.GenerateBtn.Click += new System.EventHandler(this.GenerateBtn_Click);
             // 
             // PlatformHeightTest
             // 
@@ -459,8 +485,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1131, 480);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.pointsCB);
+            this.Controls.Add(this.GenerateBtn);
+            this.Controls.Add(this.WidthNUD);
+            this.Controls.Add(this.LengthNUD);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.PaintTypeCkb);
             this.Controls.Add(this.panel2);
@@ -490,6 +517,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).EndInit();
             this.ListViewPanel.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.LengthNUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WidthNUD)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -531,7 +560,8 @@
         private System.Windows.Forms.CheckBox PaintTypeCkb;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.ComboBox pointsCB;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown LengthNUD;
+        private System.Windows.Forms.NumericUpDown WidthNUD;
+        private System.Windows.Forms.Button GenerateBtn;
     }
 }
