@@ -13,7 +13,7 @@ namespace PlatformHeightTest
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PlatformHeightTest());
+            Application.Run(new PlatformHeightChartForm());
         }
     }
 }
