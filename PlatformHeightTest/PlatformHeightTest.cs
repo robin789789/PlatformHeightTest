@@ -82,7 +82,7 @@ namespace PlatformHeightTest
             this.Size = unExtend;
             CenterToScreen();
             createButtons();
-            comboBox1.SelectedIndex = 0;
+            PathTypeCB.SelectedIndex = 0;
             OKpictureBox.Visible = false;
             NGpictureBox.Visible = false;
             ExtendBtn.MouseHover += btn_MouseHover;
@@ -214,10 +214,10 @@ namespace PlatformHeightTest
             return result;
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void PathTypeCB_SelectedIndexChanged(object sender, EventArgs e)
         {
             way = new int[shapeinfo.PointCnt];
-            way = ZS(comboBox1.Text);
+            way = ZS(PathTypeCB.Text);
 
             if (watcher != null)
             {
@@ -234,6 +234,23 @@ namespace PlatformHeightTest
                 }
             }
         }
+       
+        private void GenerateBtn_Click(object sender, EventArgs e)
+        {
+            shapeinfo.ShapeLength = Convert.ToInt32(LengthNUD.Value);
+            shapeinfo.ShapeWidth = Convert.ToInt32(WidthNUD.Value);
+            shapeinfo.PointCnt = shapeinfo.ShapeLength * shapeinfo.ShapeWidth;
+            way = ZS(PathTypeCB.Text);
+            createButtons();
+            tips(paintType);
+            foreach (var bt in btns)
+            {
+                bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
+                bt.BackColor = initColor;
+            }
+        }
+
+        #region Xlms Export
 
         private void ExportBtn_Click(object sender, EventArgs e)
         {
@@ -410,6 +427,8 @@ namespace PlatformHeightTest
             }
             return true;
         }
+
+        #endregion
 
         #region FileWatch
 
@@ -914,19 +933,5 @@ namespace PlatformHeightTest
 
         #endregion tips
 
-        private void GenerateBtn_Click(object sender, EventArgs e)
-        {
-            shapeinfo.ShapeLength = Convert.ToInt32(LengthNUD.Value);
-            shapeinfo.ShapeWidth = Convert.ToInt32(WidthNUD.Value);
-            shapeinfo.PointCnt = shapeinfo.ShapeLength * shapeinfo.ShapeWidth;
-            way = ZS(comboBox1.Text);
-            createButtons();
-            tips(paintType);
-            foreach (var bt in btns)
-            {
-                bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
-                bt.BackColor = initColor;
-            }
-        }
     }
 }
