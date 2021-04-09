@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Button = System.Windows.Forms.Button;
-using Point = System.Drawing.Point;
 
 namespace PlatformHeightTest
 {
@@ -17,11 +16,11 @@ namespace PlatformHeightTest
         {
             InitializeComponent();
             createButtons();
+            shapeinfo.Init9PointSquare();
         }
 
         #region Announce
 
-        private int points= 9;
         private FileSystemWatcher watcher;
         private const string v2kPathFolder = @".\HeightRecognition";
         private Button[] btns;
@@ -39,6 +38,27 @@ namespace PlatformHeightTest
 
         private bool paintType; private double[] sortAryForColor;
 
+        public class ShapeInfo
+        {
+            public int PointCnt { get; set; }
+            public int ShapeLength { get; set; }
+            public int ShapeWidth { get; set; }
+
+            public void Init9PointSquare()
+            {
+                PointCnt = 9;
+                ShapeLength = 3;
+                ShapeWidth = 3;
+            }
+
+            public void testRec()
+            {
+                PointCnt = 10;
+                ShapeLength = 2;
+                ShapeWidth = 5;
+            }
+        }
+
         #region NPOI Excel
 
         private string sheetOfCTQ = "工作表1";
@@ -49,13 +69,19 @@ namespace PlatformHeightTest
 
         #endregion NPOI Excel
 
+        private ShapeInfo shapeinfo = new ShapeInfo();
+
         #endregion Announce
 
         private void PlatformHeightTest_Load(object sender, EventArgs e)
         {
             Button.CheckForIllegalCrossThreadCalls = false;
+
+            #region UI setting
+
             this.Size = unExtend;
             CenterToScreen();
+            createButtons();
             comboBox1.SelectedIndex = 0;
             OKpictureBox.Visible = false;
             NGpictureBox.Visible = false;
@@ -63,6 +89,9 @@ namespace PlatformHeightTest
             ExtendBtn.MouseLeave += btn_MouseLeave;
             SetBtnStyle(ExtendBtn);
             initListView(AllListView);
+
+            #endregion UI setting
+
             try
             {
                 startWatchHeight(v2kPathFolder);
@@ -90,26 +119,33 @@ namespace PlatformHeightTest
         private void createButtons()
         {
             this.flowLayoutPanel1.Controls.Clear();
-            btns = new Button[points];
-            int size = newSize(Convert.ToInt32(Math.Sqrt(points)));
+            btns = new Button[shapeinfo.PointCnt];
+            int size = newSize(shapeinfo.ShapeWidth);
+            if (shapeinfo.ShapeLength > shapeinfo.ShapeWidth)
+            { size = newSize(shapeinfo.ShapeLength); }
 
             for (int i = 0; i < btns.Length; i++)
             {
-                btns[i] = new Button();
-                btns[i].Name = i.ToString();
-                btns[i].Size = new Size(size, size);
-                btns[i].Margin = new Padding(0,0,0,0);
+                btns[i] = new Button
+                {
+                    Name = i.ToString(),
+                    Size = new Size(size, size),
+                    Margin = new Padding(0, 0, 0, 0),
+                    //Font = new Font("新細明體", 8,FontStyle.Regular)
+                };
                 btns[i].Click += eachPointBtn_Click;
+                if ((i + 1) % shapeinfo.ShapeWidth == 0)
+                {
+                    this.flowLayoutPanel1.SetFlowBreak(btns[i], true);
+                }
+                this.flowLayoutPanel1.Controls.Add(btns[i]);
             }
-
-            this.flowLayoutPanel1.Controls.AddRange(btns);
-
         }
 
         private void eachPointBtn_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            MessageBox.Show(button.Text);     
+            MessageBox.Show(button.Text);
         }
 
         private int newSize(int sideLengthOfSquare)
@@ -120,45 +156,56 @@ namespace PlatformHeightTest
                 case 2:
                     result = 120;
                     break;
+
                 case 3:
                     result = 80;
                     break;
+
                 case 4:
                     result = 60;
 
                     break;
+
                 case 5:
                     result = 45;
 
                     break;
+
                 case 6:
                     result = 40;
 
                     break;
+
                 case 7:
                     result = 35;
 
                     break;
+
                 case 8:
                     result = 30;
 
                     break;
+
                 case 9:
                     result = 25;
 
                     break;
+
                 case 10:
                     result = 24;
 
                     break;
+
                 case 11:
                     result = 22;
 
                     break;
+
                 case 12:
                     result = 20;
 
                     break;
+
                 default:
                     result = 24;
 
@@ -169,14 +216,14 @@ namespace PlatformHeightTest
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            way = new int[points];
+            way = new int[shapeinfo.PointCnt];
             way = ZS(comboBox1.Text);
 
             if (watcher != null)
             {
                 if (data != null)
-                    if(data.Length>=points)
-                    dataChanged();             
+                    if (data.Length >= shapeinfo.PointCnt)
+                        dataChanged();
             }
             else
             {
@@ -417,7 +464,7 @@ namespace PlatformHeightTest
             LastUpdateTime.Text = "Latest updated:" + dirInfo.LastWriteTime;
             Thread.Sleep(100);
             lastData = File.ReadLines(e.FullPath).Last();
-            data = new double[points];
+            data = new double[shapeinfo.PointCnt];
             data = results(lastData);
             if (data != null)
             {
@@ -507,7 +554,7 @@ namespace PlatformHeightTest
         {
             double[] results;
             string[] buf = latestData.Split(',');
-            if (buf.Length == 5+points)
+            if (buf.Length == 5 + shapeinfo.PointCnt)
             {
                 results = new double[buf.Length - 5];
 
@@ -519,7 +566,7 @@ namespace PlatformHeightTest
             }
             else
             {
-                MessageBox.Show("Out of "+points.ToString()+" points", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Out of " + shapeinfo.PointCnt.ToString() + " points", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -567,13 +614,14 @@ namespace PlatformHeightTest
 
         private int[] ZS(string type)// todo
         {
+            int[] results = new int[shapeinfo.PointCnt];
+            int row, column; int totalCnt = 0;
+
+            row = shapeinfo.ShapeWidth;
+            column = shapeinfo.ShapeLength;
+
             if (type == "Z")
             {
-                int[] results = new int[points];
-                int row = Convert.ToInt32(Math.Sqrt(points));
-                int column = row;
-                int totalCnt = 0;
-
                 for (int i = 1; i <= row; i++)
                 {
                     for (int j = 0; j < column; j++)
@@ -586,15 +634,9 @@ namespace PlatformHeightTest
             }
             if (type == "S")
             {
-                int[] results = new int[points];
-                int row = Convert.ToInt32(Math.Sqrt(points));
-                int column = row;
-                
-                int totalCnt = 0;
-
-                for (int i = 1; i <= row; i++)
+                for (int i = 1; i <= column; i++)
                 {
-                    for (int j = 0; j < column; j++)
+                    for (int j = 0; j < row; j++)
                     {
                         totalCnt += 1;
                         if (i % 2 != 0)
@@ -603,7 +645,7 @@ namespace PlatformHeightTest
                         }
                         else
                         {
-                            results[totalCnt - 1] = (i * column) - j;
+                            results[totalCnt - 1] = (i * row) - j;
                         }
                     }
                 }
@@ -617,11 +659,11 @@ namespace PlatformHeightTest
             double answer = 0, temp = 0;
             double[] sortarray = new double[4];
 
-            int edgeParameters = Convert.ToInt32(Math.Sqrt(points));
-            sortarray[0] = datastring[0];                           
-            sortarray[1] = datastring[0+ edgeParameters-1];
-            sortarray[2] = datastring[points-edgeParameters+1];
-            sortarray[3] = datastring[points-1];// edge 4 points
+            int edgeParameters = Convert.ToInt32(Math.Sqrt(shapeinfo.PointCnt));
+            sortarray[0] = datastring[0];
+            sortarray[1] = datastring[0 + edgeParameters - 1];
+            sortarray[2] = datastring[shapeinfo.PointCnt - edgeParameters + 1];
+            sortarray[3] = datastring[shapeinfo.PointCnt - 1];// edge 4 points
             Array.Sort(sortarray);
 
             if (MaxorMin == "Min")
@@ -641,9 +683,9 @@ namespace PlatformHeightTest
         {
             int answer = 0;
             double temp = 0;
-            double[] sortarray = new double[points];
-            sortAryForColor = new double[points];
-            for (int i = 0; i < points; i++)
+            double[] sortarray = new double[shapeinfo.PointCnt];
+            sortAryForColor = new double[shapeinfo.PointCnt];
+            for (int i = 0; i < shapeinfo.PointCnt; i++)
             {
                 sortarray[i] = datastring[i];
             }
@@ -654,7 +696,7 @@ namespace PlatformHeightTest
             if (MaxorMin == "Min")
             {
                 temp = sortarray[0];
-                for (int i = 0; i < points; i++)
+                for (int i = 0; i < shapeinfo.PointCnt; i++)
                 {
                     if (temp == datastring[i])
                         answer = i;
@@ -662,8 +704,8 @@ namespace PlatformHeightTest
             }
             else if (MaxorMin == "Max")
             {
-                temp = sortarray[points - 1];
-                for (int i = 0; i < points; i++)
+                temp = sortarray[shapeinfo.PointCnt - 1];
+                for (int i = 0; i < shapeinfo.PointCnt; i++)
                 {
                     if (temp == datastring[i])
                         answer = i;
@@ -818,11 +860,11 @@ namespace PlatformHeightTest
         {
             int rangeInColor = 230;
             int colorOffset = 0;
-            var max = sortAryForColor[points - 1];
+            var max = sortAryForColor[shapeinfo.PointCnt - 1];
             var min = sortAryForColor[0];
             var tolerence = max - min;
-            percentage = new int[points];
-            for (int i = 0; i < points; i++)
+            percentage = new int[shapeinfo.PointCnt];
+            for (int i = 0; i < shapeinfo.PointCnt; i++)
             {
                 if (tolerence != 0)
                 {
@@ -872,9 +914,11 @@ namespace PlatformHeightTest
 
         #endregion tips
 
-        private void pointsCB_SelectedIndexChanged(object sender, EventArgs e)
+        private void GenerateBtn_Click(object sender, EventArgs e)
         {
-            points= int.Parse( pointsCB.SelectedItem.ToString());
+            shapeinfo.ShapeLength = Convert.ToInt32(LengthNUD.Value);
+            shapeinfo.ShapeWidth = Convert.ToInt32(WidthNUD.Value);
+            shapeinfo.PointCnt = shapeinfo.ShapeLength * shapeinfo.ShapeWidth;
             way = ZS(comboBox1.Text);
             createButtons();
             tips(paintType);
