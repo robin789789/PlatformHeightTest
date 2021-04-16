@@ -68,10 +68,10 @@
             this.LengthNUD = new System.Windows.Forms.NumericUpDown();
             this.WidthNUD = new System.Windows.Forms.NumericUpDown();
             this.GenerateBtn = new System.Windows.Forms.Button();
-            this.RowReverseCkb = new System.Windows.Forms.CheckBox();
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.TimeNow = new System.Windows.Forms.Label();
-            this.ColumnReverseCKB = new System.Windows.Forms.CheckBox();
+            this.FlowDirectionCB = new System.Windows.Forms.ComboBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -119,7 +119,7 @@
             // 
             this.checkWatch.AutoSize = true;
             this.checkWatch.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.checkWatch.Location = new System.Drawing.Point(362, 16);
+            this.checkWatch.Location = new System.Drawing.Point(361, 10);
             this.checkWatch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.checkWatch.Name = "checkWatch";
             this.checkWatch.Size = new System.Drawing.Size(132, 23);
@@ -483,18 +483,6 @@
             this.GenerateBtn.UseVisualStyleBackColor = true;
             this.GenerateBtn.Click += new System.EventHandler(this.GenerateBtn_Click);
             // 
-            // RowReverseCkb
-            // 
-            this.RowReverseCkb.AutoSize = true;
-            this.RowReverseCkb.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.RowReverseCkb.Location = new System.Drawing.Point(362, 44);
-            this.RowReverseCkb.Name = "RowReverseCkb";
-            this.RowReverseCkb.Size = new System.Drawing.Size(121, 23);
-            this.RowReverseCkb.TabIndex = 27;
-            this.RowReverseCkb.Text = "Row Reverse";
-            this.RowReverseCkb.UseVisualStyleBackColor = true;
-            this.RowReverseCkb.CheckedChanged += new System.EventHandler(this.RowReverseCkb_CheckedChanged);
-            // 
             // Timer
             // 
             this.Timer.Interval = 1000;
@@ -510,17 +498,26 @@
             this.TimeNow.TabIndex = 28;
             this.TimeNow.Text = "Time";
             // 
-            // ColumnReverseCKB
+            // FlowDirectionCB
             // 
-            this.ColumnReverseCKB.AutoSize = true;
-            this.ColumnReverseCKB.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.ColumnReverseCKB.Location = new System.Drawing.Point(362, 65);
-            this.ColumnReverseCKB.Name = "ColumnReverseCKB";
-            this.ColumnReverseCKB.Size = new System.Drawing.Size(145, 23);
-            this.ColumnReverseCKB.TabIndex = 27;
-            this.ColumnReverseCKB.Text = "Column Reverse";
-            this.ColumnReverseCKB.UseVisualStyleBackColor = true;
-            this.ColumnReverseCKB.CheckedChanged += new System.EventHandler(this.ColumnReverseCkb_CheckedChanged);
+            this.FlowDirectionCB.FormattingEnabled = true;
+            this.FlowDirectionCB.Location = new System.Drawing.Point(362, 65);
+            this.FlowDirectionCB.Name = "FlowDirectionCB";
+            this.FlowDirectionCB.Size = new System.Drawing.Size(152, 23);
+            this.FlowDirectionCB.TabIndex = 29;
+            this.FlowDirectionCB.SelectedIndexChanged += new System.EventHandler(this.FlowDirectionCB_SelectedIndexChanged);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Edge Points",
+            "All Points"});
+            this.comboBox1.Location = new System.Drawing.Point(361, 36);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(109, 23);
+            this.comboBox1.TabIndex = 30;
             // 
             // PlatformHeightTest
             // 
@@ -528,9 +525,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1131, 480);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.FlowDirectionCB);
             this.Controls.Add(this.TimeNow);
-            this.Controls.Add(this.ColumnReverseCKB);
-            this.Controls.Add(this.RowReverseCkb);
             this.Controls.Add(this.GenerateBtn);
             this.Controls.Add(this.WidthNUD);
             this.Controls.Add(this.LengthNUD);
@@ -609,9 +606,9 @@
         private System.Windows.Forms.NumericUpDown LengthNUD;
         private System.Windows.Forms.NumericUpDown WidthNUD;
         private System.Windows.Forms.Button GenerateBtn;
-        private System.Windows.Forms.CheckBox RowReverseCkb;
         private System.Windows.Forms.Timer Timer;
         private System.Windows.Forms.Label TimeNow;
-        private System.Windows.Forms.CheckBox ColumnReverseCKB;
+        private System.Windows.Forms.ComboBox FlowDirectionCB;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

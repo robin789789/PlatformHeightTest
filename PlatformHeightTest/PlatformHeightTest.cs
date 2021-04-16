@@ -76,7 +76,8 @@ namespace PlatformHeightTest
         private void PlatformHeightTest_Load(object sender, EventArgs e)
         {
             Timer.Enabled = true;
-
+            initFlowDirectionCB();
+            flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
             Button.CheckForIllegalCrossThreadCalls = false;
 
             #region UI setting
@@ -510,7 +511,22 @@ namespace PlatformHeightTest
                     label4.Text = "Tolerance: " + edgeTolerance.ToString() + " mm";
 
                     int index = AllListView.Items.Count + 1;
-                    if (allPointTolerance / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value))
+                    decimal whichTolerence = 0;
+                    switch (comboBox1.SelectedItem.ToString())
+                    {
+                        case "Edge Points":
+                            whichTolerence = edgeTolerance;
+                            break;
+
+                        case "All Points":
+                            whichTolerence = allPointTolerance;
+                            break;
+
+                        default:
+                            whichTolerence = allPointTolerance;
+                            break;
+                    }
+                    if (whichTolerence / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value))
                     {
                         var item = new ListViewItem(index.ToString());
                         item.SubItems.AddRange(new string[4] { allPointMax.ToString(), allPointMin.ToString(), allPointTolerance.ToString(), "O" });
@@ -939,33 +955,22 @@ namespace PlatformHeightTest
 
         #endregion tips
 
-        private void ColumnReverseCkb_CheckedChanged(object sender, EventArgs e)
-        {
-            if (ColumnReverseCKB.Checked)
-            {
-                this.flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
-            }
-            else
-            {
-                this.flowLayoutPanel1.FlowDirection = FlowDirection.BottomUp;
-            }
-        }
-       
         private void Timer_Tick(object sender, EventArgs e)
         {
             TimeNow.Text = DateTime.Now.ToString();
         }
 
-        private void RowReverseCkb_CheckedChanged(object sender, EventArgs e)
+        private void FlowDirectionCB_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (RowReverseCkb.Checked)
-            {
-                this.flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
-            }
-            else
-            {
-                this.flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
-            }
+            if (FlowDirectionCB.SelectedIndex != -1)
+                flowLayoutPanel1.FlowDirection = (FlowDirection)FlowDirectionCB.SelectedIndex;
+        }
+
+        private void initFlowDirectionCB()
+        {
+            FlowDirectionCB.Items.Clear();
+            FlowDirectionCB.DropDownStyle = ComboBoxStyle.DropDownList;
+            FlowDirectionCB.Items.AddRange(Enum.GetNames(typeof(FlowDirection)));
         }
     }
 }
