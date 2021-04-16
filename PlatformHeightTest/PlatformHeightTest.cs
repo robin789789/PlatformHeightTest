@@ -75,6 +75,8 @@ namespace PlatformHeightTest
 
         private void PlatformHeightTest_Load(object sender, EventArgs e)
         {
+            Timer.Enabled = true;
+
             Button.CheckForIllegalCrossThreadCalls = false;
 
             #region UI setting
@@ -153,6 +155,10 @@ namespace PlatformHeightTest
             int result = 0;
             switch (sideLengthOfSquare)
             {
+                case 1:
+                    result = 250;
+                    break;
+
                 case 2:
                     result = 120;
                     break;
@@ -234,7 +240,7 @@ namespace PlatformHeightTest
                 }
             }
         }
-       
+
         private void GenerateBtn_Click(object sender, EventArgs e)
         {
             shapeinfo.ShapeLength = Convert.ToInt32(LengthNUD.Value);
@@ -428,7 +434,7 @@ namespace PlatformHeightTest
             return true;
         }
 
-        #endregion
+        #endregion Xlms Export
 
         #region FileWatch
 
@@ -933,5 +939,33 @@ namespace PlatformHeightTest
 
         #endregion tips
 
+        private void ColumnReverseCkb_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ColumnReverseCKB.Checked)
+            {
+                this.flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
+            }
+            else
+            {
+                this.flowLayoutPanel1.FlowDirection = FlowDirection.BottomUp;
+            }
+        }
+       
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            TimeNow.Text = DateTime.Now.ToString();
+        }
+
+        private void RowReverseCkb_CheckedChanged(object sender, EventArgs e)
+        {
+            if (RowReverseCkb.Checked)
+            {
+                this.flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
+            }
+            else
+            {
+                this.flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
+            }
+        }
     }
 }

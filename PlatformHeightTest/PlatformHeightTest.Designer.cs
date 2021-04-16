@@ -68,6 +68,10 @@
             this.LengthNUD = new System.Windows.Forms.NumericUpDown();
             this.WidthNUD = new System.Windows.Forms.NumericUpDown();
             this.GenerateBtn = new System.Windows.Forms.Button();
+            this.RowReverseCkb = new System.Windows.Forms.CheckBox();
+            this.Timer = new System.Windows.Forms.Timer(this.components);
+            this.TimeNow = new System.Windows.Forms.Label();
+            this.ColumnReverseCKB = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -93,7 +97,7 @@
             // 
             this.LastUpdateTime.AutoSize = true;
             this.LastUpdateTime.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.LastUpdateTime.Location = new System.Drawing.Point(8, 453);
+            this.LastUpdateTime.Location = new System.Drawing.Point(222, 457);
             this.LastUpdateTime.Name = "LastUpdateTime";
             this.LastUpdateTime.Size = new System.Drawing.Size(95, 19);
             this.LastUpdateTime.TabIndex = 5;
@@ -471,13 +475,52 @@
             // GenerateBtn
             // 
             this.GenerateBtn.Font = new System.Drawing.Font("微軟正黑體", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.GenerateBtn.Location = new System.Drawing.Point(221, 54);
+            this.GenerateBtn.Location = new System.Drawing.Point(226, 54);
             this.GenerateBtn.Name = "GenerateBtn";
-            this.GenerateBtn.Size = new System.Drawing.Size(117, 60);
+            this.GenerateBtn.Size = new System.Drawing.Size(112, 60);
             this.GenerateBtn.TabIndex = 26;
             this.GenerateBtn.Text = "Calculate";
             this.GenerateBtn.UseVisualStyleBackColor = true;
             this.GenerateBtn.Click += new System.EventHandler(this.GenerateBtn_Click);
+            // 
+            // RowReverseCkb
+            // 
+            this.RowReverseCkb.AutoSize = true;
+            this.RowReverseCkb.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.RowReverseCkb.Location = new System.Drawing.Point(362, 44);
+            this.RowReverseCkb.Name = "RowReverseCkb";
+            this.RowReverseCkb.Size = new System.Drawing.Size(121, 23);
+            this.RowReverseCkb.TabIndex = 27;
+            this.RowReverseCkb.Text = "Row Reverse";
+            this.RowReverseCkb.UseVisualStyleBackColor = true;
+            this.RowReverseCkb.CheckedChanged += new System.EventHandler(this.RowReverseCkb_CheckedChanged);
+            // 
+            // Timer
+            // 
+            this.Timer.Interval = 1000;
+            this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
+            // 
+            // TimeNow
+            // 
+            this.TimeNow.AutoSize = true;
+            this.TimeNow.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.TimeNow.Location = new System.Drawing.Point(12, 457);
+            this.TimeNow.Name = "TimeNow";
+            this.TimeNow.Size = new System.Drawing.Size(43, 19);
+            this.TimeNow.TabIndex = 28;
+            this.TimeNow.Text = "Time";
+            // 
+            // ColumnReverseCKB
+            // 
+            this.ColumnReverseCKB.AutoSize = true;
+            this.ColumnReverseCKB.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.ColumnReverseCKB.Location = new System.Drawing.Point(362, 65);
+            this.ColumnReverseCKB.Name = "ColumnReverseCKB";
+            this.ColumnReverseCKB.Size = new System.Drawing.Size(145, 23);
+            this.ColumnReverseCKB.TabIndex = 27;
+            this.ColumnReverseCKB.Text = "Column Reverse";
+            this.ColumnReverseCKB.UseVisualStyleBackColor = true;
+            this.ColumnReverseCKB.CheckedChanged += new System.EventHandler(this.ColumnReverseCkb_CheckedChanged);
             // 
             // PlatformHeightTest
             // 
@@ -485,6 +528,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1131, 480);
+            this.Controls.Add(this.TimeNow);
+            this.Controls.Add(this.ColumnReverseCKB);
+            this.Controls.Add(this.RowReverseCkb);
             this.Controls.Add(this.GenerateBtn);
             this.Controls.Add(this.WidthNUD);
             this.Controls.Add(this.LengthNUD);
@@ -563,5 +609,9 @@
         private System.Windows.Forms.NumericUpDown LengthNUD;
         private System.Windows.Forms.NumericUpDown WidthNUD;
         private System.Windows.Forms.Button GenerateBtn;
+        private System.Windows.Forms.CheckBox RowReverseCkb;
+        private System.Windows.Forms.Timer Timer;
+        private System.Windows.Forms.Label TimeNow;
+        private System.Windows.Forms.CheckBox ColumnReverseCKB;
     }
 }
