@@ -512,7 +512,7 @@ namespace PlatformHeightTest
 
                     int index = AllListView.Items.Count + 1;
                     decimal whichTolerence = 0;
-                    switch (comboBox1.SelectedItem.ToString())
+                    switch (ModeCB.SelectedItem.ToString())
                     {
                         case "Edge Points":
                             whichTolerence = edgeTolerance;
@@ -968,7 +968,7 @@ namespace PlatformHeightTest
 
         private void initFlowDirectionCB()
         {
-            FlowDirectionCB.Items.Clear();
+           // FlowDirectionCB.Items.Clear();
             FlowDirectionCB.DropDownStyle = ComboBoxStyle.DropDownList;
             FlowDirectionCB.Items.AddRange(Enum.GetNames(typeof(FlowDirection)));
         }

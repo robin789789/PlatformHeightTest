@@ -71,7 +71,11 @@
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.TimeNow = new System.Windows.Forms.Label();
             this.FlowDirectionCB = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.ModeCB = new System.Windows.Forms.ComboBox();
+            this.ModeLb = new System.Windows.Forms.Label();
+            this.DirectionLB = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -144,30 +148,30 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label2.Location = new System.Drawing.Point(345, 124);
+            this.label2.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label2.Location = new System.Drawing.Point(344, 138);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(125, 25);
+            this.label2.Size = new System.Drawing.Size(93, 19);
             this.label2.TabIndex = 10;
             this.label2.Text = "Corner Max:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label3.Location = new System.Drawing.Point(349, 157);
+            this.label3.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label3.Location = new System.Drawing.Point(344, 167);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(121, 25);
+            this.label3.Size = new System.Drawing.Size(91, 19);
             this.label3.TabIndex = 11;
             this.label3.Text = "Corner Min:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label4.Location = new System.Drawing.Point(362, 190);
+            this.label4.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label4.Location = new System.Drawing.Point(344, 196);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(108, 25);
+            this.label4.Size = new System.Drawing.Size(79, 19);
             this.label4.TabIndex = 12;
             this.label4.Text = "Tolerance:";
             // 
@@ -201,7 +205,7 @@
             0,
             0,
             196608});
-            this.SpecNumericUpDown.Location = new System.Drawing.Point(433, 92);
+            this.SpecNumericUpDown.Location = new System.Drawing.Point(402, 102);
             this.SpecNumericUpDown.Maximum = new decimal(new int[] {
             1,
             0,
@@ -219,20 +223,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label1.Location = new System.Drawing.Point(362, 91);
+            this.label1.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label1.Location = new System.Drawing.Point(344, 109);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 25);
+            this.label1.Size = new System.Drawing.Size(45, 19);
             this.label1.TabIndex = 16;
             this.label1.Text = "Spec:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label5.Location = new System.Drawing.Point(519, 91);
+            this.label5.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label5.Location = new System.Drawing.Point(489, 109);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 25);
+            this.label5.Size = new System.Drawing.Size(37, 19);
             this.label5.TabIndex = 17;
             this.label5.Text = "mm";
             // 
@@ -436,7 +440,8 @@
             // 
             this.LengthNUD.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.LengthNUD.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.LengthNUD.Location = new System.Drawing.Point(92, 54);
+            this.LengthNUD.Location = new System.Drawing.Point(186, 53);
+            this.LengthNUD.Margin = new System.Windows.Forms.Padding(0);
             this.LengthNUD.Maximum = new decimal(new int[] {
             12,
             0,
@@ -456,7 +461,8 @@
             // 
             this.WidthNUD.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.WidthNUD.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.WidthNUD.Location = new System.Drawing.Point(157, 55);
+            this.WidthNUD.Location = new System.Drawing.Point(102, 53);
+            this.WidthNUD.Margin = new System.Windows.Forms.Padding(0);
             this.WidthNUD.Maximum = new decimal(new int[] {
             12,
             0,
@@ -475,9 +481,9 @@
             // GenerateBtn
             // 
             this.GenerateBtn.Font = new System.Drawing.Font("微軟正黑體", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.GenerateBtn.Location = new System.Drawing.Point(226, 54);
+            this.GenerateBtn.Location = new System.Drawing.Point(247, 53);
             this.GenerateBtn.Name = "GenerateBtn";
-            this.GenerateBtn.Size = new System.Drawing.Size(112, 60);
+            this.GenerateBtn.Size = new System.Drawing.Size(91, 61);
             this.GenerateBtn.TabIndex = 26;
             this.GenerateBtn.Text = "Calculate";
             this.GenerateBtn.UseVisualStyleBackColor = true;
@@ -500,32 +506,82 @@
             // 
             // FlowDirectionCB
             // 
+            this.FlowDirectionCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FlowDirectionCB.FormattingEnabled = true;
-            this.FlowDirectionCB.Location = new System.Drawing.Point(362, 65);
+            this.FlowDirectionCB.Location = new System.Drawing.Point(427, 69);
+            this.FlowDirectionCB.Margin = new System.Windows.Forms.Padding(0);
             this.FlowDirectionCB.Name = "FlowDirectionCB";
-            this.FlowDirectionCB.Size = new System.Drawing.Size(152, 23);
+            this.FlowDirectionCB.Size = new System.Drawing.Size(114, 23);
             this.FlowDirectionCB.TabIndex = 29;
             this.FlowDirectionCB.SelectedIndexChanged += new System.EventHandler(this.FlowDirectionCB_SelectedIndexChanged);
             // 
-            // comboBox1
+            // ModeCB
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.ModeCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ModeCB.FormattingEnabled = true;
+            this.ModeCB.Items.AddRange(new object[] {
             "Edge Points",
             "All Points"});
-            this.comboBox1.Location = new System.Drawing.Point(361, 36);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(109, 23);
-            this.comboBox1.TabIndex = 30;
+            this.ModeCB.Location = new System.Drawing.Point(405, 37);
+            this.ModeCB.Name = "ModeCB";
+            this.ModeCB.Size = new System.Drawing.Size(108, 23);
+            this.ModeCB.TabIndex = 30;
+            // 
+            // ModeLb
+            // 
+            this.ModeLb.AutoSize = true;
+            this.ModeLb.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.ModeLb.Location = new System.Drawing.Point(344, 41);
+            this.ModeLb.Name = "ModeLb";
+            this.ModeLb.Size = new System.Drawing.Size(53, 19);
+            this.ModeLb.TabIndex = 31;
+            this.ModeLb.Text = "Mode:";
+            // 
+            // DirectionLB
+            // 
+            this.DirectionLB.AutoSize = true;
+            this.DirectionLB.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.DirectionLB.Location = new System.Drawing.Point(344, 70);
+            this.DirectionLB.Margin = new System.Windows.Forms.Padding(0);
+            this.DirectionLB.Name = "DirectionLB";
+            this.DirectionLB.Size = new System.Drawing.Size(75, 19);
+            this.DirectionLB.TabIndex = 32;
+            this.DirectionLB.Text = "Direction:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label6.Location = new System.Drawing.Point(159, 57);
+            this.label6.Margin = new System.Windows.Forms.Padding(0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(21, 19);
+            this.label6.TabIndex = 33;
+            this.label6.Text = "Y:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label7.Location = new System.Drawing.Point(75, 57);
+            this.label7.Margin = new System.Windows.Forms.Padding(0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(22, 19);
+            this.label7.TabIndex = 33;
+            this.label7.Text = "X:";
             // 
             // PlatformHeightTest
             // 
+            this.AcceptButton = this.GenerateBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1131, 480);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.DirectionLB);
+            this.Controls.Add(this.ModeLb);
+            this.Controls.Add(this.ModeCB);
             this.Controls.Add(this.FlowDirectionCB);
             this.Controls.Add(this.TimeNow);
             this.Controls.Add(this.GenerateBtn);
@@ -609,6 +665,10 @@
         private System.Windows.Forms.Timer Timer;
         private System.Windows.Forms.Label TimeNow;
         private System.Windows.Forms.ComboBox FlowDirectionCB;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox ModeCB;
+        private System.Windows.Forms.Label ModeLb;
+        private System.Windows.Forms.Label DirectionLB;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }
