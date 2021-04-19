@@ -502,34 +502,44 @@ namespace PlatformHeightTest
                     edgeMax = Convert.ToDecimal(getMaxMin(data, "Max"));
                     maxIndex = getAllMaxMin(data, "Max");
                     minIndex = getAllMaxMin(data, "Min");
-                    edgeTolerance = edgeMax - edgeMin;//4pt
+                    edgeTolerance = (edgeMax - edgeMin) * 1000;//4pt
                     allPointMax = Convert.ToDecimal(data[maxIndex]);
                     allPointMin = Convert.ToDecimal(data[minIndex]);
                     allPointTolerance = (allPointMax - allPointMin) * 1000;//9pt um*1000
                     label2.Text = "Corner Max: " + edgeMax.ToString() + " mm";
                     label3.Text = "Corner Min: " + edgeMin.ToString() + " mm";
-                    label4.Text = "Tolerance: " + edgeTolerance.ToString() + " mm";
+                    label4.Text = "Tolerance: " + (edgeTolerance / 1000).ToString() + " mm";
 
                     int index = AllListView.Items.Count + 1;
-                    decimal whichTolerence = 0;
-                    switch (ModeCB.SelectedItem.ToString())
+                    decimal whichTolerence = 0, whichMax = 0, whichMin = 0;
+                    if (null != ModeCB.SelectedItem)
                     {
-                        case "Edge Points":
-                            whichTolerence = edgeTolerance;
-                            break;
+                        switch (ModeCB.SelectedItem.ToString())
+                        {
+                            case "Edge Points":
+                                whichTolerence = edgeTolerance;
+                                whichMax = edgeMax;
+                                whichMin = edgeMin;
+                                break;
 
-                        case "All Points":
-                            whichTolerence = allPointTolerance;
-                            break;
-
-                        default:
-                            whichTolerence = allPointTolerance;
-                            break;
+                            case "All Points":
+                                whichTolerence = allPointTolerance;
+                                whichMax = allPointMax;
+                                whichMin = allPointMin;
+                                break;
+                        }
                     }
+                    else
+                    {
+                        whichTolerence = allPointTolerance;
+                        whichMax = allPointMax;
+                        whichMin = allPointMin;
+                    }
+
                     if (whichTolerence / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value))
                     {
                         var item = new ListViewItem(index.ToString());
-                        item.SubItems.AddRange(new string[4] { allPointMax.ToString(), allPointMin.ToString(), allPointTolerance.ToString(), "O" });
+                        item.SubItems.AddRange(new string[4] { whichMax.ToString(), whichMin.ToString(), whichTolerence.ToString(), "O" });
                         item.ForeColor = oKColor;
                         AllListView.Items.Add(item);
                         OKpictureBox.Visible = true;
@@ -538,7 +548,7 @@ namespace PlatformHeightTest
                     else
                     {
                         var item = new ListViewItem(index.ToString());
-                        item.SubItems.AddRange(new string[4] { allPointMax.ToString(), allPointMin.ToString(), allPointTolerance.ToString(), "X" });
+                        item.SubItems.AddRange(new string[4] { whichMax.ToString(), whichMin.ToString(), whichTolerence.ToString(), "X" });
                         item.ForeColor = nGColor;
                         AllListView.Items.Add(item);
                         OKpictureBox.Visible = false;
@@ -578,7 +588,7 @@ namespace PlatformHeightTest
             }
             else
             {
-                MessageBox.Show("測高數據異常，請確認為九點測高", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("測高數據異常，請確認為" + shapeinfo.PointCnt.ToString() + "點測高", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -700,10 +710,9 @@ namespace PlatformHeightTest
             double answer = 0, temp = 0;
             double[] sortarray = new double[4];
 
-            int edgeParameters = Convert.ToInt32(Math.Sqrt(shapeinfo.PointCnt));
             sortarray[0] = datastring[0];
-            sortarray[1] = datastring[0 + edgeParameters - 1];
-            sortarray[2] = datastring[shapeinfo.PointCnt - edgeParameters + 1];
+            sortarray[1] = datastring[shapeinfo.ShapeWidth - 1];
+            sortarray[2] = datastring[shapeinfo.PointCnt - shapeinfo.ShapeWidth];
             sortarray[3] = datastring[shapeinfo.PointCnt - 1];// edge 4 points
             Array.Sort(sortarray);
 
@@ -968,7 +977,6 @@ namespace PlatformHeightTest
 
         private void initFlowDirectionCB()
         {
-           // FlowDirectionCB.Items.Clear();
             FlowDirectionCB.DropDownStyle = ComboBoxStyle.DropDownList;
             FlowDirectionCB.Items.AddRange(Enum.GetNames(typeof(FlowDirection)));
         }
