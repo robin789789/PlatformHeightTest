@@ -560,12 +560,12 @@ namespace PlatformHeightTest
                     MessageBox.Show("Data Error.");
                 }
 
-                foreach (var bt in btns)
+                if (paintType)
                 {
-                    int index = int.Parse(bt.Name);
-                    bt.Text = setValueToBtn(data[way[index] - 1]);
-                    if (paintType)
+                    foreach (var bt in btns)
                     {
+                        int index = int.Parse(bt.Name);
+                        bt.Text = setValueToBtn(data[way[index] - 1]);
                         if (bt.Name == (way[maxIndex] - 1).ToString())
                         { bt.BackColor = maxColor; }
                         else if (bt.Name == (way[minIndex] - 1).ToString())
@@ -573,18 +573,20 @@ namespace PlatformHeightTest
                         else
                         { bt.BackColor = initColor; }
                     }
-                    else
+                }
+                else
+                {
+                    var temp=sortAryForColor.ToList();
+                    colorSort(out int[] colorInt);
+                    foreach (var bt in btns)
                     {
-                        colorSort(out int[] colorInt);
-                        for (int i = 0; i < btns.Length; i++)
-                        {
-                            if (bt.Text == sortAryForColor[i].ToString() + " mm")
-                            {
-                                bt.BackColor = Color.FromArgb(colorInt[i], 255, colorInt[i]);
-                            }
-                        }
+                        int index = int.Parse(bt.Name);
+                        bt.Text = setValueToBtn(data[way[index] - 1]);
+                        int i = temp.IndexOf(Convert.ToDouble(bt.Text.Replace(" mm","")));
+                        bt.BackColor = Color.FromArgb(colorInt[i], 255, colorInt[i]);
                     }
                 }
+                
             }
             else
             {
@@ -635,13 +637,12 @@ namespace PlatformHeightTest
             int minIndex = getAllMaxMin(data, "Min");
 
             if (data != null)
-                foreach (var bt in btns)
+                if (paintType)
                 {
-                    int index = int.Parse(bt.Name);
-                    bt.Text = setValueToBtn(data[way[index] - 1]);
-
-                    if (paintType)
+                    foreach (var bt in btns)
                     {
+                        int index = int.Parse(bt.Name);
+                        bt.Text = setValueToBtn(data[way[index] - 1]);
                         if (bt.Name == (way[maxIndex] - 1).ToString())
                         { bt.BackColor = maxColor; }
                         else if (bt.Name == (way[minIndex] - 1).ToString())
@@ -649,16 +650,17 @@ namespace PlatformHeightTest
                         else
                         { bt.BackColor = initColor; }
                     }
-                    else
+                }
+                else
+                {
+                    var temp = sortAryForColor.ToList();
+                    colorSort(out int[] colorInt);
+                    foreach (var bt in btns)
                     {
-                        colorSort(out int[] colorInt);
-                        for (int i = 0; i < sortAryForColor.Length; i++)
-                        {
-                            if (bt.Text == sortAryForColor[i].ToString() + " mm")
-                            {
-                                bt.BackColor = Color.FromArgb(colorInt[i], 255, colorInt[i]);
-                            }
-                        }
+                        int index = int.Parse(bt.Name);
+                        bt.Text = setValueToBtn(data[way[index] - 1]);
+                        int i = temp.IndexOf(Convert.ToDouble(bt.Text.Replace(" mm", "")));
+                        bt.BackColor = Color.FromArgb(colorInt[i], 255, colorInt[i]);
                     }
                 }
         }
@@ -914,9 +916,9 @@ namespace PlatformHeightTest
             var min = sortAryForColor[0];
             var tolerence = max - min;
             percentage = new int[shapeinfo.PointCnt];
-            for (int i = 0; i < shapeinfo.PointCnt; i++)
+            if (tolerence != 0)
             {
-                if (tolerence != 0)
+                for (int i = 0; i < shapeinfo.PointCnt; i++)
                 {
                     var percent = (sortAryForColor[i] - min) / tolerence;
                     if ((percent * rangeInColor).ToString().Contains('.'))
@@ -928,7 +930,7 @@ namespace PlatformHeightTest
                     {
                         percentage[i] = int.Parse((percent * rangeInColor).ToString()) + colorOffset;
                     }
-                }
+                }       
             }
         }
 
