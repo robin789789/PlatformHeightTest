@@ -576,17 +576,16 @@ namespace PlatformHeightTest
                 }
                 else
                 {
-                    var temp=sortAryForColor.ToList();
+                    var temp = sortAryForColor.ToList();
                     colorSort(out int[] colorInt);
                     foreach (var bt in btns)
                     {
                         int index = int.Parse(bt.Name);
                         bt.Text = setValueToBtn(data[way[index] - 1]);
-                        int i = temp.IndexOf(Convert.ToDouble(bt.Text.Replace(" mm","")));
+                        int i = temp.IndexOf(Convert.ToDouble(bt.Text.Replace(" mm", "")));
                         bt.BackColor = Color.FromArgb(colorInt[i], 255, colorInt[i]);
                     }
                 }
-                
             }
             else
             {
@@ -735,34 +734,24 @@ namespace PlatformHeightTest
         {
             int answer = 0;
             double temp = 0;
-            double[] sortarray = new double[shapeinfo.PointCnt];
-            sortAryForColor = new double[shapeinfo.PointCnt];
-            for (int i = 0; i < shapeinfo.PointCnt; i++)
-            {
-                sortarray[i] = datastring[i];
-            }
+            double[] sortarray = new double[datastring.Length];
+            sortAryForColor = new double[datastring.Length];
+
+            datastring.CopyTo(sortarray, 0);
             Array.Sort(sortarray);
 
             sortAryForColor = sortarray;
+            var list = datastring.ToList();
 
             if (MaxorMin == "Min")
             {
                 temp = sortarray[0];
-                for (int i = 0; i < shapeinfo.PointCnt; i++)
-                {
-                    if (temp == datastring[i])
-                        answer = i;
-                }
             }
             else if (MaxorMin == "Max")
             {
-                temp = sortarray[shapeinfo.PointCnt - 1];
-                for (int i = 0; i < shapeinfo.PointCnt; i++)
-                {
-                    if (temp == datastring[i])
-                        answer = i;
-                }
+                temp = sortarray[sortarray.Length - 1];
             }
+            answer = list.IndexOf(temp);
             return answer;
         }
 
@@ -930,7 +919,7 @@ namespace PlatformHeightTest
                     {
                         percentage[i] = int.Parse((percent * rangeInColor).ToString()) + colorOffset;
                     }
-                }       
+                }
             }
         }
 
