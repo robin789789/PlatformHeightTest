@@ -76,19 +76,24 @@
             this.DirectionLB = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.ExtendLabel = new System.Windows.Forms.Label();
             this.offsetPanel = new System.Windows.Forms.Panel();
-            this.CatchBtn = new System.Windows.Forms.Button();
-            this.OffsetLB = new System.Windows.Forms.Label();
-            this.HeightTextLB = new System.Windows.Forms.Label();
-            this.ExportBtn2 = new System.Windows.Forms.Button();
+            this.OffsetSpecLB = new System.Windows.Forms.Label();
+            this.OffsetSpecNum = new System.Windows.Forms.NumericUpDown();
             this.GetOffsetBtn = new System.Windows.Forms.Button();
+            this.ExportBtn2 = new System.Windows.Forms.Button();
+            this.HeightTextLB = new System.Windows.Forms.Label();
             this.OffsetListView = new System.Windows.Forms.ListView();
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.OffsetLB = new System.Windows.Forms.Label();
+            this.CatchBtn = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.ImageInsectionBtn = new System.Windows.Forms.Button();
+            this.HeightRecognitionBtn = new System.Windows.Forms.Button();
+            this.Extend2Btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -97,6 +102,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.LengthNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WidthNUD)).BeginInit();
             this.offsetPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.OffsetSpecNum)).BeginInit();
             this.SuspendLayout();
             // 
             // WatchPathBtn
@@ -271,7 +277,7 @@
             // CopyBtn
             // 
             this.CopyBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.CopyBtn.Location = new System.Drawing.Point(191, 236);
+            this.CopyBtn.Location = new System.Drawing.Point(249, 235);
             this.CopyBtn.Name = "CopyBtn";
             this.CopyBtn.Size = new System.Drawing.Size(75, 35);
             this.CopyBtn.TabIndex = 5;
@@ -282,9 +288,9 @@
             // DeleteBtn
             // 
             this.DeleteBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.DeleteBtn.Location = new System.Drawing.Point(80, 236);
+            this.DeleteBtn.Location = new System.Drawing.Point(160, 235);
             this.DeleteBtn.Name = "DeleteBtn";
-            this.DeleteBtn.Size = new System.Drawing.Size(75, 35);
+            this.DeleteBtn.Size = new System.Drawing.Size(83, 35);
             this.DeleteBtn.TabIndex = 4;
             this.DeleteBtn.Text = "Delete";
             this.DeleteBtn.UseVisualStyleBackColor = true;
@@ -293,9 +299,9 @@
             // ExportBtn
             // 
             this.ExportBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.ExportBtn.Location = new System.Drawing.Point(296, 236);
+            this.ExportBtn.Location = new System.Drawing.Point(331, 236);
             this.ExportBtn.Name = "ExportBtn";
-            this.ExportBtn.Size = new System.Drawing.Size(85, 35);
+            this.ExportBtn.Size = new System.Drawing.Size(130, 35);
             this.ExportBtn.TabIndex = 3;
             this.ExportBtn.Text = "Excel";
             this.ExportBtn.UseVisualStyleBackColor = true;
@@ -585,82 +591,91 @@
             this.label7.TabIndex = 33;
             this.label7.Text = "X:";
             // 
-            // ExtendLabel
-            // 
-            this.ExtendLabel.AutoSize = true;
-            this.ExtendLabel.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.ExtendLabel.Location = new System.Drawing.Point(623, 457);
-            this.ExtendLabel.Name = "ExtendLabel";
-            this.ExtendLabel.Size = new System.Drawing.Size(65, 19);
-            this.ExtendLabel.TabIndex = 34;
-            this.ExtendLabel.Text = "Extend2";
-            this.ExtendLabel.Click += new System.EventHandler(this.ExtendLabel_Click);
-            // 
             // offsetPanel
             // 
+            this.offsetPanel.Controls.Add(this.HeightRecognitionBtn);
+            this.offsetPanel.Controls.Add(this.ImageInsectionBtn);
+            this.offsetPanel.Controls.Add(this.OffsetSpecLB);
+            this.offsetPanel.Controls.Add(this.OffsetSpecNum);
             this.offsetPanel.Controls.Add(this.GetOffsetBtn);
             this.offsetPanel.Controls.Add(this.ExportBtn2);
             this.offsetPanel.Controls.Add(this.HeightTextLB);
             this.offsetPanel.Controls.Add(this.OffsetListView);
             this.offsetPanel.Controls.Add(this.OffsetLB);
             this.offsetPanel.Controls.Add(this.CatchBtn);
+            this.offsetPanel.Controls.Add(this.label8);
             this.offsetPanel.Location = new System.Drawing.Point(16, 479);
             this.offsetPanel.Name = "offsetPanel";
             this.offsetPanel.Size = new System.Drawing.Size(1072, 248);
             this.offsetPanel.TabIndex = 35;
             // 
-            // CatchBtn
+            // OffsetSpecLB
             // 
-            this.CatchBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.CatchBtn.Location = new System.Drawing.Point(123, 14);
-            this.CatchBtn.Name = "CatchBtn";
-            this.CatchBtn.Size = new System.Drawing.Size(291, 35);
-            this.CatchBtn.TabIndex = 1;
-            this.CatchBtn.Text = "Catch";
-            this.CatchBtn.UseVisualStyleBackColor = true;
-            this.CatchBtn.Click += new System.EventHandler(this.CatchBtn_Click);
+            this.OffsetSpecLB.AutoSize = true;
+            this.OffsetSpecLB.Font = new System.Drawing.Font("微軟正黑體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.OffsetSpecLB.Location = new System.Drawing.Point(645, 27);
+            this.OffsetSpecLB.Name = "OffsetSpecLB";
+            this.OffsetSpecLB.Size = new System.Drawing.Size(66, 22);
+            this.OffsetSpecLB.TabIndex = 7;
+            this.OffsetSpecLB.Text = "±Spec:";
             // 
-            // OffsetLB
+            // OffsetSpecNum
             // 
-            this.OffsetLB.AutoSize = true;
-            this.OffsetLB.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.OffsetLB.Location = new System.Drawing.Point(531, 22);
-            this.OffsetLB.Name = "OffsetLB";
-            this.OffsetLB.Size = new System.Drawing.Size(61, 19);
-            this.OffsetLB.TabIndex = 2;
-            this.OffsetLB.Text = "Z offset";
+            this.OffsetSpecNum.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.OffsetSpecNum.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.OffsetSpecNum.Location = new System.Drawing.Point(717, 27);
+            this.OffsetSpecNum.Maximum = new decimal(new int[] {
+            2500,
+            0,
+            0,
+            0});
+            this.OffsetSpecNum.Name = "OffsetSpecNum";
+            this.OffsetSpecNum.ReadOnly = true;
+            this.OffsetSpecNum.Size = new System.Drawing.Size(71, 27);
+            this.OffsetSpecNum.TabIndex = 6;
+            this.OffsetSpecNum.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.OffsetSpecNum.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.OffsetSpecNum.ValueChanged += new System.EventHandler(this.OffsetSpecNum_ValueChanged);
             // 
-            // HeightTextLB
+            // GetOffsetBtn
             // 
-            this.HeightTextLB.AutoSize = true;
-            this.HeightTextLB.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.HeightTextLB.Location = new System.Drawing.Point(420, 22);
-            this.HeightTextLB.Name = "HeightTextLB";
-            this.HeightTextLB.Size = new System.Drawing.Size(105, 19);
-            this.HeightTextLB.TabIndex = 3;
-            this.HeightTextLB.Text = "Height Offset:";
+            this.GetOffsetBtn.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.GetOffsetBtn.Location = new System.Drawing.Point(11, 5);
+            this.GetOffsetBtn.Name = "GetOffsetBtn";
+            this.GetOffsetBtn.Size = new System.Drawing.Size(87, 236);
+            this.GetOffsetBtn.TabIndex = 5;
+            this.GetOffsetBtn.Text = "Get";
+            this.GetOffsetBtn.UseVisualStyleBackColor = true;
+            this.GetOffsetBtn.Click += new System.EventHandler(this.GetOffsetBtn_Click);
             // 
             // ExportBtn2
             // 
             this.ExportBtn2.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.ExportBtn2.Location = new System.Drawing.Point(875, 14);
+            this.ExportBtn2.Location = new System.Drawing.Point(935, 5);
             this.ExportBtn2.Name = "ExportBtn2";
-            this.ExportBtn2.Size = new System.Drawing.Size(88, 35);
+            this.ExportBtn2.Size = new System.Drawing.Size(133, 66);
             this.ExportBtn2.TabIndex = 4;
             this.ExportBtn2.Text = "Excel";
             this.ExportBtn2.UseVisualStyleBackColor = true;
             this.ExportBtn2.Click += new System.EventHandler(this.ExportBtn2_Click);
             // 
-            // GetOffsetBtn
+            // HeightTextLB
             // 
-            this.GetOffsetBtn.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.GetOffsetBtn.Location = new System.Drawing.Point(11, 14);
-            this.GetOffsetBtn.Name = "GetOffsetBtn";
-            this.GetOffsetBtn.Size = new System.Drawing.Size(87, 216);
-            this.GetOffsetBtn.TabIndex = 5;
-            this.GetOffsetBtn.Text = "Get";
-            this.GetOffsetBtn.UseVisualStyleBackColor = true;
-            this.GetOffsetBtn.Click += new System.EventHandler(this.GetOffsetBtn_Click);
+            this.HeightTextLB.AutoSize = true;
+            this.HeightTextLB.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.HeightTextLB.Location = new System.Drawing.Point(420, 29);
+            this.HeightTextLB.Name = "HeightTextLB";
+            this.HeightTextLB.Size = new System.Drawing.Size(105, 19);
+            this.HeightTextLB.TabIndex = 3;
+            this.HeightTextLB.Text = "Height Offset:";
             // 
             // OffsetListView
             // 
@@ -677,7 +692,7 @@
             this.OffsetListView.GridLines = true;
             this.OffsetListView.HideSelection = false;
             this.OffsetListView.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.OffsetListView.Location = new System.Drawing.Point(123, 63);
+            this.OffsetListView.Location = new System.Drawing.Point(123, 74);
             this.OffsetListView.MultiSelect = false;
             this.OffsetListView.Name = "OffsetListView";
             this.OffsetListView.Scrollable = false;
@@ -693,23 +708,89 @@
             // 
             // columnHeader8
             // 
-            this.columnHeader8.Text = "X Offset";
+            this.columnHeader8.Text = "X Offset(mm)";
             this.columnHeader8.Width = 170;
             // 
             // columnHeader9
             // 
-            this.columnHeader9.Text = "Y Offset";
+            this.columnHeader9.Text = "Y Offset(mm)";
             this.columnHeader9.Width = 170;
             // 
             // columnHeader10
             // 
-            this.columnHeader10.Text = "Z Offset";
+            this.columnHeader10.Text = "Z Offset(mm)";
             this.columnHeader10.Width = 150;
             // 
             // columnHeader11
             // 
-            this.columnHeader11.Text = "Z\' Offset";
+            this.columnHeader11.Text = "Z\' Offset(mm)";
             this.columnHeader11.Width = 150;
+            // 
+            // OffsetLB
+            // 
+            this.OffsetLB.AutoSize = true;
+            this.OffsetLB.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.OffsetLB.Location = new System.Drawing.Point(531, 29);
+            this.OffsetLB.Name = "OffsetLB";
+            this.OffsetLB.Size = new System.Drawing.Size(18, 19);
+            this.OffsetLB.TabIndex = 2;
+            this.OffsetLB.Text = "0";
+            // 
+            // CatchBtn
+            // 
+            this.CatchBtn.Font = new System.Drawing.Font("微軟正黑體", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.CatchBtn.Location = new System.Drawing.Point(123, 5);
+            this.CatchBtn.Name = "CatchBtn";
+            this.CatchBtn.Size = new System.Drawing.Size(291, 63);
+            this.CatchBtn.TabIndex = 1;
+            this.CatchBtn.Text = "Catch";
+            this.CatchBtn.UseVisualStyleBackColor = true;
+            this.CatchBtn.Click += new System.EventHandler(this.CatchBtn_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label8.Location = new System.Drawing.Point(794, 29);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(32, 19);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "um";
+            // 
+            // ImageInsectionBtn
+            // 
+            this.ImageInsectionBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.ImageInsectionBtn.Location = new System.Drawing.Point(834, 3);
+            this.ImageInsectionBtn.Margin = new System.Windows.Forms.Padding(0);
+            this.ImageInsectionBtn.Name = "ImageInsectionBtn";
+            this.ImageInsectionBtn.Size = new System.Drawing.Size(98, 34);
+            this.ImageInsectionBtn.TabIndex = 18;
+            this.ImageInsectionBtn.Text = "Image.csv";
+            this.ImageInsectionBtn.UseVisualStyleBackColor = true;
+            this.ImageInsectionBtn.Click += new System.EventHandler(this.ImageInsectionBtn_Click);
+            // 
+            // HeightRecognitionBtn
+            // 
+            this.HeightRecognitionBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.HeightRecognitionBtn.Location = new System.Drawing.Point(834, 37);
+            this.HeightRecognitionBtn.Margin = new System.Windows.Forms.Padding(0);
+            this.HeightRecognitionBtn.Name = "HeightRecognitionBtn";
+            this.HeightRecognitionBtn.Size = new System.Drawing.Size(98, 34);
+            this.HeightRecognitionBtn.TabIndex = 18;
+            this.HeightRecognitionBtn.Text = "Height.csv";
+            this.HeightRecognitionBtn.UseVisualStyleBackColor = true;
+            this.HeightRecognitionBtn.Click += new System.EventHandler(this.HeightRecognitionBtn_Click);
+            // 
+            // Extend2Btn
+            // 
+            this.Extend2Btn.Location = new System.Drawing.Point(627, 452);
+            this.Extend2Btn.Margin = new System.Windows.Forms.Padding(0);
+            this.Extend2Btn.Name = "Extend2Btn";
+            this.Extend2Btn.Size = new System.Drawing.Size(461, 23);
+            this.Extend2Btn.TabIndex = 37;
+            this.Extend2Btn.Text = "▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼";
+            this.Extend2Btn.UseVisualStyleBackColor = true;
+            this.Extend2Btn.Click += new System.EventHandler(this.Extend2Btn_Click);
             // 
             // PlatformHeightTest
             // 
@@ -718,8 +799,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1131, 739);
+            this.Controls.Add(this.Extend2Btn);
             this.Controls.Add(this.offsetPanel);
-            this.Controls.Add(this.ExtendLabel);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.DirectionLB);
@@ -763,6 +844,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.WidthNUD)).EndInit();
             this.offsetPanel.ResumeLayout(false);
             this.offsetPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.OffsetSpecNum)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -815,7 +897,6 @@
         private System.Windows.Forms.Label DirectionLB;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label ExtendLabel;
         private System.Windows.Forms.Panel offsetPanel;
         private System.Windows.Forms.Button CatchBtn;
         private System.Windows.Forms.Label OffsetLB;
@@ -828,5 +909,11 @@
         private System.Windows.Forms.ColumnHeader columnHeader9;
         private System.Windows.Forms.ColumnHeader columnHeader10;
         private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.Label OffsetSpecLB;
+        private System.Windows.Forms.NumericUpDown OffsetSpecNum;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button ImageInsectionBtn;
+        private System.Windows.Forms.Button HeightRecognitionBtn;
+        private System.Windows.Forms.Button Extend2Btn;
     }
 }

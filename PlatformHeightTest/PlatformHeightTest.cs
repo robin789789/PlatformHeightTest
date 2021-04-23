@@ -1,6 +1,7 @@
 ﻿using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -66,28 +67,45 @@ namespace PlatformHeightTest
                 ShapeWidth = 1;
             }
         }
+
         public class OffsetInfo
         {
+            public string ImagePath { get; set; }
+            public string HeightPath { get; set; }
             public int offsetNum = 5;
             public int ImageIndex { get; set; }
             public int HeightIndex { get; set; }
             public double[] XOffset { get; set; }
             public double[] YOffset { get; set; }
             public decimal[] ZOffset { get; set; }
+            public bool IsDataExist { get; set; }
+            public decimal SpecOfAllOffset { get; set; }
+
             public void Init()
             {
                 XOffset = new double[offsetNum];
                 YOffset = new double[offsetNum];
                 ZOffset = new decimal[offsetNum];
             }
+
             public void Reverse()
             {
                 XOffset.Reverse();
                 YOffset.Reverse();
                 ZOffset.Reverse();
             }
+
+            public void GetPath()
+            {
+                string[] path = new string[2];
+                string date = DateTime.Now.ToString("yyyyMMd");
+                HeightPath = @".\HeightRecognition\HeightRecognition_" + date + ".csv";
+                ImagePath = @".\ImageInspection\ImageInspection_" + date + ".csv";
+            }
         }
+
         #region NPOI Excel
+
         public class XlsxFormat
         {
             public string sheetOfCTQ { get; set; }
@@ -95,6 +113,7 @@ namespace PlatformHeightTest
             public int startRow { get; set; }
             public string endColumn { get; set; }
             public int endRow { get; set; }
+            public string dotFormat { get; set; }
 
             public void HeightTestFormat()
             {
@@ -103,7 +122,9 @@ namespace PlatformHeightTest
                 startRow = 56;
                 endColumn = "D";
                 endRow = 60;
+                dotFormat = "0.000";
             }
+
             public void OffsetFormat()
             {
                 sheetOfCTQ = "工作表1";
@@ -111,13 +132,18 @@ namespace PlatformHeightTest
                 startRow = 69;
                 endColumn = "D";
                 endRow = 73;
+                dotFormat = "0.0000";
             }
         }
+
         #endregion NPOI Excel
 
         private ShapeInfo shapeinfo = new ShapeInfo();
         private OffsetInfo offsetInfo = new OffsetInfo();
+
         #endregion Announce
+
+        #region MainUI events
 
         private void PlatformHeightTest_Load(object sender, EventArgs e)
         {
@@ -125,6 +151,7 @@ namespace PlatformHeightTest
             initFlowDirectionCB();
             flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
             Button.CheckForIllegalCrossThreadCalls = false;
+            offsetInfo.GetPath();
 
             #region UI setting
 
@@ -138,6 +165,7 @@ namespace PlatformHeightTest
             ExtendBtn.MouseLeave += btn_MouseLeave;
             SetBtnStyle(ExtendBtn);
             initListView(AllListView);
+            initListView(OffsetListView);
 
             #endregion UI setting
 
@@ -165,106 +193,10 @@ namespace PlatformHeightTest
             #endregion tooltip
         }
 
-        private void createButtons()
-        {
-            this.flowLayoutPanel1.Controls.Clear();
-            btns = new Button[shapeinfo.PointCnt];
-            int size = newSize(shapeinfo.ShapeWidth);
-            if (shapeinfo.ShapeLength > shapeinfo.ShapeWidth)
-            { size = newSize(shapeinfo.ShapeLength); }
-
-            for (int i = 0; i < btns.Length; i++)
-            {
-                btns[i] = new Button
-                {
-                    Name = i.ToString(),
-                    Size = new Size(size, size),
-                    Margin = new Padding(0, 0, 0, 0),
-                    //Font = new Font("新細明體", 8,FontStyle.Regular)
-                };
-                btns[i].Click += eachPointBtn_Click;
-                if ((i + 1) % shapeinfo.ShapeWidth == 0)
-                {
-                    this.flowLayoutPanel1.SetFlowBreak(btns[i], true);
-                }
-                this.flowLayoutPanel1.Controls.Add(btns[i]);
-            }
-        }
-
         private void eachPointBtn_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
             MessageBox.Show(button.Text);
-        }
-
-        private int newSize(int sideLengthOfSquare)
-        {
-            int result = 0;
-            switch (sideLengthOfSquare)
-            {
-                case 1:
-                    result = 250;
-                    break;
-
-                case 2:
-                    result = 120;
-                    break;
-
-                case 3:
-                    result = 80;
-                    break;
-
-                case 4:
-                    result = 60;
-
-                    break;
-
-                case 5:
-                    result = 45;
-
-                    break;
-
-                case 6:
-                    result = 40;
-
-                    break;
-
-                case 7:
-                    result = 35;
-
-                    break;
-
-                case 8:
-                    result = 30;
-
-                    break;
-
-                case 9:
-                    result = 25;
-
-                    break;
-
-                case 10:
-                    result = 24;
-
-                    break;
-
-                case 11:
-                    result = 22;
-
-                    break;
-
-                case 12:
-                    result = 20;
-
-                    break;
-
-                default:
-                    result = 24;
-
-                    break;
-            }
-            return result;
         }
 
         private void PathTypeCB_SelectedIndexChanged(object sender, EventArgs e)
@@ -302,6 +234,59 @@ namespace PlatformHeightTest
                 bt.BackColor = initColor;
             }
         }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            TimeNow.Text = DateTime.Now.ToString();
+        }
+
+        private void FlowDirectionCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (FlowDirectionCB.SelectedIndex != -1)
+                flowLayoutPanel1.FlowDirection = (FlowDirection)FlowDirectionCB.SelectedIndex;
+        }
+
+        private void initFlowDirectionCB()
+        {
+            FlowDirectionCB.DropDownStyle = ComboBoxStyle.DropDownList;
+            FlowDirectionCB.Items.AddRange(Enum.GetNames(typeof(FlowDirection)));
+        }
+
+        private void Extend2Btn_Click(object sender, EventArgs e)
+        {
+            if (!extendForm2)
+            {
+                this.Size = extend + extend2;
+
+                #region init
+
+                shapeinfo.singlePoint();
+                createButtons();
+                foreach (var bt in btns)
+                {
+                    bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
+                    bt.BackColor = initColor;
+                }
+                foreach (Control con in offsetPanel.Controls)
+                {
+                    con.Enabled = false;
+                }
+                CatchBtn.Enabled = true;
+                offsetInfo.SpecOfAllOffset = OffsetSpecNum.Value;
+
+                #endregion init
+
+                Extend2Btn.Text = "▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲";
+            }
+            else
+            {
+                this.Size -= extend2;
+                Extend2Btn.Text = "▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼";
+            }
+            extendForm2 = !extendForm2;
+        }
+
+        #endregion MainUI events
 
         #region Xlms Export
 
@@ -403,7 +388,7 @@ namespace PlatformHeightTest
                             XSSFDataFormat format = (XSSFDataFormat)templateWorkbook.CreateDataFormat();
                             XSSFFont font = (XSSFFont)templateWorkbook.CreateFont();
 
-                            cellStyle.DataFormat = format.GetFormat("0.000");
+                            cellStyle.DataFormat = format.GetFormat(xlsxformat.dotFormat);
                             font.FontName = "Calibri";
                             font.FontHeightInPoints = 12;
                             cellStyle.SetFont(font);
@@ -485,7 +470,7 @@ namespace PlatformHeightTest
 
         #endregion Xlms Export
 
-        #region FileWatch
+        #region FileWatch_watchChanged
 
         private void WatchPathBtn_Click(object sender, EventArgs e)
         {
@@ -646,9 +631,35 @@ namespace PlatformHeightTest
             MessageBox.Show("請重新選擇測高資料夾.", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }//exception
 
-        #endregion FileWatch
+        #endregion FileWatch_watchChanged
 
-        #region Function
+        #region Function Button[],DataChanged,ZS,MaxMin,BtnSize
+
+        private void createButtons()
+        {
+            this.flowLayoutPanel1.Controls.Clear();
+            btns = new Button[shapeinfo.PointCnt];
+            int size = newSize(shapeinfo.ShapeWidth);
+            if (shapeinfo.ShapeLength > shapeinfo.ShapeWidth)
+            { size = newSize(shapeinfo.ShapeLength); }
+
+            for (int i = 0; i < btns.Length; i++)
+            {
+                btns[i] = new Button
+                {
+                    Name = i.ToString(),
+                    Size = new Size(size, size),
+                    Margin = new Padding(0, 0, 0, 0),
+                    //Font = new Font("新細明體", 8,FontStyle.Regular)
+                };
+                btns[i].Click += eachPointBtn_Click;
+                if ((i + 1) % shapeinfo.ShapeWidth == 0)
+                {
+                    this.flowLayoutPanel1.SetFlowBreak(btns[i], true);
+                }
+                this.flowLayoutPanel1.Controls.Add(btns[i]);
+            }
+        }
 
         private double[] results(string latestData)//最後行轉九點高度
         {
@@ -816,7 +827,77 @@ namespace PlatformHeightTest
             return retVal;
         }
 
-        #endregion Function
+        private int newSize(int sideLengthOfSquare)
+        {
+            int result = 0;
+            switch (sideLengthOfSquare)
+            {
+                case 1:
+                    result = 250;
+                    break;
+
+                case 2:
+                    result = 120;
+                    break;
+
+                case 3:
+                    result = 80;
+                    break;
+
+                case 4:
+                    result = 60;
+
+                    break;
+
+                case 5:
+                    result = 45;
+
+                    break;
+
+                case 6:
+                    result = 40;
+
+                    break;
+
+                case 7:
+                    result = 35;
+
+                    break;
+
+                case 8:
+                    result = 30;
+
+                    break;
+
+                case 9:
+                    result = 25;
+
+                    break;
+
+                case 10:
+                    result = 24;
+
+                    break;
+
+                case 11:
+                    result = 22;
+
+                    break;
+
+                case 12:
+                    result = 20;
+
+                    break;
+
+                default:
+                    result = 24;
+
+                    break;
+            }
+            return result;
+        }
+
+        #endregion Function Button[],DataChanged,ZS,MaxMin,BtnSize
 
         #region Extend
 
@@ -859,7 +940,7 @@ namespace PlatformHeightTest
 
         #endregion Extend
 
-        #region ListView
+        #region AllListView + OKListview
 
         private void initListView(ListView listView)
         {
@@ -942,9 +1023,9 @@ namespace PlatformHeightTest
             return paste;
         }
 
-        #endregion ListView
+        #endregion AllListView + OKListview
 
-        #region ColorRGB
+        #region Gradient Colors
 
         private void colorSort(out int[] percentage)
         {
@@ -983,9 +1064,9 @@ namespace PlatformHeightTest
             tips(paintType);
         }
 
-        #endregion ColorRGB
+        #endregion Gradient Colors
 
-        #region tips
+        #region Tips
 
         private void tips(bool paintType)
         {
@@ -1002,52 +1083,16 @@ namespace PlatformHeightTest
             }
         }
 
-        #endregion tips
+        #endregion Tips
 
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            TimeNow.Text = DateTime.Now.ToString();
-        }
-
-        private void FlowDirectionCB_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (FlowDirectionCB.SelectedIndex != -1)
-                flowLayoutPanel1.FlowDirection = (FlowDirection)FlowDirectionCB.SelectedIndex;
-        }
-
-        private void initFlowDirectionCB()
-        {
-            FlowDirectionCB.DropDownStyle = ComboBoxStyle.DropDownList;
-            FlowDirectionCB.Items.AddRange(Enum.GetNames(typeof(FlowDirection)));
-        }
-
-        private void ExtendLabel_Click(object sender, EventArgs e)
-        {
-            if (!extendForm2)
-            {
-                this.Size = extend + extend2;
-                shapeinfo.singlePoint();
-                createButtons();
-                foreach (var bt in btns)
-                {
-                    bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
-                    bt.BackColor = initColor;
-                }
-            }
-            else
-            {
-                this.Size -= extend2;
-            }
-            extendForm2 = !extendForm2;
-        }
+        #region Offset checking and export to xlsx
 
         private void CatchBtn_Click(object sender, EventArgs e)
         {
-            var path = pathOfRecognition();
             try
             {
-                var strRead = File.ReadLines(path[0]).ToList();
-                var strRead2 = File.ReadLines(path[1]).ToList();
+                var strRead = File.ReadLines(offsetInfo.HeightPath).ToList();
+                var strRead2 = File.ReadLines(offsetInfo.ImagePath).ToList();
                 offsetInfo.HeightIndex = strRead.Count;
                 offsetInfo.ImageIndex = strRead2.Count;
                 if (strRead.Count > 2)
@@ -1057,6 +1102,11 @@ namespace PlatformHeightTest
                     {
                         catchOffsetHeight = Convert.ToDecimal(tempStr[5]);
                         OffsetLB.Text = tempStr[5].ToString();
+
+                        foreach (Control con in offsetPanel.Controls)
+                        {
+                            con.Enabled = true;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -1070,39 +1120,31 @@ namespace PlatformHeightTest
             }
         }
 
-        private string[] pathOfRecognition()
-        {
-            string[] path = new string[2];
-            string date = DateTime.Now.ToString("yyyyMMd");
-            path[0] = @".\HeightRecognition\HeightRecognition_" + date + ".csv";
-            path[1] = @".\ImageInspection\ImageInspection_" + date + ".csv";
-            return path;
-        }
-
         private void ExportBtn2_Click(object sender, EventArgs e)
         {
             XlsxFormat format = new XlsxFormat();
             format.OffsetFormat();
-
-            double[,] result = new double[5, 3];
-            for (int i = 0; i < offsetInfo.offsetNum; i++)
+            if (offsetInfo.IsDataExist)
             {
-                result[i, 0] = offsetInfo.XOffset[i];
-                result[i, 1] = offsetInfo.YOffset[i];
-                result[i, 2] = Convert.ToDouble(catchOffsetHeight - Convert.ToDecimal(offsetInfo.ZOffset[i]));
+                double[,] result = new double[5, 3];
+                for (int i = 0; i < offsetInfo.offsetNum; i++)
+                {
+                    result[i, 0] = offsetInfo.XOffset[i];
+                    result[i, 1] = offsetInfo.YOffset[i];
+                    result[i, 2] = Convert.ToDouble(catchOffsetHeight - Convert.ToDecimal(offsetInfo.ZOffset[i]));
+                }
+                npoiSetExcel(format, result);
             }
-            npoiSetExcel(format, result);
         }
 
         private void GetOffsetBtn_Click(object sender, EventArgs e)
         {
-            var path = pathOfRecognition();
             offsetInfo.Init();
-            bool isReadOk = false;
+            offsetInfo.IsDataExist = false;
             try
             {
-                var heightStr = File.ReadLines(path[0]).ToList();
-                var imageStr = File.ReadLines(path[1]).ToList();
+                var heightStr = File.ReadLines(offsetInfo.HeightPath).ToList();
+                var imageStr = File.ReadLines(offsetInfo.ImagePath).ToList();
                 int heightDatasNum = heightStr.Count - offsetInfo.HeightIndex;
                 int imageDatasNum = imageStr.Count - offsetInfo.ImageIndex;
                 bool isHeightOK = heightDatasNum >= offsetInfo.offsetNum;
@@ -1119,22 +1161,23 @@ namespace PlatformHeightTest
                             offsetInfo.XOffset[i] = Convert.ToDouble(temp2[7]);
                             offsetInfo.YOffset[i] = Convert.ToDouble(temp2[8]);
                         }
-                        isReadOk = true;
+                        offsetInfo.IsDataExist = true;
+                        offsetInfo.Reverse();
                     }
                     else
                     {
-                        MessageBox.Show("Data is not enough.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("At least need " + offsetInfo.offsetNum.ToString() + " records.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 else
                 {
                     if (!isHeightOK)
                     {
-                        MessageBox.Show("HeightRecognition Data is not enough." + Environment.NewLine + "Only " + heightDatasNum.ToString() + " records were caught.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Insufficient HeightRecognition Records." + Environment.NewLine + "Only " + heightDatasNum.ToString() + " records were caught.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     if (!isImageOK)
                     {
-                        MessageBox.Show("ImageInspection Data is not enough." + Environment.NewLine + "Only " + imageDatasNum.ToString() + " records were caught.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Insufficient ImageInspection Records." + Environment.NewLine + "Only " + imageDatasNum.ToString() + " records were caught.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -1142,17 +1185,63 @@ namespace PlatformHeightTest
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            if (isReadOk)
+            if (offsetInfo.IsDataExist)
             {
                 OffsetListView.Items.Clear();
                 for (int i = 0; i < offsetInfo.offsetNum; i++)
                 {
-                    var item = new ListViewItem((i+1).ToString());
+                    var item = new ListViewItem((i + 1).ToString());
                     item.SubItems.AddRange(new string[4] { offsetInfo.XOffset[i].ToString(), offsetInfo.YOffset[i].ToString(), offsetInfo.ZOffset[i].ToString(), (catchOffsetHeight - Convert.ToDecimal(offsetInfo.ZOffset[i])).ToString() });
-                    item.ForeColor = oKColor;
+                    item.UseItemStyleForSubItems = false;
                     OffsetListView.Items.Add(item);
-                }            
+                }
+                foreach (ListViewItem item in OffsetListView.Items)
+                {
+                    for (int i = 0; i < item.SubItems.Count; i++)
+                    {
+                        if (i != 3)
+                        {
+                            if (Convert.ToDecimal(item.SubItems[i].Text) * 1000 > offsetInfo.SpecOfAllOffset)
+                            {
+                                item.SubItems[i].ForeColor = nGColor;
+                            }
+                            else
+                            {
+                                item.SubItems[i].ForeColor = oKColor;
+                            }
+                        }
+                    }
+                }
             }
         }
+
+        private void OffsetSpecNum_ValueChanged(object sender, EventArgs e)
+        {
+            offsetInfo.SpecOfAllOffset = OffsetSpecNum.Value * 2;
+        }
+
+        #endregion Offset checking and export to xlsx
+
+        #region Open csv
+
+        private void ImageInsectionBtn_Click(object sender, EventArgs e)
+        {
+            openCSVbyNpad(offsetInfo.ImagePath);
+        }
+
+        private void HeightRecognitionBtn_Click(object sender, EventArgs e)
+        {
+            openCSVbyNpad(offsetInfo.HeightPath);
+        }
+
+        private void openCSVbyNpad(string path)
+        {
+            if (File.Exists(path))
+                Process.Start("notepad", path);
+            else
+                MessageBox.Show("File doesn't exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        #endregion Open csv
     }
 }
