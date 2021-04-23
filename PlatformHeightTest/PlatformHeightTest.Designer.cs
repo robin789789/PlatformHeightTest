@@ -76,6 +76,7 @@
             this.DirectionLB = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.ExtendLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -256,6 +257,7 @@
             // 
             // CopyBtn
             // 
+            this.CopyBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.CopyBtn.Location = new System.Drawing.Point(191, 236);
             this.CopyBtn.Name = "CopyBtn";
             this.CopyBtn.Size = new System.Drawing.Size(75, 35);
@@ -570,6 +572,17 @@
             this.label7.TabIndex = 33;
             this.label7.Text = "X:";
             // 
+            // ExtendLabel
+            // 
+            this.ExtendLabel.AutoSize = true;
+            this.ExtendLabel.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.ExtendLabel.Location = new System.Drawing.Point(1011, 452);
+            this.ExtendLabel.Name = "ExtendLabel";
+            this.ExtendLabel.Size = new System.Drawing.Size(65, 19);
+            this.ExtendLabel.TabIndex = 34;
+            this.ExtendLabel.Text = "Extend2";
+            this.ExtendLabel.Click += new System.EventHandler(this.ExtendLabel_Click);
+            // 
             // PlatformHeightTest
             // 
             this.AcceptButton = this.GenerateBtn;
@@ -577,6 +590,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1131, 480);
+            this.Controls.Add(this.ExtendLabel);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.DirectionLB);
@@ -670,5 +684,6 @@
         private System.Windows.Forms.Label DirectionLB;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label ExtendLabel;
     }
 }

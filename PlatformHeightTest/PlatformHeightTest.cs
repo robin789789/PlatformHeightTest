@@ -32,9 +32,10 @@ namespace PlatformHeightTest
         private Color nGColor = Color.Red;
         private Color oKColor = Color.LimeGreen;
         private Color initColor = Color.White;
-        private bool extendForm = false;
+        private bool extendForm = false;private bool extendForm2 = false;
         private Size unExtend = new Size(480, 425);
         private Size extend = new Size(840, 425);
+        private Size extend2=new Size(0,200);
 
         private bool paintType; private double[] sortAryForColor;
 
@@ -783,6 +784,7 @@ namespace PlatformHeightTest
             {
                 extendForm = false;
                 this.Size = unExtend;
+                extendForm2 = false;
             }
         }
 
@@ -970,6 +972,19 @@ namespace PlatformHeightTest
         {
             FlowDirectionCB.DropDownStyle = ComboBoxStyle.DropDownList;
             FlowDirectionCB.Items.AddRange(Enum.GetNames(typeof(FlowDirection)));
+        }
+
+        private void ExtendLabel_Click(object sender, EventArgs e)
+        {
+            if (!extendForm2)
+            {
+                this.Size = extend + extend2;
+            }
+            else
+            {
+                this.Size -= extend2;
+            }
+            extendForm2 = !extendForm2;
         }
     }
 }
