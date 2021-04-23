@@ -32,11 +32,11 @@ namespace PlatformHeightTest
         private Color nGColor = Color.Red;
         private Color oKColor = Color.LimeGreen;
         private Color initColor = Color.White;
-        private bool extendForm = false;private bool extendForm2 = false;
+        private bool extendForm = false; private bool extendForm2 = false;
         private Size unExtend = new Size(480, 425);
         private Size extend = new Size(840, 425);
-        private Size extend2=new Size(0,200);
-
+        private Size extend2 = new Size(0, 200);
+        private decimal catchOffsetHeight;
         private bool paintType; private double[] sortAryForColor;
 
         public class ShapeInfo
@@ -58,20 +58,65 @@ namespace PlatformHeightTest
                 ShapeLength = 2;
                 ShapeWidth = 5;
             }
+
+            public void singlePoint()
+            {
+                PointCnt = 1;
+                ShapeLength = 1;
+                ShapeWidth = 1;
+            }
         }
-
+        public class OffsetInfo
+        {
+            public int offsetNum = 5;
+            public int ImageIndex { get; set; }
+            public int HeightIndex { get; set; }
+            public double[] XOffset { get; set; }
+            public double[] YOffset { get; set; }
+            public decimal[] ZOffset { get; set; }
+            public void Init()
+            {
+                XOffset = new double[offsetNum];
+                YOffset = new double[offsetNum];
+                ZOffset = new decimal[offsetNum];
+            }
+            public void Reverse()
+            {
+                XOffset.Reverse();
+                YOffset.Reverse();
+                ZOffset.Reverse();
+            }
+        }
         #region NPOI Excel
+        public class XlsxFormat
+        {
+            public string sheetOfCTQ { get; set; }
+            public string startColumn { get; set; }
+            public int startRow { get; set; }
+            public string endColumn { get; set; }
+            public int endRow { get; set; }
 
-        private string sheetOfCTQ = "工作表1";
-        private string startColumn = "B";
-        private int startRow = 56;
-        private string endColumn = "D";
-        private int endRow = 60;
-
+            public void HeightTestFormat()
+            {
+                sheetOfCTQ = "工作表1";
+                startColumn = "B";
+                startRow = 56;
+                endColumn = "D";
+                endRow = 60;
+            }
+            public void OffsetFormat()
+            {
+                sheetOfCTQ = "工作表1";
+                startColumn = "B";
+                startRow = 69;
+                endColumn = "D";
+                endRow = 73;
+            }
+        }
         #endregion NPOI Excel
 
         private ShapeInfo shapeinfo = new ShapeInfo();
-
+        private OffsetInfo offsetInfo = new OffsetInfo();
         #endregion Announce
 
         private void PlatformHeightTest_Load(object sender, EventArgs e)
@@ -263,10 +308,27 @@ namespace PlatformHeightTest
         private void ExportBtn_Click(object sender, EventArgs e)
         {
             //setExcel();
-            npoiSetExcel();
+            XlsxFormat format = new XlsxFormat();
+            format.HeightTestFormat();
+
+            if (OKListView.Items.Count == 5)
+            {
+                double[,] result = new double[5, 3];
+                for (int i = 0; i < OKListView.Items.Count; i++)
+                {
+                    result[i, 0] = double.Parse(OKListView.Items[i].SubItems[1].Text);
+                    result[i, 1] = double.Parse(OKListView.Items[i].SubItems[2].Text);
+                    result[i, 2] = double.Parse(OKListView.Items[i].SubItems[3].Text);
+                }
+                npoiSetExcel(format, result);
+            }
+            else
+            {
+                MessageBox.Show("At least five records are required.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void setExcel()
+        private void setExcel(XlsxFormat xlsxFormat)
         {
             if (OKListView.Items.Count == 5)
             {
@@ -289,12 +351,12 @@ namespace PlatformHeightTest
 
                 if (!string.IsNullOrEmpty(dialog.FileName))
                 {
-                    string leftTop = startColumn + startRow.ToString();
-                    string rightBottm = endColumn + endRow.ToString();
+                    string leftTop = xlsxFormat.startColumn + xlsxFormat.startRow.ToString();
+                    string rightBottm = xlsxFormat.endColumn + xlsxFormat.endRow.ToString();
                     Microsoft.Office.Interop.Excel.Workbook Wbook = App.Workbooks.Open(dialog.FileName);
                     System.IO.FileInfo xlsAttribute = new FileInfo(dialog.FileName);
                     xlsAttribute.Attributes = FileAttributes.Normal;
-                    Microsoft.Office.Interop.Excel.Worksheet Wsheet = (Microsoft.Office.Interop.Excel.Worksheet)Wbook.Sheets[sheetOfCTQ];
+                    Microsoft.Office.Interop.Excel.Worksheet Wsheet = (Microsoft.Office.Interop.Excel.Worksheet)Wbook.Sheets[xlsxFormat.sheetOfCTQ];
                     Microsoft.Office.Interop.Excel.Range aRangeChange = Wsheet.get_Range(leftTop, rightBottm);
                     aRangeChange.Value2 = result;
                     aRangeChange.NumberFormat = "0.000";
@@ -310,100 +372,85 @@ namespace PlatformHeightTest
             }
         }
 
-        private void npoiSetExcel()
+        private void npoiSetExcel(XlsxFormat xlsxformat, double[,] data)
         {
-            if (OKListView.Items.Count == 5)
+            OpenFileDialog dialog = new OpenFileDialog()
             {
-                OpenFileDialog dialog = new OpenFileDialog()
-                {
-                    RestoreDirectory = true,
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                    Filter = "Excel Work|*.xlsx",
-                    Title = "Open 檢核表.xlsx File"
-                };
-                dialog.ShowDialog();
+                RestoreDirectory = true,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                Filter = "Excel Work|*.xlsx",
+                Title = "Open 檢核表.xlsx File"
+            };
+            dialog.ShowDialog();
 
-                double[,] result = new double[5, 3];
-                for (int i = 0; i < OKListView.Items.Count; i++)
+            if (!string.IsNullOrEmpty(dialog.FileName))
+            {
+                IWorkbook templateWorkbook;
+                try
                 {
-                    result[i, 0] = double.Parse(OKListView.Items[i].SubItems[1].Text);
-                    result[i, 1] = double.Parse(OKListView.Items[i].SubItems[2].Text);
-                    result[i, 2] = double.Parse(OKListView.Items[i].SubItems[3].Text);
-                }
-
-                if (!string.IsNullOrEmpty(dialog.FileName))
-                {
-                    IWorkbook templateWorkbook;
-                    try
+                    if (isOpen(dialog.FileName))
                     {
-                        if (isOpen(dialog.FileName))
+                        if (MessageBox.Show("Writing to the" + dialog.SafeFileName + "?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                         {
-                            if (MessageBox.Show("Writing to the" + dialog.SafeFileName + "?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                            using (FileStream fs = new FileStream(dialog.FileName, FileMode.Open, FileAccess.Read))
                             {
-                                using (FileStream fs = new FileStream(dialog.FileName, FileMode.Open, FileAccess.Read))
+                                templateWorkbook = new XSSFWorkbook(fs);
+                            }
+
+                            #region setting style
+
+                            XSSFCellStyle cellStyle = (XSSFCellStyle)templateWorkbook.CreateCellStyle();
+                            XSSFDataFormat format = (XSSFDataFormat)templateWorkbook.CreateDataFormat();
+                            XSSFFont font = (XSSFFont)templateWorkbook.CreateFont();
+
+                            cellStyle.DataFormat = format.GetFormat("0.000");
+                            font.FontName = "Calibri";
+                            font.FontHeightInPoints = 12;
+                            cellStyle.SetFont(font);
+                            cellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                            cellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                            cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                            cellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+
+                            #endregion setting style
+
+                            string sheetName = xlsxformat.sheetOfCTQ;
+                            ISheet sheet = templateWorkbook.GetSheet(sheetName) ?? templateWorkbook.CreateSheet(sheetName);
+
+                            int _startCloumn = NumberFromExcelColumn(xlsxformat.startColumn) - 1;//from [0] start first
+                            int _endColumn = NumberFromExcelColumn(xlsxformat.endColumn) - 1;
+                            int cloumnQTY = _endColumn - _startCloumn;
+                            int rowQTY = xlsxformat.endRow - xlsxformat.startRow;
+                            for (int i = 0; i < rowQTY + 1; i++)
+                            {
+                                IRow dataRow = sheet.GetRow(i + xlsxformat.startRow - 1) ?? sheet.CreateRow(i + xlsxformat.startRow - 1);//-1 cause from [0] start first
+                                for (int j = 0; j < cloumnQTY + 1; j++)
                                 {
-                                    templateWorkbook = new XSSFWorkbook(fs);
+                                    ICell cell = dataRow.GetCell(j + _startCloumn) ?? dataRow.CreateCell(j + _startCloumn);
+                                    cell.SetCellValue(data[i, j]);
+                                    cell.CellStyle = cellStyle;
                                 }
+                            }
 
-                                #region setting style
+                            sheet.ForceFormulaRecalculation = true;///強制重新計算公式
 
-                                XSSFCellStyle cellStyle = (XSSFCellStyle)templateWorkbook.CreateCellStyle();
-                                XSSFDataFormat format = (XSSFDataFormat)templateWorkbook.CreateDataFormat();
-                                XSSFFont font = (XSSFFont)templateWorkbook.CreateFont();
-
-                                cellStyle.DataFormat = format.GetFormat("0.000");
-                                font.FontName = "Calibri";
-                                font.FontHeightInPoints = 12;
-                                cellStyle.SetFont(font);
-                                cellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                                cellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                                cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                                cellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-
-                                #endregion setting style
-
-                                string sheetName = sheetOfCTQ;
-                                ISheet sheet = templateWorkbook.GetSheet(sheetName) ?? templateWorkbook.CreateSheet(sheetName);
-
-                                int _startCloumn = NumberFromExcelColumn(startColumn) - 1;//from [0] start first
-                                int _endColumn = NumberFromExcelColumn(endColumn) - 1;
-                                int cloumnQTY = _endColumn - _startCloumn;
-                                int rowQTY = endRow - startRow;
-                                for (int i = 0; i < rowQTY + 1; i++)
-                                {
-                                    IRow dataRow = sheet.GetRow(i + startRow - 1) ?? sheet.CreateRow(i + startRow - 1);//-1 cause from [0] start first
-                                    for (int j = 0; j < cloumnQTY + 1; j++)
-                                    {
-                                        ICell cell = dataRow.GetCell(j + _startCloumn) ?? dataRow.CreateCell(j + _startCloumn);
-                                        cell.SetCellValue(result[i, j]);
-                                        cell.CellStyle = cellStyle;
-                                    }
-                                }
-
-                                sheet.ForceFormulaRecalculation = true;///強制重新計算公式
-
-                                using (FileStream fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
-                                {
-                                    templateWorkbook.Write(fs);
-                                    fs.Close();
-                                    templateWorkbook.Close();
-                                }
+                            using (FileStream fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
+                            {
+                                templateWorkbook.Write(fs);
+                                fs.Close();
+                                templateWorkbook.Close();
                             }
                         }
                     }
-                    catch (Exception ex)
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (ex is FileNotFoundException)
                     {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        if (ex is FileNotFoundException)
-                        {
-                            MessageBox.Show("請確認NPOI資料夾位於mcconf內，或是缺乏Dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        MessageBox.Show("請確認NPOI資料夾位於mcconf內，或是缺乏Dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("At least five records are required.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -979,12 +1026,133 @@ namespace PlatformHeightTest
             if (!extendForm2)
             {
                 this.Size = extend + extend2;
+                shapeinfo.singlePoint();
+                createButtons();
+                foreach (var bt in btns)
+                {
+                    bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
+                    bt.BackColor = initColor;
+                }
             }
             else
             {
                 this.Size -= extend2;
             }
             extendForm2 = !extendForm2;
+        }
+
+        private void CatchBtn_Click(object sender, EventArgs e)
+        {
+            var path = pathOfRecognition();
+            try
+            {
+                var strRead = File.ReadLines(path[0]).ToList();
+                var strRead2 = File.ReadLines(path[1]).ToList();
+                offsetInfo.HeightIndex = strRead.Count;
+                offsetInfo.ImageIndex = strRead2.Count;
+                if (strRead.Count > 2)
+                {
+                    var tempStr = strRead[strRead.Count - 1].Split(',');
+                    try
+                    {
+                        catchOffsetHeight = Convert.ToDecimal(tempStr[5]);
+                        OffsetLB.Text = tempStr[5].ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string[] pathOfRecognition()
+        {
+            string[] path = new string[2];
+            string date = DateTime.Now.ToString("yyyyMMd");
+            path[0] = @".\HeightRecognition\HeightRecognition_" + date + ".csv";
+            path[1] = @".\ImageInspection\ImageInspection_" + date + ".csv";
+            return path;
+        }
+
+        private void ExportBtn2_Click(object sender, EventArgs e)
+        {
+            XlsxFormat format = new XlsxFormat();
+            format.OffsetFormat();
+
+            double[,] result = new double[5, 3];
+            for (int i = 0; i < offsetInfo.offsetNum; i++)
+            {
+                result[i, 0] = offsetInfo.XOffset[i];
+                result[i, 1] = offsetInfo.YOffset[i];
+                result[i, 2] = Convert.ToDouble(catchOffsetHeight - Convert.ToDecimal(offsetInfo.ZOffset[i]));
+            }
+            npoiSetExcel(format, result);
+        }
+
+        private void GetOffsetBtn_Click(object sender, EventArgs e)
+        {
+            var path = pathOfRecognition();
+            offsetInfo.Init();
+            bool isReadOk = false;
+            try
+            {
+                var heightStr = File.ReadLines(path[0]).ToList();
+                var imageStr = File.ReadLines(path[1]).ToList();
+                int heightDatasNum = heightStr.Count - offsetInfo.HeightIndex;
+                int imageDatasNum = imageStr.Count - offsetInfo.ImageIndex;
+                bool isHeightOK = heightDatasNum >= offsetInfo.offsetNum;
+                bool isImageOK = imageDatasNum >= offsetInfo.offsetNum;
+                if (isHeightOK && isImageOK)
+                {
+                    if (heightStr.Count >= (2 + offsetInfo.offsetNum) && imageStr.Count >= (2 + offsetInfo.offsetNum))
+                    {
+                        for (int i = 0; i < offsetInfo.offsetNum; i++)
+                        {
+                            var temp = heightStr[heightStr.Count - 1 - i].Split(',');
+                            var temp2 = imageStr[imageStr.Count - 1 - i].Split(',');
+                            offsetInfo.ZOffset[i] = Convert.ToDecimal(temp[5]);
+                            offsetInfo.XOffset[i] = Convert.ToDouble(temp2[7]);
+                            offsetInfo.YOffset[i] = Convert.ToDouble(temp2[8]);
+                        }
+                        isReadOk = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Data is not enough.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    if (!isHeightOK)
+                    {
+                        MessageBox.Show("HeightRecognition Data is not enough." + Environment.NewLine + "Only " + heightDatasNum.ToString() + " records were caught.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    if (!isImageOK)
+                    {
+                        MessageBox.Show("ImageInspection Data is not enough." + Environment.NewLine + "Only " + imageDatasNum.ToString() + " records were caught.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            if (isReadOk)
+            {
+                OffsetListView.Items.Clear();
+                for (int i = 0; i < offsetInfo.offsetNum; i++)
+                {
+                    var item = new ListViewItem((i+1).ToString());
+                    item.SubItems.AddRange(new string[4] { offsetInfo.XOffset[i].ToString(), offsetInfo.YOffset[i].ToString(), offsetInfo.ZOffset[i].ToString(), (catchOffsetHeight - Convert.ToDecimal(offsetInfo.ZOffset[i])).ToString() });
+                    item.ForeColor = oKColor;
+                    OffsetListView.Items.Add(item);
+                }            
+            }
         }
     }
 }

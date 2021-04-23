@@ -77,6 +77,18 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.ExtendLabel = new System.Windows.Forms.Label();
+            this.offsetPanel = new System.Windows.Forms.Panel();
+            this.CatchBtn = new System.Windows.Forms.Button();
+            this.OffsetLB = new System.Windows.Forms.Label();
+            this.HeightTextLB = new System.Windows.Forms.Label();
+            this.ExportBtn2 = new System.Windows.Forms.Button();
+            this.GetOffsetBtn = new System.Windows.Forms.Button();
+            this.OffsetListView = new System.Windows.Forms.ListView();
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -84,6 +96,7 @@
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LengthNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WidthNUD)).BeginInit();
+            this.offsetPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // WatchPathBtn
@@ -576,12 +589,127 @@
             // 
             this.ExtendLabel.AutoSize = true;
             this.ExtendLabel.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.ExtendLabel.Location = new System.Drawing.Point(1011, 452);
+            this.ExtendLabel.Location = new System.Drawing.Point(623, 457);
             this.ExtendLabel.Name = "ExtendLabel";
             this.ExtendLabel.Size = new System.Drawing.Size(65, 19);
             this.ExtendLabel.TabIndex = 34;
             this.ExtendLabel.Text = "Extend2";
             this.ExtendLabel.Click += new System.EventHandler(this.ExtendLabel_Click);
+            // 
+            // offsetPanel
+            // 
+            this.offsetPanel.Controls.Add(this.GetOffsetBtn);
+            this.offsetPanel.Controls.Add(this.ExportBtn2);
+            this.offsetPanel.Controls.Add(this.HeightTextLB);
+            this.offsetPanel.Controls.Add(this.OffsetListView);
+            this.offsetPanel.Controls.Add(this.OffsetLB);
+            this.offsetPanel.Controls.Add(this.CatchBtn);
+            this.offsetPanel.Location = new System.Drawing.Point(16, 479);
+            this.offsetPanel.Name = "offsetPanel";
+            this.offsetPanel.Size = new System.Drawing.Size(1072, 248);
+            this.offsetPanel.TabIndex = 35;
+            // 
+            // CatchBtn
+            // 
+            this.CatchBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.CatchBtn.Location = new System.Drawing.Point(123, 14);
+            this.CatchBtn.Name = "CatchBtn";
+            this.CatchBtn.Size = new System.Drawing.Size(291, 35);
+            this.CatchBtn.TabIndex = 1;
+            this.CatchBtn.Text = "Catch";
+            this.CatchBtn.UseVisualStyleBackColor = true;
+            this.CatchBtn.Click += new System.EventHandler(this.CatchBtn_Click);
+            // 
+            // OffsetLB
+            // 
+            this.OffsetLB.AutoSize = true;
+            this.OffsetLB.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.OffsetLB.Location = new System.Drawing.Point(531, 22);
+            this.OffsetLB.Name = "OffsetLB";
+            this.OffsetLB.Size = new System.Drawing.Size(61, 19);
+            this.OffsetLB.TabIndex = 2;
+            this.OffsetLB.Text = "Z offset";
+            // 
+            // HeightTextLB
+            // 
+            this.HeightTextLB.AutoSize = true;
+            this.HeightTextLB.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.HeightTextLB.Location = new System.Drawing.Point(420, 22);
+            this.HeightTextLB.Name = "HeightTextLB";
+            this.HeightTextLB.Size = new System.Drawing.Size(105, 19);
+            this.HeightTextLB.TabIndex = 3;
+            this.HeightTextLB.Text = "Height Offset:";
+            // 
+            // ExportBtn2
+            // 
+            this.ExportBtn2.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.ExportBtn2.Location = new System.Drawing.Point(875, 14);
+            this.ExportBtn2.Name = "ExportBtn2";
+            this.ExportBtn2.Size = new System.Drawing.Size(88, 35);
+            this.ExportBtn2.TabIndex = 4;
+            this.ExportBtn2.Text = "Excel";
+            this.ExportBtn2.UseVisualStyleBackColor = true;
+            this.ExportBtn2.Click += new System.EventHandler(this.ExportBtn2_Click);
+            // 
+            // GetOffsetBtn
+            // 
+            this.GetOffsetBtn.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.GetOffsetBtn.Location = new System.Drawing.Point(11, 14);
+            this.GetOffsetBtn.Name = "GetOffsetBtn";
+            this.GetOffsetBtn.Size = new System.Drawing.Size(87, 216);
+            this.GetOffsetBtn.TabIndex = 5;
+            this.GetOffsetBtn.Text = "Get";
+            this.GetOffsetBtn.UseVisualStyleBackColor = true;
+            this.GetOffsetBtn.Click += new System.EventHandler(this.GetOffsetBtn_Click);
+            // 
+            // OffsetListView
+            // 
+            this.OffsetListView.BackColor = System.Drawing.SystemColors.InfoText;
+            this.OffsetListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader11});
+            this.OffsetListView.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.OffsetListView.ForeColor = System.Drawing.Color.Lime;
+            this.OffsetListView.FullRowSelect = true;
+            this.OffsetListView.GridLines = true;
+            this.OffsetListView.HideSelection = false;
+            this.OffsetListView.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.OffsetListView.Location = new System.Drawing.Point(123, 63);
+            this.OffsetListView.MultiSelect = false;
+            this.OffsetListView.Name = "OffsetListView";
+            this.OffsetListView.Scrollable = false;
+            this.OffsetListView.Size = new System.Drawing.Size(946, 167);
+            this.OffsetListView.TabIndex = 2;
+            this.OffsetListView.UseCompatibleStateImageBehavior = false;
+            this.OffsetListView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Index";
+            this.columnHeader7.Width = 45;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "X Offset";
+            this.columnHeader8.Width = 170;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Y Offset";
+            this.columnHeader9.Width = 170;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Z Offset";
+            this.columnHeader10.Width = 150;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "Z\' Offset";
+            this.columnHeader11.Width = 150;
             // 
             // PlatformHeightTest
             // 
@@ -589,7 +717,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1131, 480);
+            this.ClientSize = new System.Drawing.Size(1131, 739);
+            this.Controls.Add(this.offsetPanel);
             this.Controls.Add(this.ExtendLabel);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -632,6 +761,8 @@
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.LengthNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WidthNUD)).EndInit();
+            this.offsetPanel.ResumeLayout(false);
+            this.offsetPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -685,5 +816,17 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label ExtendLabel;
+        private System.Windows.Forms.Panel offsetPanel;
+        private System.Windows.Forms.Button CatchBtn;
+        private System.Windows.Forms.Label OffsetLB;
+        private System.Windows.Forms.Label HeightTextLB;
+        private System.Windows.Forms.Button ExportBtn2;
+        private System.Windows.Forms.Button GetOffsetBtn;
+        private System.Windows.Forms.ListView OffsetListView;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
     }
 }
