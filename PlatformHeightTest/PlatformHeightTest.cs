@@ -1,6 +1,7 @@
 ﻿using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -72,7 +73,7 @@ namespace PlatformHeightTest
         {
             public string ImagePath { get; set; }
             public string HeightPath { get; set; }
-            public int offsetNum = 5;
+            public int offsetNum = 5;//data quantities
             public int ImageIndex { get; set; }
             public int HeightIndex { get; set; }
             public double[] XOffset { get; set; }
@@ -90,14 +91,13 @@ namespace PlatformHeightTest
 
             public void Reverse()
             {
-                XOffset.Reverse();
-                YOffset.Reverse();
-                ZOffset.Reverse();
+                Array.Reverse(XOffset);
+                Array.Reverse(YOffset);
+                Array.Reverse(ZOffset);
             }
 
             public void GetPath()
             {
-                string[] path = new string[2];
                 string date = DateTime.Now.ToString("yyyyMMd");
                 HeightPath = @".\HeightRecognition\HeightRecognition_" + date + ".csv";
                 ImagePath = @".\ImageInspection\ImageInspection_" + date + ".csv";
@@ -108,11 +108,22 @@ namespace PlatformHeightTest
 
         public class XlsxFormat
         {
+            [CategoryAttribute("Xlsx工作表名稱"), DefaultValueAttribute(true)]
             public string sheetOfCTQ { get; set; }
+
+            [CategoryAttribute("Xlsx起始行列(左上)"), DefaultValueAttribute(true)]
             public string startColumn { get; set; }
+
+            [CategoryAttribute("Xlsx起始行列(左上)"), DefaultValueAttribute(true)]
             public int startRow { get; set; }
+
+            [CategoryAttribute("Xlsx結束行列(右下)"), DefaultValueAttribute(true)]
             public string endColumn { get; set; }
+
+            [CategoryAttribute("Xlsx結束行列(右下)"), DefaultValueAttribute(true)]
             public int endRow { get; set; }
+
+            [CategoryAttribute("Xlsx數值位數格式"), DefaultValueAttribute(true)]
             public string dotFormat { get; set; }
 
             public void HeightTestFormat()
@@ -140,6 +151,8 @@ namespace PlatformHeightTest
 
         private ShapeInfo shapeinfo = new ShapeInfo();
         private OffsetInfo offsetInfo = new OffsetInfo();
+        private XlsxFormat heightTestXlsx = new XlsxFormat();
+        private XlsxFormat offsetXlsx = new XlsxFormat();
 
         #endregion Announce
 
@@ -152,6 +165,8 @@ namespace PlatformHeightTest
             flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
             Button.CheckForIllegalCrossThreadCalls = false;
             offsetInfo.GetPath();
+            heightTestXlsx.HeightTestFormat();
+            offsetXlsx.OffsetFormat();
 
             #region UI setting
 
@@ -166,6 +181,8 @@ namespace PlatformHeightTest
             SetBtnStyle(ExtendBtn);
             initListView(AllListView);
             initListView(OffsetListView);
+            ExportBtn.MouseMove += ExportBtn_MouseMove;
+            ExportBtn2.MouseMove += ExportBtn_MouseMove;
 
             #endregion UI setting
 
@@ -192,6 +209,32 @@ namespace PlatformHeightTest
 
             #endregion tooltip
         }
+
+        private void ExportBtn_MouseMove(object sender, MouseEventArgs e)
+        {
+            var bt = (Button)sender;
+            Setting.Tag = bt.Tag;
+        }
+
+        private void Setting_Click(object sender, EventArgs e)
+        {
+            var item = (ToolStripMenuItem)sender;
+            string type = item.Tag.ToString();
+            PropertyGridForm propertyGridForm = new PropertyGridForm();
+
+            switch (type)
+            {
+                case "Height":
+                    propertyGridForm.SetPropertyGridForm(heightTestXlsx);
+                    break;
+
+                case "Offset":
+                    propertyGridForm.SetPropertyGridForm(offsetXlsx);
+                    break;
+            }
+            propertyGridForm.ShowDialog();
+        }
+
 
         private void eachPointBtn_Click(object sender, EventArgs e)
         {
@@ -292,10 +335,6 @@ namespace PlatformHeightTest
 
         private void ExportBtn_Click(object sender, EventArgs e)
         {
-            //setExcel();
-            XlsxFormat format = new XlsxFormat();
-            format.HeightTestFormat();
-
             if (OKListView.Items.Count == 5)
             {
                 double[,] result = new double[5, 3];
@@ -305,7 +344,8 @@ namespace PlatformHeightTest
                     result[i, 1] = double.Parse(OKListView.Items[i].SubItems[2].Text);
                     result[i, 2] = double.Parse(OKListView.Items[i].SubItems[3].Text);
                 }
-                npoiSetExcel(format, result);
+                npoiSetExcel(heightTestXlsx, result);
+                //setExcel(format,result);
             }
             else
             {
@@ -313,47 +353,33 @@ namespace PlatformHeightTest
             }
         }
 
-        private void setExcel(XlsxFormat xlsxFormat)
+        private void setExcel(XlsxFormat xlsxFormat, double[,] result)
         {
-            if (OKListView.Items.Count == 5)
+            OpenFileDialog dialog = new OpenFileDialog()
             {
-                double[,] result = new double[5, 2];
-                for (int i = 0; i < OKListView.Items.Count; i++)
-                {
-                    result[i, 0] = double.Parse(OKListView.Items[i].SubItems[1].Text);
-                    result[i, 1] = double.Parse(OKListView.Items[i].SubItems[2].Text);
-                }
+                RestoreDirectory = true,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                Filter = "Excel Work|*.xlsx",
+                Title = "Open 檢核表.xlsx File"
+            };
+            dialog.ShowDialog();
+            Microsoft.Office.Interop.Excel.Application App = new Microsoft.Office.Interop.Excel.Application();
 
-                OpenFileDialog dialog = new OpenFileDialog()
-                {
-                    RestoreDirectory = true,
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                    Filter = "Excel Work|*.xlsx",
-                    Title = "Open 檢核表.xlsx File"
-                };
-                dialog.ShowDialog();
-                Microsoft.Office.Interop.Excel.Application App = new Microsoft.Office.Interop.Excel.Application();
-
-                if (!string.IsNullOrEmpty(dialog.FileName))
-                {
-                    string leftTop = xlsxFormat.startColumn + xlsxFormat.startRow.ToString();
-                    string rightBottm = xlsxFormat.endColumn + xlsxFormat.endRow.ToString();
-                    Microsoft.Office.Interop.Excel.Workbook Wbook = App.Workbooks.Open(dialog.FileName);
-                    System.IO.FileInfo xlsAttribute = new FileInfo(dialog.FileName);
-                    xlsAttribute.Attributes = FileAttributes.Normal;
-                    Microsoft.Office.Interop.Excel.Worksheet Wsheet = (Microsoft.Office.Interop.Excel.Worksheet)Wbook.Sheets[xlsxFormat.sheetOfCTQ];
-                    Microsoft.Office.Interop.Excel.Range aRangeChange = Wsheet.get_Range(leftTop, rightBottm);
-                    aRangeChange.Value2 = result;
-                    aRangeChange.NumberFormat = "0.000";
-
-                    Wbook.Save();
-                    Wbook.Close();
-                    App.Quit();
-                }
-            }
-            else
+            if (!string.IsNullOrEmpty(dialog.FileName))
             {
-                MessageBox.Show("Data null.");
+                string leftTop = xlsxFormat.startColumn + xlsxFormat.startRow.ToString();
+                string rightBottm = xlsxFormat.endColumn + xlsxFormat.endRow.ToString();
+                Microsoft.Office.Interop.Excel.Workbook Wbook = App.Workbooks.Open(dialog.FileName);
+                System.IO.FileInfo xlsAttribute = new FileInfo(dialog.FileName);
+                xlsAttribute.Attributes = FileAttributes.Normal;
+                Microsoft.Office.Interop.Excel.Worksheet Wsheet = (Microsoft.Office.Interop.Excel.Worksheet)Wbook.Sheets[xlsxFormat.sheetOfCTQ];
+                Microsoft.Office.Interop.Excel.Range aRangeChange = Wsheet.get_Range(leftTop, rightBottm);
+                aRangeChange.Value2 = result;
+                aRangeChange.NumberFormat = "0.000";
+
+                Wbook.Save();
+                Wbook.Close();
+                App.Quit();
             }
         }
 
@@ -1122,8 +1148,6 @@ namespace PlatformHeightTest
 
         private void ExportBtn2_Click(object sender, EventArgs e)
         {
-            XlsxFormat format = new XlsxFormat();
-            format.OffsetFormat();
             if (offsetInfo.IsDataExist)
             {
                 double[,] result = new double[5, 3];
@@ -1133,7 +1157,7 @@ namespace PlatformHeightTest
                     result[i, 1] = offsetInfo.YOffset[i];
                     result[i, 2] = Convert.ToDouble(catchOffsetHeight - Convert.ToDecimal(offsetInfo.ZOffset[i]));
                 }
-                npoiSetExcel(format, result);
+                npoiSetExcel(offsetXlsx, result);
             }
         }
 
@@ -1243,5 +1267,6 @@ namespace PlatformHeightTest
         }
 
         #endregion Open csv
+
     }
 }

@@ -77,6 +77,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.offsetPanel = new System.Windows.Forms.Panel();
+            this.HeightRecognitionBtn = new System.Windows.Forms.Button();
+            this.ImageInsectionBtn = new System.Windows.Forms.Button();
             this.OffsetSpecLB = new System.Windows.Forms.Label();
             this.OffsetSpecNum = new System.Windows.Forms.NumericUpDown();
             this.GetOffsetBtn = new System.Windows.Forms.Button();
@@ -91,9 +93,9 @@
             this.OffsetLB = new System.Windows.Forms.Label();
             this.CatchBtn = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.ImageInsectionBtn = new System.Windows.Forms.Button();
-            this.HeightRecognitionBtn = new System.Windows.Forms.Button();
             this.Extend2Btn = new System.Windows.Forms.Button();
+            this.ExcelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.Setting = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -103,6 +105,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.WidthNUD)).BeginInit();
             this.offsetPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OffsetSpecNum)).BeginInit();
+            this.ExcelContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // WatchPathBtn
@@ -298,11 +301,13 @@
             // 
             // ExportBtn
             // 
+            this.ExportBtn.ContextMenuStrip = this.ExcelContextMenu;
             this.ExportBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.ExportBtn.Location = new System.Drawing.Point(331, 236);
             this.ExportBtn.Name = "ExportBtn";
             this.ExportBtn.Size = new System.Drawing.Size(130, 35);
             this.ExportBtn.TabIndex = 3;
+            this.ExportBtn.Tag = "Height";
             this.ExportBtn.Text = "Excel";
             this.ExportBtn.UseVisualStyleBackColor = true;
             this.ExportBtn.Click += new System.EventHandler(this.ExportBtn_Click);
@@ -609,6 +614,30 @@
             this.offsetPanel.Size = new System.Drawing.Size(1072, 248);
             this.offsetPanel.TabIndex = 35;
             // 
+            // HeightRecognitionBtn
+            // 
+            this.HeightRecognitionBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.HeightRecognitionBtn.Location = new System.Drawing.Point(834, 37);
+            this.HeightRecognitionBtn.Margin = new System.Windows.Forms.Padding(0);
+            this.HeightRecognitionBtn.Name = "HeightRecognitionBtn";
+            this.HeightRecognitionBtn.Size = new System.Drawing.Size(98, 34);
+            this.HeightRecognitionBtn.TabIndex = 18;
+            this.HeightRecognitionBtn.Text = "Height.csv";
+            this.HeightRecognitionBtn.UseVisualStyleBackColor = true;
+            this.HeightRecognitionBtn.Click += new System.EventHandler(this.HeightRecognitionBtn_Click);
+            // 
+            // ImageInsectionBtn
+            // 
+            this.ImageInsectionBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.ImageInsectionBtn.Location = new System.Drawing.Point(834, 3);
+            this.ImageInsectionBtn.Margin = new System.Windows.Forms.Padding(0);
+            this.ImageInsectionBtn.Name = "ImageInsectionBtn";
+            this.ImageInsectionBtn.Size = new System.Drawing.Size(98, 34);
+            this.ImageInsectionBtn.TabIndex = 18;
+            this.ImageInsectionBtn.Text = "Image.csv";
+            this.ImageInsectionBtn.UseVisualStyleBackColor = true;
+            this.ImageInsectionBtn.Click += new System.EventHandler(this.ImageInsectionBtn_Click);
+            // 
             // OffsetSpecLB
             // 
             this.OffsetSpecLB.AutoSize = true;
@@ -658,11 +687,13 @@
             // 
             // ExportBtn2
             // 
+            this.ExportBtn2.ContextMenuStrip = this.ExcelContextMenu;
             this.ExportBtn2.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.ExportBtn2.Location = new System.Drawing.Point(935, 5);
             this.ExportBtn2.Name = "ExportBtn2";
             this.ExportBtn2.Size = new System.Drawing.Size(133, 66);
             this.ExportBtn2.TabIndex = 4;
+            this.ExportBtn2.Tag = "Offset";
             this.ExportBtn2.Text = "Excel";
             this.ExportBtn2.UseVisualStyleBackColor = true;
             this.ExportBtn2.Click += new System.EventHandler(this.ExportBtn2_Click);
@@ -757,30 +788,6 @@
             this.label8.TabIndex = 17;
             this.label8.Text = "um";
             // 
-            // ImageInsectionBtn
-            // 
-            this.ImageInsectionBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.ImageInsectionBtn.Location = new System.Drawing.Point(834, 3);
-            this.ImageInsectionBtn.Margin = new System.Windows.Forms.Padding(0);
-            this.ImageInsectionBtn.Name = "ImageInsectionBtn";
-            this.ImageInsectionBtn.Size = new System.Drawing.Size(98, 34);
-            this.ImageInsectionBtn.TabIndex = 18;
-            this.ImageInsectionBtn.Text = "Image.csv";
-            this.ImageInsectionBtn.UseVisualStyleBackColor = true;
-            this.ImageInsectionBtn.Click += new System.EventHandler(this.ImageInsectionBtn_Click);
-            // 
-            // HeightRecognitionBtn
-            // 
-            this.HeightRecognitionBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.HeightRecognitionBtn.Location = new System.Drawing.Point(834, 37);
-            this.HeightRecognitionBtn.Margin = new System.Windows.Forms.Padding(0);
-            this.HeightRecognitionBtn.Name = "HeightRecognitionBtn";
-            this.HeightRecognitionBtn.Size = new System.Drawing.Size(98, 34);
-            this.HeightRecognitionBtn.TabIndex = 18;
-            this.HeightRecognitionBtn.Text = "Height.csv";
-            this.HeightRecognitionBtn.UseVisualStyleBackColor = true;
-            this.HeightRecognitionBtn.Click += new System.EventHandler(this.HeightRecognitionBtn_Click);
-            // 
             // Extend2Btn
             // 
             this.Extend2Btn.Location = new System.Drawing.Point(627, 452);
@@ -791,6 +798,21 @@
             this.Extend2Btn.Text = "▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼";
             this.Extend2Btn.UseVisualStyleBackColor = true;
             this.Extend2Btn.Click += new System.EventHandler(this.Extend2Btn_Click);
+            // 
+            // ExcelContextMenu
+            // 
+            this.ExcelContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ExcelContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Setting});
+            this.ExcelContextMenu.Name = "ExcelContextMenu";
+            this.ExcelContextMenu.Size = new System.Drawing.Size(129, 28);
+            // 
+            // Setting
+            // 
+            this.Setting.Name = "Setting";
+            this.Setting.Size = new System.Drawing.Size(210, 24);
+            this.Setting.Text = "Setting";
+            this.Setting.Click += new System.EventHandler(this.Setting_Click);
             // 
             // PlatformHeightTest
             // 
@@ -845,6 +867,7 @@
             this.offsetPanel.ResumeLayout(false);
             this.offsetPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OffsetSpecNum)).EndInit();
+            this.ExcelContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -915,5 +938,7 @@
         private System.Windows.Forms.Button ImageInsectionBtn;
         private System.Windows.Forms.Button HeightRecognitionBtn;
         private System.Windows.Forms.Button Extend2Btn;
+        private System.Windows.Forms.ContextMenuStrip ExcelContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem Setting;
     }
 }
