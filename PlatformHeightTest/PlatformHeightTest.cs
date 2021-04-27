@@ -109,41 +109,41 @@ namespace PlatformHeightTest
         public class XlsxFormat
         {
             [CategoryAttribute("Xlsx工作表名稱"), DefaultValueAttribute(true)]
-            public string sheetOfCTQ { get; set; }
+            public string SheetOfCTQ { get; set; }
 
             [CategoryAttribute("Xlsx起始行列(左上)"), DefaultValueAttribute(true)]
-            public string startColumn { get; set; }
+            public string StartColumn { get; set; }
 
             [CategoryAttribute("Xlsx起始行列(左上)"), DefaultValueAttribute(true)]
-            public int startRow { get; set; }
+            public int StartRow { get; set; }
 
             [CategoryAttribute("Xlsx結束行列(右下)"), DefaultValueAttribute(true)]
-            public string endColumn { get; set; }
+            public string EndColumn { get; set; }
 
             [CategoryAttribute("Xlsx結束行列(右下)"), DefaultValueAttribute(true)]
-            public int endRow { get; set; }
+            public int EndRow { get; set; }
 
             [CategoryAttribute("Xlsx數值位數格式"), DefaultValueAttribute(true)]
-            public string dotFormat { get; set; }
+            public string DotFormat { get; set; }
 
             public void HeightTestFormat()
             {
-                sheetOfCTQ = "工作表1";
-                startColumn = "B";
-                startRow = 56;
-                endColumn = "D";
-                endRow = 60;
-                dotFormat = "0.000";
+                SheetOfCTQ = "工作表1";
+                StartColumn = "B";
+                StartRow = 56;
+                EndColumn = "D";
+                EndRow = 60;
+                DotFormat = "0.000";
             }
 
             public void OffsetFormat()
             {
-                sheetOfCTQ = "工作表1";
-                startColumn = "B";
-                startRow = 69;
-                endColumn = "D";
-                endRow = 73;
-                dotFormat = "0.0000";
+                SheetOfCTQ = "工作表1";
+                StartColumn = "B";
+                StartRow = 69;
+                EndColumn = "D";
+                EndRow = 73;
+                DotFormat = "0.0000";
             }
         }
 
@@ -367,12 +367,12 @@ namespace PlatformHeightTest
 
             if (!string.IsNullOrEmpty(dialog.FileName))
             {
-                string leftTop = xlsxFormat.startColumn + xlsxFormat.startRow.ToString();
-                string rightBottm = xlsxFormat.endColumn + xlsxFormat.endRow.ToString();
+                string leftTop = xlsxFormat.StartColumn + xlsxFormat.StartRow.ToString();
+                string rightBottm = xlsxFormat.EndColumn + xlsxFormat.EndRow.ToString();
                 Microsoft.Office.Interop.Excel.Workbook Wbook = App.Workbooks.Open(dialog.FileName);
                 System.IO.FileInfo xlsAttribute = new FileInfo(dialog.FileName);
                 xlsAttribute.Attributes = FileAttributes.Normal;
-                Microsoft.Office.Interop.Excel.Worksheet Wsheet = (Microsoft.Office.Interop.Excel.Worksheet)Wbook.Sheets[xlsxFormat.sheetOfCTQ];
+                Microsoft.Office.Interop.Excel.Worksheet Wsheet = (Microsoft.Office.Interop.Excel.Worksheet)Wbook.Sheets[xlsxFormat.SheetOfCTQ];
                 Microsoft.Office.Interop.Excel.Range aRangeChange = Wsheet.get_Range(leftTop, rightBottm);
                 aRangeChange.Value2 = result;
                 aRangeChange.NumberFormat = "0.000";
@@ -414,7 +414,7 @@ namespace PlatformHeightTest
                             XSSFDataFormat format = (XSSFDataFormat)templateWorkbook.CreateDataFormat();
                             XSSFFont font = (XSSFFont)templateWorkbook.CreateFont();
 
-                            cellStyle.DataFormat = format.GetFormat(xlsxformat.dotFormat);
+                            cellStyle.DataFormat = format.GetFormat(xlsxformat.DotFormat);
                             font.FontName = "Calibri";
                             font.FontHeightInPoints = 12;
                             cellStyle.SetFont(font);
@@ -425,16 +425,16 @@ namespace PlatformHeightTest
 
                             #endregion setting style
 
-                            string sheetName = xlsxformat.sheetOfCTQ;
+                            string sheetName = xlsxformat.SheetOfCTQ;
                             ISheet sheet = templateWorkbook.GetSheet(sheetName) ?? templateWorkbook.CreateSheet(sheetName);
 
-                            int _startCloumn = NumberFromExcelColumn(xlsxformat.startColumn) - 1;//from [0] start first
-                            int _endColumn = NumberFromExcelColumn(xlsxformat.endColumn) - 1;
+                            int _startCloumn = NumberFromExcelColumn(xlsxformat.StartColumn) - 1;//from [0] start first
+                            int _endColumn = NumberFromExcelColumn(xlsxformat.EndColumn) - 1;
                             int cloumnQTY = _endColumn - _startCloumn;
-                            int rowQTY = xlsxformat.endRow - xlsxformat.startRow;
+                            int rowQTY = xlsxformat.EndRow - xlsxformat.StartRow;
                             for (int i = 0; i < rowQTY + 1; i++)
                             {
-                                IRow dataRow = sheet.GetRow(i + xlsxformat.startRow - 1) ?? sheet.CreateRow(i + xlsxformat.startRow - 1);//-1 cause from [0] start first
+                                IRow dataRow = sheet.GetRow(i + xlsxformat.StartRow - 1) ?? sheet.CreateRow(i + xlsxformat.StartRow - 1);//-1 cause from [0] start first
                                 for (int j = 0; j < cloumnQTY + 1; j++)
                                 {
                                     ICell cell = dataRow.GetCell(j + _startCloumn) ?? dataRow.CreateCell(j + _startCloumn);
@@ -503,10 +503,12 @@ namespace PlatformHeightTest
             FolderBrowserDialog fbd = new FolderBrowserDialog
             {
                 ShowNewFolderButton = false,
-                RootFolder = Environment.SpecialFolder.DesktopDirectory
+                //RootFolder = Environment.SpecialFolder.DesktopDirectory
             };
             if (fbd.ShowDialog() == DialogResult.OK)
             {
+                if (null != watcher)
+                { watcher.Dispose(); }
                 startWatchHeight(fbd.SelectedPath);
                 this.Text = "HeightTest " + "Path:" + fbd.SelectedPath;
             }
@@ -1150,7 +1152,7 @@ namespace PlatformHeightTest
         {
             if (offsetInfo.IsDataExist)
             {
-                double[,] result = new double[5, 3];
+                double[,] result = new double[offsetInfo.offsetNum, 3];
                 for (int i = 0; i < offsetInfo.offsetNum; i++)
                 {
                     result[i, 0] = offsetInfo.XOffset[i];
