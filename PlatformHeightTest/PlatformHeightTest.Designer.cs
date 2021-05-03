@@ -47,6 +47,8 @@
             this.CopyBtn = new System.Windows.Forms.Button();
             this.DeleteBtn = new System.Windows.Forms.Button();
             this.ExportBtn = new System.Windows.Forms.Button();
+            this.ExcelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.Setting = new System.Windows.Forms.ToolStripMenuItem();
             this.OKListView = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -94,18 +96,16 @@
             this.CatchBtn = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.Extend2Btn = new System.Windows.Forms.Button();
-            this.ExcelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.Setting = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
             this.ListViewPanel.SuspendLayout();
+            this.ExcelContextMenu.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LengthNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WidthNUD)).BeginInit();
             this.offsetPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OffsetSpecNum)).BeginInit();
-            this.ExcelContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // WatchPathBtn
@@ -311,6 +311,21 @@
             this.ExportBtn.Text = "Excel";
             this.ExportBtn.UseVisualStyleBackColor = true;
             this.ExportBtn.Click += new System.EventHandler(this.ExportBtn_Click);
+            // 
+            // ExcelContextMenu
+            // 
+            this.ExcelContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ExcelContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Setting});
+            this.ExcelContextMenu.Name = "ExcelContextMenu";
+            this.ExcelContextMenu.Size = new System.Drawing.Size(129, 28);
+            // 
+            // Setting
+            // 
+            this.Setting.Name = "Setting";
+            this.Setting.Size = new System.Drawing.Size(128, 24);
+            this.Setting.Text = "Setting";
+            this.Setting.Click += new System.EventHandler(this.Setting_Click);
             // 
             // OKListView
             // 
@@ -799,21 +814,6 @@
             this.Extend2Btn.UseVisualStyleBackColor = true;
             this.Extend2Btn.Click += new System.EventHandler(this.Extend2Btn_Click);
             // 
-            // ExcelContextMenu
-            // 
-            this.ExcelContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.ExcelContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Setting});
-            this.ExcelContextMenu.Name = "ExcelContextMenu";
-            this.ExcelContextMenu.Size = new System.Drawing.Size(129, 28);
-            // 
-            // Setting
-            // 
-            this.Setting.Name = "Setting";
-            this.Setting.Size = new System.Drawing.Size(210, 24);
-            this.Setting.Text = "Setting";
-            this.Setting.Click += new System.EventHandler(this.Setting_Click);
-            // 
             // PlatformHeightTest
             // 
             this.AcceptButton = this.GenerateBtn;
@@ -861,13 +861,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).EndInit();
             this.ListViewPanel.ResumeLayout(false);
+            this.ExcelContextMenu.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.LengthNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WidthNUD)).EndInit();
             this.offsetPanel.ResumeLayout(false);
             this.offsetPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OffsetSpecNum)).EndInit();
-            this.ExcelContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

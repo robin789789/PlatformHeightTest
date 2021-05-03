@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Button = System.Windows.Forms.Button;
 
 namespace PlatformHeightTest
 {
@@ -40,6 +39,94 @@ namespace PlatformHeightTest
         private Size extend2 = new Size(0, 200);
         private decimal catchOffsetHeight;
         private bool paintType; private double[] sortAryForColor;
+        private Thread threadForForm;
+
+        private class ExtendFormUI
+        {
+            private static object thisLock = new object();
+            public Form form;
+            public int IntervalOfScroll = 10;
+            public Size ExtendSize1 = new Size(480, 425);
+            public Size ExtendSize2 = new Size(840, 425);
+
+            public delegate void Thread_Helper(Form form, int size);
+
+            public void ExtendThreadHeight(Form form, int height)
+            {
+                if (form.InvokeRequired)
+                {
+                    Thread_Helper helper = new Thread_Helper(ExtendThreadHeight);
+                    form.Invoke(helper, form, height);
+                }
+                else
+                {
+                    var sizeHeight = new Size(0, height);
+                    form.Size = ExtendSize2 + sizeHeight;
+                }
+            }
+
+            public void ExtendThreadWidth(Form form, int width)
+            {
+                if (form.InvokeRequired)
+                {
+                    Thread_Helper helper = new Thread_Helper(ExtendThreadWidth);
+                    form.Invoke(helper, form, width);
+                }
+                else
+                {
+                    var sizeWidth = new Size(width, 0);
+                    form.Size = ExtendSize1 + sizeWidth;
+                }
+            }
+
+            public void ExtendHeightSlowly()
+            {
+                lock (thisLock)
+                {
+                    for (int i = 0; i <= 20; i++)
+                    {
+                        ExtendThreadHeight(form, i * 10);
+                        Thread.Sleep(IntervalOfScroll);
+                    }
+                }
+            }
+
+            public void UnExtendHeightSlowly()
+            {
+                lock (thisLock)
+                {
+                    for (int i = 20; i >= 0; i--)
+                    {
+                        ExtendThreadHeight(form, i * 10);
+                        Thread.Sleep(IntervalOfScroll);
+                    }
+                }
+            }
+
+            public void ExtendWidthSlowly()
+            {
+                lock (thisLock)
+                {
+                    for (int i = 0; i <= 36; i++)
+                    {
+                        ExtendThreadWidth(form, i * 10);
+                        Thread.Sleep(IntervalOfScroll);
+                    }
+                }
+            }
+
+            public void UnExtendWidthSlowly()
+            {
+                lock (thisLock)
+                {
+                    for (int i = 36; i >= 0; i--)
+                    {
+                        ExtendThreadWidth(form, i * 10);
+                        Thread.Sleep(IntervalOfScroll);
+                    }
+                }
+            }
+        }
 
         public class ShapeInfo
         {
@@ -153,6 +240,8 @@ namespace PlatformHeightTest
         private OffsetInfo offsetInfo = new OffsetInfo();
         private XlsxFormat heightTestXlsx = new XlsxFormat();
         private XlsxFormat offsetXlsx = new XlsxFormat();
+        private ExtendFormUI extendFormUI = new ExtendFormUI();
+
 
         #endregion Announce
 
@@ -235,7 +324,6 @@ namespace PlatformHeightTest
             propertyGridForm.ShowDialog();
         }
 
-
         private void eachPointBtn_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -297,9 +385,11 @@ namespace PlatformHeightTest
 
         private void Extend2Btn_Click(object sender, EventArgs e)
         {
+            extendFormUI.form = this;
             if (!extendForm2)
             {
-                this.Size = extend + extend2;
+                threadForForm = new Thread(extendFormUI.ExtendHeightSlowly);
+                threadForForm.Start();
 
                 #region init
 
@@ -323,7 +413,9 @@ namespace PlatformHeightTest
             }
             else
             {
-                this.Size -= extend2;
+                threadForForm = new Thread(extendFormUI.UnExtendHeightSlowly);
+                threadForForm.Start();
+                // this.Size -= extend2;
                 Extend2Btn.Text = "▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼";
             }
             extendForm2 = !extendForm2;
@@ -929,18 +1021,36 @@ namespace PlatformHeightTest
 
         #region Extend
 
+        private static object lock0 = new object();
+
         private void ExtendBtn_Click(object sender, EventArgs e)
         {
-            if (!extendForm)
+            extendFormUI.form = this;
+            lock (lock0)
             {
-                extendForm = true;
-                this.Size = extend;
-            }
-            else
-            {
-                extendForm = false;
-                this.Size = unExtend;
-                extendForm2 = false;
+                if (!extendForm)
+                {
+                    extendForm = true;
+                    threadForForm = new Thread(extendFormUI.ExtendWidthSlowly);
+                    threadForForm.Start();
+                }
+                else
+                {
+                    extendForm = false;
+                    if (!extendForm2)
+                    {
+                        threadForForm = new Thread(extendFormUI.UnExtendWidthSlowly);
+                        threadForForm.Start();
+                    }
+                    else
+                    {
+                        threadForForm = new Thread(extendFormUI.UnExtendHeightSlowly);
+                        threadForForm.Start();
+                        threadForForm = new Thread(extendFormUI.UnExtendWidthSlowly);
+                        threadForForm.Start();
+                        extendForm2 = false;
+                    }
+                }
             }
         }
 
@@ -1269,6 +1379,5 @@ namespace PlatformHeightTest
         }
 
         #endregion Open csv
-
     }
 }
