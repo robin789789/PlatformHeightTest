@@ -185,7 +185,7 @@ namespace PlatformHeightTest
 
             public void GetPath()
             {
-                string date = DateTime.Now.ToString("yyyyMMd");
+                string date = DateTime.Now.ToString("yyyyMMdd");
                 HeightPath = @".\HeightRecognition\HeightRecognition_" + date + ".csv";
                 ImagePath = @".\ImageInspection\ImageInspection_" + date + ".csv";
             }
