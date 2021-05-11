@@ -16,7 +16,7 @@ namespace PlatformHeightTest
         public PlatformHeightTest()
         {
             InitializeComponent();
-            createButtons();
+            createButtons(this.flowLayoutPanel1);
             shapeinfo.Init9PointSquare();
         }
 
@@ -27,19 +27,16 @@ namespace PlatformHeightTest
         private Button[] btns;
         private double[] data;
         private int[] way;//Z+S
-        private string lastData = "";
-        private Color maxColor = Color.Red;
-        private Color minColor = Color.LimeGreen;
-        private Color nGColor = Color.Red;
-        private Color oKColor = Color.LimeGreen;
-        private Color initColor = Color.White;
+        private string lastData = string.Empty;
+        private Color maxColor = Color.Red; private Color minColor = Color.LimeGreen;
+        private Color nGColor = Color.Red; private Color oKColor = Color.LimeGreen; private Color initColor = Color.White;
         private bool extendForm = false; private bool extendForm2 = false;
-        private Size unExtend = new Size(480, 425);
-        private Size extend = new Size(840, 425);
-        private Size extend2 = new Size(0, 200);
+        private Size unExtend = new Size(480, 425); private Size extend = new Size(840, 425); private Size extend2 = new Size(0, 200);
         private decimal catchOffsetHeight;
         private bool paintType; private double[] sortAryForColor;
         private Thread threadForForm;
+
+        #region Class
 
         private class ExtendFormUI
         {
@@ -191,8 +188,6 @@ namespace PlatformHeightTest
             }
         }
 
-        #region NPOI Excel
-
         public class XlsxFormat
         {
             [CategoryAttribute("Xlsx工作表名稱"), DefaultValueAttribute(true)]
@@ -242,16 +237,12 @@ namespace PlatformHeightTest
         private XlsxFormat offsetXlsx = new XlsxFormat();
         private ExtendFormUI extendFormUI = new ExtendFormUI();
 
-
         #endregion Announce
 
         #region MainUI events
 
         private void PlatformHeightTest_Load(object sender, EventArgs e)
         {
-            Timer.Enabled = true;
-            initFlowDirectionCB();
-            flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
             Button.CheckForIllegalCrossThreadCalls = false;
             offsetInfo.GetPath();
             heightTestXlsx.HeightTestFormat();
@@ -261,17 +252,25 @@ namespace PlatformHeightTest
 
             this.Size = unExtend;
             CenterToScreen();
-            createButtons();
-            PathTypeCB.SelectedIndex = 0;
-            OKpictureBox.Visible = false;
-            NGpictureBox.Visible = false;
-            ExtendBtn.MouseHover += btn_MouseHover;
-            ExtendBtn.MouseLeave += btn_MouseLeave;
+            createButtons(this.flowLayoutPanel1);
             SetBtnStyle(ExtendBtn);
+            initFlowDirectionCB();
             initListView(AllListView);
             initListView(OffsetListView);
+            initTooltip(toolTip);
+
+            flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
+            PathTypeCB.SelectedIndex = 0;
+
+            ExtendBtn.MouseHover += btn_MouseHover;
+            ExtendBtn.MouseLeave += btn_MouseLeave;
             ExportBtn.MouseMove += ExportBtn_MouseMove;
             ExportBtn2.MouseMove += ExportBtn_MouseMove;
+
+            OKpictureBox.Visible = false;
+            NGpictureBox.Visible = false;
+            Timer.Enabled = true;
+            tips(paintType);
 
             #endregion UI setting
 
@@ -284,19 +283,6 @@ namespace PlatformHeightTest
             {
                 MessageBox.Show(ex.Message + Environment.NewLine + "請手動添加測高資料夾位址", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            #region tooltip
-
-            toolTip.ToolTipIcon = ToolTipIcon.Info;
-            toolTip.ForeColor = Color.Blue;
-            toolTip.BackColor = Color.Gray;
-            toolTip.AutoPopDelay = 4000;
-            toolTip.ToolTipTitle = "Tips";
-
-            toolTip.RemoveAll();
-            tips(paintType);
-
-            #endregion tooltip
         }
 
         private void ExportBtn_MouseMove(object sender, MouseEventArgs e)
@@ -357,7 +343,7 @@ namespace PlatformHeightTest
             shapeinfo.ShapeWidth = Convert.ToInt32(WidthNUD.Value);
             shapeinfo.PointCnt = shapeinfo.ShapeLength * shapeinfo.ShapeWidth;
             way = ZS(PathTypeCB.Text);
-            createButtons();
+            createButtons(this.flowLayoutPanel1);
             tips(paintType);
             foreach (var bt in btns)
             {
@@ -394,7 +380,7 @@ namespace PlatformHeightTest
                 #region init
 
                 shapeinfo.singlePoint();
-                createButtons();
+                createButtons(this.flowLayoutPanel1);
                 foreach (var bt in btns)
                 {
                     bt.Text = "第 " + way[int.Parse(bt.Name)].ToString() + " 點";
@@ -755,9 +741,9 @@ namespace PlatformHeightTest
 
         #region Function Button[],DataChanged,ZS,MaxMin,BtnSize
 
-        private void createButtons()
+        private void createButtons(FlowLayoutPanel flowLayoutPanel)
         {
-            this.flowLayoutPanel1.Controls.Clear();
+            flowLayoutPanel.Controls.Clear();
             btns = new Button[shapeinfo.PointCnt];
             int size = newSize(shapeinfo.ShapeWidth);
             if (shapeinfo.ShapeLength > shapeinfo.ShapeWidth)
@@ -775,9 +761,9 @@ namespace PlatformHeightTest
                 btns[i].Click += eachPointBtn_Click;
                 if ((i + 1) % shapeinfo.ShapeWidth == 0)
                 {
-                    this.flowLayoutPanel1.SetFlowBreak(btns[i], true);
+                    flowLayoutPanel.SetFlowBreak(btns[i], true);
                 }
-                this.flowLayoutPanel1.Controls.Add(btns[i]);
+                flowLayoutPanel.Controls.Add(btns[i]);
             }
         }
 
@@ -791,7 +777,15 @@ namespace PlatformHeightTest
 
                 for (int i = 5; i < buf.Length; i++)
                 {
-                    results[i - 5] = double.Parse(buf[i]);
+                    if (double.TryParse(buf[i], out double result))
+                    {
+                        results[i - 5] = result;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Data Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return null;
+                    }
                 }
                 return results;
             }
@@ -1044,11 +1038,11 @@ namespace PlatformHeightTest
                     }
                     else
                     {
+                        extendForm2 = false;
                         threadForForm = new Thread(extendFormUI.UnExtendHeightSlowly);
                         threadForForm.Start();
                         threadForForm = new Thread(extendFormUI.UnExtendWidthSlowly);
                         threadForForm.Start();
-                        extendForm2 = false;
                     }
                 }
             }
@@ -1221,6 +1215,16 @@ namespace PlatformHeightTest
             }
         }
 
+        private void initTooltip(ToolTip toolTip)
+        {
+            toolTip.ToolTipIcon = ToolTipIcon.Info;
+            toolTip.ForeColor = Color.Blue;
+            toolTip.BackColor = Color.Gray;
+            toolTip.AutoPopDelay = 4000;
+            toolTip.ToolTipTitle = "Tips";
+            toolTip.RemoveAll();
+        }
+
         #endregion Tips
 
         #region Offset checking and export to xlsx
@@ -1331,6 +1335,9 @@ namespace PlatformHeightTest
                     item.UseItemStyleForSubItems = false;
                     OffsetListView.Items.Add(item);
                 }
+
+                #region checking NG data
+
                 foreach (ListViewItem item in OffsetListView.Items)
                 {
                     for (int i = 0; i < item.SubItems.Count; i++)
@@ -1348,6 +1355,8 @@ namespace PlatformHeightTest
                         }
                     }
                 }
+
+                #endregion checking NG data
             }
         }
 
