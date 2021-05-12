@@ -96,6 +96,7 @@
             this.CatchBtn = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.Extend2Btn = new System.Windows.Forms.Button();
+            this.SubtractBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -814,6 +815,17 @@
             this.Extend2Btn.UseVisualStyleBackColor = true;
             this.Extend2Btn.Click += new System.EventHandler(this.Extend2Btn_Click);
             // 
+            // SubtractBtn
+            // 
+            this.SubtractBtn.Font = new System.Drawing.Font("微軟正黑體", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.SubtractBtn.Location = new System.Drawing.Point(159, 83);
+            this.SubtractBtn.Name = "SubtractBtn";
+            this.SubtractBtn.Size = new System.Drawing.Size(82, 31);
+            this.SubtractBtn.TabIndex = 38;
+            this.SubtractBtn.Text = "Subtract";
+            this.SubtractBtn.UseVisualStyleBackColor = true;
+            this.SubtractBtn.Click += new System.EventHandler(this.SubtractBtn_Click);
+            // 
             // PlatformHeightTest
             // 
             this.AcceptButton = this.GenerateBtn;
@@ -821,6 +833,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1131, 739);
+            this.Controls.Add(this.SubtractBtn);
             this.Controls.Add(this.Extend2Btn);
             this.Controls.Add(this.offsetPanel);
             this.Controls.Add(this.label7);
@@ -940,5 +953,6 @@
         private System.Windows.Forms.Button Extend2Btn;
         private System.Windows.Forms.ContextMenuStrip ExcelContextMenu;
         private System.Windows.Forms.ToolStripMenuItem Setting;
+        private System.Windows.Forms.Button SubtractBtn;
     }
 }

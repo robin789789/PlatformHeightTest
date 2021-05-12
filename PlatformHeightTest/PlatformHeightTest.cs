@@ -229,6 +229,65 @@ namespace PlatformHeightTest
             }
         }
 
+        public class Subtract2Point
+        {
+            public bool IsStartSubtract  { get; set; }
+            public bool IsFirstPointClick { get; set; }
+            public bool IsSecondPointClick { get; set; }
+            public string FirstPoint { get; set; }
+            public string SecondPoint { get; set; }
+
+            public void InitSub()
+            {
+                IsStartSubtract = false; IsFirstPointClick = false; IsSecondPointClick = false;
+                FirstPoint = string.Empty; SecondPoint = string.Empty;
+            }
+
+            public bool GetSubtractValue(Button btn)
+            {
+                if (IsStartSubtract)
+                {
+                    if (!IsFirstPointClick)
+                    {
+                        IsFirstPointClick = true;
+                        FirstPoint = btn.Text;
+                        btn.FlatAppearance.BorderColor = Color.Red;
+                        return false;
+                    }
+                    else
+                    {
+                        IsSecondPointClick = true;
+                        SecondPoint = btn.Text;
+                        btn.FlatAppearance.BorderColor = Color.Red;
+                        IsStartSubtract = false;
+                        return true;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(btn.Text);
+                    return false;
+                }
+            }
+
+            public void StartSubtract()
+            {
+                try
+                {
+                    var a = Convert.ToDecimal(FirstPoint.Replace(" mm", ""));
+                    var b = Convert.ToDecimal(SecondPoint.Replace(" mm", ""));
+
+                    MessageBox.Show("Result: "+(a-b).ToString()+" mm", "Subtract",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    InitSub();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message,"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                }
+            }
+
+        }
+
         #endregion NPOI Excel
 
         private ShapeInfo shapeinfo = new ShapeInfo();
@@ -236,6 +295,7 @@ namespace PlatformHeightTest
         private XlsxFormat heightTestXlsx = new XlsxFormat();
         private XlsxFormat offsetXlsx = new XlsxFormat();
         private ExtendFormUI extendFormUI = new ExtendFormUI();
+        private Subtract2Point subtract2Point = new Subtract2Point();
 
         #endregion Announce
 
@@ -313,7 +373,32 @@ namespace PlatformHeightTest
         private void eachPointBtn_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            MessageBox.Show(button.Text);
+
+            if (subtract2Point.GetSubtractValue(button))
+            {
+                subtract2Point.IsStartSubtract = false;
+                subtract2Point.StartSubtract();
+                foreach (var item in btns)
+                {
+                    item.FlatAppearance.BorderColor = Color.LightGray;
+                }
+            }
+            SubtractBtnColor();
+        }
+       
+        private void SubtractBtn_Click(object sender, EventArgs e)
+        {
+            subtract2Point.InitSub();
+            subtract2Point.IsStartSubtract = true;
+            SubtractBtnColor();
+        }
+
+        private void SubtractBtnColor()
+        {
+            if (subtract2Point.IsStartSubtract)
+            { SubtractBtn.BackColor = oKColor; }
+            else
+            { SubtractBtn.BackColor = Color.FromArgb(0, 255, 255, 255); }
         }
 
         private void PathTypeCB_SelectedIndexChanged(object sender, EventArgs e)
@@ -758,6 +843,8 @@ namespace PlatformHeightTest
                     Margin = new Padding(0, 0, 0, 0),
                     //Font = new Font("新細明體", 8,FontStyle.Regular)
                 };
+                btns[i].FlatStyle = FlatStyle.Flat;
+                btns[i].FlatAppearance.BorderColor = Color.LightGray;
                 btns[i].Click += eachPointBtn_Click;
                 if ((i + 1) % shapeinfo.ShapeWidth == 0)
                 {
@@ -1387,6 +1474,8 @@ namespace PlatformHeightTest
                 MessageBox.Show("File doesn't exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+
         #endregion Open csv
+        
     }
 }
