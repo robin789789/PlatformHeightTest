@@ -173,7 +173,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label2.Location = new System.Drawing.Point(344, 138);
+            this.label2.Location = new System.Drawing.Point(372, 138);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 19);
             this.label2.TabIndex = 10;
@@ -183,7 +183,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label3.Location = new System.Drawing.Point(344, 167);
+            this.label3.Location = new System.Drawing.Point(372, 167);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(91, 19);
             this.label3.TabIndex = 11;
@@ -193,7 +193,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label4.Location = new System.Drawing.Point(344, 196);
+            this.label4.Location = new System.Drawing.Point(372, 196);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(79, 19);
             this.label4.TabIndex = 12;
@@ -202,7 +202,7 @@
             // OKpictureBox
             // 
             this.OKpictureBox.Image = ((System.Drawing.Image)(resources.GetObject("OKpictureBox.Image")));
-            this.OKpictureBox.Location = new System.Drawing.Point(368, 220);
+            this.OKpictureBox.Location = new System.Drawing.Point(376, 220);
             this.OKpictureBox.Name = "OKpictureBox";
             this.OKpictureBox.Size = new System.Drawing.Size(230, 230);
             this.OKpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -212,7 +212,7 @@
             // NGpictureBox
             // 
             this.NGpictureBox.Image = ((System.Drawing.Image)(resources.GetObject("NGpictureBox.Image")));
-            this.NGpictureBox.Location = new System.Drawing.Point(368, 220);
+            this.NGpictureBox.Location = new System.Drawing.Point(376, 220);
             this.NGpictureBox.Name = "NGpictureBox";
             this.NGpictureBox.Size = new System.Drawing.Size(230, 230);
             this.NGpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -229,7 +229,7 @@
             0,
             0,
             196608});
-            this.SpecNumericUpDown.Location = new System.Drawing.Point(402, 102);
+            this.SpecNumericUpDown.Location = new System.Drawing.Point(437, 102);
             this.SpecNumericUpDown.Maximum = new decimal(new int[] {
             1,
             0,
@@ -248,17 +248,17 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label1.Location = new System.Drawing.Point(344, 109);
+            this.label1.Location = new System.Drawing.Point(372, 109);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 19);
+            this.label1.Size = new System.Drawing.Size(56, 19);
             this.label1.TabIndex = 16;
-            this.label1.Text = "Spec:";
+            this.label1.Text = "±Spec:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label5.Location = new System.Drawing.Point(489, 109);
+            this.label5.Location = new System.Drawing.Point(524, 109);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(37, 19);
             this.label5.TabIndex = 17;

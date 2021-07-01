@@ -760,21 +760,27 @@ namespace PlatformHeightTest
                         whichMin = allPointMin;
                     }
 
-                    if (whichTolerence / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value))
+                    if (whichTolerence / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value*2))
                     {
                         var item = new ListViewItem(index.ToString());
                         item.SubItems.AddRange(new string[4] { whichMax.ToString(), whichMin.ToString(), whichTolerence.ToString(), "O" });
                         item.ForeColor = oKColor;
-                        AllListView.Items.Add(item);
-                        OKpictureBox.Visible = true;
-                        NGpictureBox.Visible = false;
+                        AllListView.Items.Add(item);                     
                     }
                     else
                     {
                         var item = new ListViewItem(index.ToString());
                         item.SubItems.AddRange(new string[4] { whichMax.ToString(), whichMin.ToString(), whichTolerence.ToString(), "X" });
                         item.ForeColor = nGColor;
-                        AllListView.Items.Add(item);
+                        AllListView.Items.Add(item);                   
+                    }
+                    if (edgeTolerance / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value))
+                    {
+                        OKpictureBox.Visible = true;
+                        NGpictureBox.Visible = false;
+                    }
+                    else
+                    {
                         OKpictureBox.Visible = false;
                         NGpictureBox.Visible = true;
                     }
