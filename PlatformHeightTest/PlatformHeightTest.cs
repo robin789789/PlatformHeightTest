@@ -227,11 +227,31 @@ namespace PlatformHeightTest
                 EndRow = 73;
                 DotFormat = "0.0000";
             }
+
+            public void FAEHeightTestFormat()
+            {
+                SheetOfCTQ = "Machine Base + Conveyor";
+                StartColumn = "M";
+                StartRow = 13;
+                EndColumn = "O";
+                EndRow = 17;
+                DotFormat = "0.000";
+            }
+
+            public void FAEOffsetFormat()
+            {
+                SheetOfCTQ = "Machine Base + Conveyor";
+                StartColumn = "D";
+                StartRow = 24;
+                EndColumn = "F";
+                EndRow = 28;
+                DotFormat = "0.0000";
+            }
         }
 
         public class Subtract2Point
         {
-            public bool IsStartSubtract  { get; set; }
+            public bool IsStartSubtract { get; set; }
             public bool IsFirstPointClick { get; set; }
             public bool IsSecondPointClick { get; set; }
             public string FirstPoint { get; set; }
@@ -277,23 +297,24 @@ namespace PlatformHeightTest
                     var a = Convert.ToDecimal(FirstPoint.Replace(" mm", ""));
                     var b = Convert.ToDecimal(SecondPoint.Replace(" mm", ""));
 
-                    MessageBox.Show("Result: "+(a-b).ToString()+" mm", "Subtract",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    MessageBox.Show("Result: " + (a - b).ToString() + " mm", "Subtract", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     InitSub();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message,"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
         }
 
-        #endregion NPOI Excel
+        #endregion Class
 
         private ShapeInfo shapeinfo = new ShapeInfo();
         private OffsetInfo offsetInfo = new OffsetInfo();
         private XlsxFormat heightTestXlsx = new XlsxFormat();
         private XlsxFormat offsetXlsx = new XlsxFormat();
+        private XlsxFormat fAEheightTestXlsx = new XlsxFormat();
+        private XlsxFormat fAeoffsetXlsx = new XlsxFormat();
         private ExtendFormUI extendFormUI = new ExtendFormUI();
         private Subtract2Point subtract2Point = new Subtract2Point();
 
@@ -306,7 +327,9 @@ namespace PlatformHeightTest
             Button.CheckForIllegalCrossThreadCalls = false;
             offsetInfo.GetPath();
             heightTestXlsx.HeightTestFormat();
+            fAEheightTestXlsx.FAEHeightTestFormat();
             offsetXlsx.OffsetFormat();
+            fAeoffsetXlsx.FAEOffsetFormat();
 
             #region UI setting
 
@@ -349,6 +372,8 @@ namespace PlatformHeightTest
         {
             var bt = (Button)sender;
             Setting.Tag = bt.Tag;
+            ExportBtn3.Tag = bt.Tag;
+            Setting2.Tag = bt.Tag;
         }
 
         private void Setting_Click(object sender, EventArgs e)
@@ -370,6 +395,24 @@ namespace PlatformHeightTest
             propertyGridForm.ShowDialog();
         }
 
+        private void Setting2_Click(object sender, EventArgs e)
+        {
+            var item = (ToolStripMenuItem)sender;
+            string type = item.Tag.ToString();
+            PropertyGridForm propertyGridForm = new PropertyGridForm();
+            switch (type)
+            {
+                case "Height":
+                    propertyGridForm.SetPropertyGridForm(fAEheightTestXlsx);
+                    break;
+
+                case "Offset":
+                    propertyGridForm.SetPropertyGridForm(fAeoffsetXlsx);
+                    break;
+            }
+            propertyGridForm.ShowDialog();
+        }
+
         private void eachPointBtn_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -385,7 +428,7 @@ namespace PlatformHeightTest
             }
             SubtractBtnColor();
         }
-       
+
         private void SubtractBtn_Click(object sender, EventArgs e)
         {
             subtract2Point.InitSub();
@@ -513,6 +556,50 @@ namespace PlatformHeightTest
             else
             {
                 MessageBox.Show("At least five records are required.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ExportBtn3_Click(object sender, EventArgs e)
+        {
+            var item = (ToolStripMenuItem)sender;
+            string type = item.Tag.ToString();
+            switch (type)
+            {
+                case "Height":
+                    {
+                        if (OKListView.Items.Count == 5)
+                        {
+                            double[,] result = new double[5, 3];
+                            for (int i = 0; i < OKListView.Items.Count; i++)
+                            {
+                                result[i, 0] = double.Parse(OKListView.Items[i].SubItems[1].Text);
+                                result[i, 1] = double.Parse(OKListView.Items[i].SubItems[2].Text);
+                                result[i, 2] = double.Parse(OKListView.Items[i].SubItems[3].Text);
+                            }
+                            npoiSetExcel(fAEheightTestXlsx, result);
+                        }
+                        else
+                        {
+                            MessageBox.Show("At least five records are required.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    break;
+
+                case "Offset":
+                    {
+                        if (offsetInfo.IsDataExist)
+                        {
+                            double[,] result = new double[offsetInfo.offsetNum, 3];
+                            for (int i = 0; i < offsetInfo.offsetNum; i++)
+                            {
+                                result[i, 0] = offsetInfo.XOffset[i];
+                                result[i, 1] = offsetInfo.YOffset[i];
+                                result[i, 2] = Convert.ToDouble(catchOffsetHeight - Convert.ToDecimal(offsetInfo.ZOffset[i]));
+                            }
+                            npoiSetExcel(fAeoffsetXlsx, result);
+                        }
+                    }
+                    break;
             }
         }
 
@@ -760,19 +847,19 @@ namespace PlatformHeightTest
                         whichMin = allPointMin;
                     }
 
-                    if (whichTolerence / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value*2))
+                    if (whichTolerence / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value * 2))
                     {
                         var item = new ListViewItem(index.ToString());
                         item.SubItems.AddRange(new string[4] { whichMax.ToString(), whichMin.ToString(), whichTolerence.ToString(), "O" });
                         item.ForeColor = oKColor;
-                        AllListView.Items.Add(item);                     
+                        AllListView.Items.Add(item);
                     }
                     else
                     {
                         var item = new ListViewItem(index.ToString());
                         item.SubItems.AddRange(new string[4] { whichMax.ToString(), whichMin.ToString(), whichTolerence.ToString(), "X" });
                         item.ForeColor = nGColor;
-                        AllListView.Items.Add(item);                   
+                        AllListView.Items.Add(item);
                     }
                     if (edgeTolerance / 1000 <= Convert.ToDecimal(SpecNumericUpDown.Value))
                     {
@@ -1480,8 +1567,6 @@ namespace PlatformHeightTest
                 MessageBox.Show("File doesn't exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-
         #endregion Open csv
-        
     }
 }

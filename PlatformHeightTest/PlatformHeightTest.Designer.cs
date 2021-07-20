@@ -49,6 +49,8 @@
             this.ExportBtn = new System.Windows.Forms.Button();
             this.ExcelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Setting = new System.Windows.Forms.ToolStripMenuItem();
+            this.FAE_CTQ = new System.Windows.Forms.ToolStripMenuItem();
+            this.Setting2 = new System.Windows.Forms.ToolStripMenuItem();
             this.OKListView = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -97,6 +99,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.Extend2Btn = new System.Windows.Forms.Button();
             this.SubtractBtn = new System.Windows.Forms.Button();
+            this.ExportBtn3 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -317,16 +320,33 @@
             // 
             this.ExcelContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.ExcelContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Setting});
+            this.Setting,
+            this.FAE_CTQ});
             this.ExcelContextMenu.Name = "ExcelContextMenu";
-            this.ExcelContextMenu.Size = new System.Drawing.Size(129, 28);
+            this.ExcelContextMenu.Size = new System.Drawing.Size(211, 80);
             // 
             // Setting
             // 
             this.Setting.Name = "Setting";
-            this.Setting.Size = new System.Drawing.Size(128, 24);
+            this.Setting.Size = new System.Drawing.Size(210, 24);
             this.Setting.Text = "Setting";
             this.Setting.Click += new System.EventHandler(this.Setting_Click);
+            // 
+            // FAE_CTQ
+            // 
+            this.FAE_CTQ.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ExportBtn3,
+            this.Setting2});
+            this.FAE_CTQ.Name = "FAE_CTQ";
+            this.FAE_CTQ.Size = new System.Drawing.Size(210, 24);
+            this.FAE_CTQ.Text = "FAE CTQ";
+            // 
+            // Setting2
+            // 
+            this.Setting2.Name = "Setting2";
+            this.Setting2.Size = new System.Drawing.Size(224, 26);
+            this.Setting2.Text = "Setting";
+            this.Setting2.Click += new System.EventHandler(this.Setting2_Click);
             // 
             // OKListView
             // 
@@ -826,6 +846,13 @@
             this.SubtractBtn.UseVisualStyleBackColor = true;
             this.SubtractBtn.Click += new System.EventHandler(this.SubtractBtn_Click);
             // 
+            // ExportBtn3
+            // 
+            this.ExportBtn3.Name = "ExportBtn3";
+            this.ExportBtn3.Size = new System.Drawing.Size(224, 26);
+            this.ExportBtn3.Text = "Excel";
+            this.ExportBtn3.Click += new System.EventHandler(this.ExportBtn3_Click);
+            // 
             // PlatformHeightTest
             // 
             this.AcceptButton = this.GenerateBtn;
@@ -954,5 +981,8 @@
         private System.Windows.Forms.ContextMenuStrip ExcelContextMenu;
         private System.Windows.Forms.ToolStripMenuItem Setting;
         private System.Windows.Forms.Button SubtractBtn;
+        private System.Windows.Forms.ToolStripMenuItem FAE_CTQ;
+        private System.Windows.Forms.ToolStripMenuItem Setting2;
+        private System.Windows.Forms.ToolStripMenuItem ExportBtn3;
     }
 }
