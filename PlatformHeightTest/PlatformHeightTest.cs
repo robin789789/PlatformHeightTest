@@ -701,6 +701,7 @@ namespace PlatformHeightTest
                                 fs.Close();
                                 templateWorkbook.Close();
                             }
+                            MessageBox.Show("Done!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                 }
@@ -1434,6 +1435,10 @@ namespace PlatformHeightTest
                     {
                         MessageBox.Show(ex.Message);
                     }
+                }
+                else
+                {
+                    MessageBox.Show("測高資料不足。","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
