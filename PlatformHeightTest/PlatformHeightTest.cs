@@ -1573,5 +1573,11 @@ namespace PlatformHeightTest
         }
 
         #endregion Open csv
+
+        public void AnalysisBtn_Click(object sender, EventArgs e)
+        {
+            AnalysisForm analysisForm = new AnalysisForm();
+            analysisForm.ShowDialog();
+        }
     }
 }

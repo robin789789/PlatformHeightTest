@@ -77,9 +77,16 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalysisForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AnalysisForm.Designer.cs">
+      <DependentUpon>AnalysisForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlatformHeightTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +101,9 @@
     <Compile Include="PropertyGridForm.Designer.cs">
       <DependentUpon>PropertyGridForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AnalysisForm.resx">
+      <DependentUpon>AnalysisForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PlatformHeightTest.resx">
       <DependentUpon>PlatformHeightTest.cs</DependentUpon>
     </EmbeddedResource>

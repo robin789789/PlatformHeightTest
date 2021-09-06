@@ -50,6 +50,7 @@
             this.ExcelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Setting = new System.Windows.Forms.ToolStripMenuItem();
             this.FAE_CTQ = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExportBtn3 = new System.Windows.Forms.ToolStripMenuItem();
             this.Setting2 = new System.Windows.Forms.ToolStripMenuItem();
             this.OKListView = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -99,7 +100,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.Extend2Btn = new System.Windows.Forms.Button();
             this.SubtractBtn = new System.Windows.Forms.Button();
-            this.ExportBtn3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.AnalysisBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -270,6 +271,7 @@
             // ListViewPanel
             // 
             this.ListViewPanel.BackColor = System.Drawing.Color.White;
+            this.ListViewPanel.Controls.Add(this.AnalysisBtn);
             this.ListViewPanel.Controls.Add(this.CopyBtn);
             this.ListViewPanel.Controls.Add(this.DeleteBtn);
             this.ListViewPanel.Controls.Add(this.ExportBtn);
@@ -323,12 +325,12 @@
             this.Setting,
             this.FAE_CTQ});
             this.ExcelContextMenu.Name = "ExcelContextMenu";
-            this.ExcelContextMenu.Size = new System.Drawing.Size(211, 80);
+            this.ExcelContextMenu.Size = new System.Drawing.Size(139, 52);
             // 
             // Setting
             // 
             this.Setting.Name = "Setting";
-            this.Setting.Size = new System.Drawing.Size(210, 24);
+            this.Setting.Size = new System.Drawing.Size(138, 24);
             this.Setting.Text = "Setting";
             this.Setting.Click += new System.EventHandler(this.Setting_Click);
             // 
@@ -338,13 +340,20 @@
             this.ExportBtn3,
             this.Setting2});
             this.FAE_CTQ.Name = "FAE_CTQ";
-            this.FAE_CTQ.Size = new System.Drawing.Size(210, 24);
+            this.FAE_CTQ.Size = new System.Drawing.Size(138, 24);
             this.FAE_CTQ.Text = "FAE CTQ";
+            // 
+            // ExportBtn3
+            // 
+            this.ExportBtn3.Name = "ExportBtn3";
+            this.ExportBtn3.Size = new System.Drawing.Size(142, 26);
+            this.ExportBtn3.Text = "Excel";
+            this.ExportBtn3.Click += new System.EventHandler(this.ExportBtn3_Click);
             // 
             // Setting2
             // 
             this.Setting2.Name = "Setting2";
-            this.Setting2.Size = new System.Drawing.Size(224, 26);
+            this.Setting2.Size = new System.Drawing.Size(142, 26);
             this.Setting2.Text = "Setting";
             this.Setting2.Click += new System.EventHandler(this.Setting2_Click);
             // 
@@ -846,12 +855,15 @@
             this.SubtractBtn.UseVisualStyleBackColor = true;
             this.SubtractBtn.Click += new System.EventHandler(this.SubtractBtn_Click);
             // 
-            // ExportBtn3
+            // AnalysisBtn
             // 
-            this.ExportBtn3.Name = "ExportBtn3";
-            this.ExportBtn3.Size = new System.Drawing.Size(224, 26);
-            this.ExportBtn3.Text = "Excel";
-            this.ExportBtn3.Click += new System.EventHandler(this.ExportBtn3_Click);
+            this.AnalysisBtn.Location = new System.Drawing.Point(77, 234);
+            this.AnalysisBtn.Name = "AnalysisBtn";
+            this.AnalysisBtn.Size = new System.Drawing.Size(77, 36);
+            this.AnalysisBtn.TabIndex = 6;
+            this.AnalysisBtn.Text = "Analysis";
+            this.AnalysisBtn.UseVisualStyleBackColor = true;
+            this.AnalysisBtn.Click += new System.EventHandler(this.AnalysisBtn_Click);
             // 
             // PlatformHeightTest
             // 
@@ -984,5 +996,6 @@
         private System.Windows.Forms.ToolStripMenuItem FAE_CTQ;
         private System.Windows.Forms.ToolStripMenuItem Setting2;
         private System.Windows.Forms.ToolStripMenuItem ExportBtn3;
+        private System.Windows.Forms.Button AnalysisBtn;
     }
 }
