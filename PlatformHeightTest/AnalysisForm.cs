@@ -22,6 +22,7 @@ namespace PlatformHeightTest
         private const string ignoreData = "NaN";
         private string path = string.Empty;
         private bool isPositive = true;
+        private bool isLine = true;
 
         private enum generateModeEnum
         {
@@ -56,8 +57,9 @@ namespace PlatformHeightTest
 
         private void loadBtn_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Title = "Select file";
+            openFileDialog1.Title = "Select the HeightTest.csv";
             openFileDialog1.InitialDirectory = ".\\";
+            openFileDialog1.FileName="";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 path = openFileDialog1.FileName;
@@ -181,7 +183,9 @@ namespace PlatformHeightTest
             {
                 Name = name,
                 ChartType = SeriesChartType.FastLine,
-                BorderWidth = 4
+                BorderWidth = 4,
+                IsVisibleInLegend=true,
+                IsValueShownAsLabel=true
             };
             return series;
         }
@@ -293,6 +297,26 @@ namespace PlatformHeightTest
 
                 indexDataDict.Add(resultsListBox.Items.IndexOf(result), buf2);
                 HeightTestChart.Series.Add(series);
+            }
+        }
+
+        private void lineToPointBtn_Click(object sender, EventArgs e)
+        {
+            if (isLine)
+            {
+                foreach (var item in HeightTestChart.Series)
+                {
+                    item.ChartType = SeriesChartType.Point;
+                }
+                isLine = false;
+            }
+            else
+            {
+                foreach (var item in HeightTestChart.Series)
+                {
+                    item.ChartType = SeriesChartType.FastLine;
+                }
+                isLine = true;
             }
         }
 

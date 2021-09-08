@@ -29,8 +29,8 @@ namespace PlatformHeightTest
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.loadBtn = new System.Windows.Forms.Button();
             this.resultsListBox = new System.Windows.Forms.ListBox();
@@ -57,6 +57,7 @@ namespace PlatformHeightTest
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lineToPointBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.filterRowNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterColNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HeightTestChart)).BeginInit();
@@ -169,10 +170,10 @@ namespace PlatformHeightTest
             // 
             // HeightTestChart
             // 
-            chartArea6.Name = "ChartArea1";
-            this.HeightTestChart.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.HeightTestChart.Legends.Add(legend6);
+            chartArea2.Name = "ChartArea1";
+            this.HeightTestChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.HeightTestChart.Legends.Add(legend2);
             this.HeightTestChart.Location = new System.Drawing.Point(638, 104);
             this.HeightTestChart.Name = "HeightTestChart";
             this.HeightTestChart.Size = new System.Drawing.Size(811, 454);
@@ -384,11 +385,22 @@ namespace PlatformHeightTest
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "MulitySelect Setting";
             // 
+            // lineToPointBtn
+            // 
+            this.lineToPointBtn.Location = new System.Drawing.Point(1123, 21);
+            this.lineToPointBtn.Name = "lineToPointBtn";
+            this.lineToPointBtn.Size = new System.Drawing.Size(131, 23);
+            this.lineToPointBtn.TabIndex = 19;
+            this.lineToPointBtn.Text = "Line→Point";
+            this.lineToPointBtn.UseVisualStyleBackColor = true;
+            this.lineToPointBtn.Click += new System.EventHandler(this.lineToPointBtn_Click);
+            // 
             // AnalysisForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1461, 573);
+            this.Controls.Add(this.lineToPointBtn);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label9);
@@ -450,5 +462,6 @@ namespace PlatformHeightTest
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button lineToPointBtn;
     }
 }

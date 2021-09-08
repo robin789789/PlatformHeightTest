@@ -1574,6 +1574,8 @@ namespace PlatformHeightTest
 
         #endregion Open csv
 
+        #region Analysis Form
+
         public void AnalysisBtn_Click(object sender, EventArgs e)
         {
             if (analysisform == null)
@@ -1593,5 +1595,7 @@ namespace PlatformHeightTest
         {
             analysisform = null;
         }
+
+        #endregion
     }
 }
