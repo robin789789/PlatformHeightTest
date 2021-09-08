@@ -14,11 +14,45 @@ namespace PlatformHeightTest
             InitializeComponent();
         }
 
+        #region Announce
+
         private Dictionary<int, decimal[]> indexDataDict;//selectIndex and data
         private int rowFilter, columnFilter;
-        private const string ignoreStr = "Date,Time,Require,Amount,Measuring,Amount";
+        private const string ignoreStr = "Date,Time,Require Amount,Measuring Amount";
         private const string ignoreData = "NaN";
         private string path = string.Empty;
+        private bool isPositive = true;
+
+        private enum generateModeEnum
+        {
+            SingleReverse,
+            SingleZtypePath,
+            SingleStypePath,
+            MultiSelectWithReverse,
+            MultiSelect
+        }
+
+        private generateModeEnum generateMode;
+
+        #endregion
+
+        #region UIEvent
+
+        private void AnalysisForm_Load(object sender, EventArgs e)
+        {
+            resultsListBox.Items.Clear();
+            HeightTestChart.ChartAreas[0].AxisY.IsStartedFromZero = false;
+            HeightTestChart.ChartAreas[0].AxisX.IsStartedFromZero = false;
+            HeightTestChart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
+            initModeComboBox();
+        }
+
+        private void initModeComboBox()
+        {
+            modeCB.DropDownStyle = ComboBoxStyle.DropDownList;
+            modeCB.Items.AddRange(Enum.GetNames(typeof(generateModeEnum)));
+            modeCB.SelectedIndex = modeCB.Items.Count - 1;
+        }
 
         private void loadBtn_Click(object sender, EventArgs e)
         {
@@ -30,6 +64,72 @@ namespace PlatformHeightTest
                 readCSV(openFileDialog1.FileName);
             }
         }
+
+        private void refreshBtn_Click(object sender, EventArgs e)
+        {
+            resultsListBox.Items.Clear();
+            readCSV(path);
+        }
+
+        private void modeCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (modeCB.SelectedIndex != -1)
+                generateMode = (generateModeEnum)modeCB.SelectedIndex;
+            resultsListBox.SelectionMode = SelectionMode.One;
+
+            if (generateMode == generateModeEnum.MultiSelect || generateMode == generateModeEnum.MultiSelectWithReverse)
+            {
+                resultsListBox.SelectionMode = SelectionMode.MultiExtended;
+            }
+            if (generateMode == generateModeEnum.MultiSelectWithReverse)
+            {
+                MessageBox.Show("Choose the positve lines first.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void generateBtn_Click(object sender, EventArgs e)
+        {
+            columnFilter = Convert.ToInt32(filterColNumericUpDown.Value);
+            rowFilter = Convert.ToInt32(filterRowNumericUpDown.Value);
+
+            switch (generateMode)
+            {
+                case generateModeEnum.SingleReverse:
+                    singleReverseGenerate();
+                    break;
+
+                case generateModeEnum.SingleZtypePath:
+                    singleSandZtypeGenerate(generateMode);
+                    break;
+
+                case generateModeEnum.SingleStypePath:
+                    singleSandZtypeGenerate(generateMode);
+                    break;
+
+                case generateModeEnum.MultiSelect:
+                    multiselectGenerate();
+                    break;
+
+                case generateModeEnum.MultiSelectWithReverse:
+                    if (isPositive)
+                    {
+                        multiselectWithReverseGenerate(isPositive);
+                        isPositive = MessageBox.Show("Choose the negative lines then click the Generate button.", "Info", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel;
+                    }
+                    else
+                    {
+                        multiselectWithReverseGenerate(isPositive);
+                        isPositive = true;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            HeightTestChart.ChartAreas[0].RecalculateAxesScale();
+        }
+
+        #endregion
 
         private void readCSV(string path)
         {
@@ -65,59 +165,25 @@ namespace PlatformHeightTest
             }
         }
 
-        private enum generateModeEnum
+        private bool resultsValidCheck(object item)
         {
-            SingleReverse,
-            SingleZtypePath,
-            SingleStypePath,
-            MultiSelect
-        }
-
-        private generateModeEnum generateMode;
-
-        private void initModeComboBox()
-        {
-            modeCB.DropDownStyle = ComboBoxStyle.DropDownList;
-            modeCB.Items.AddRange(Enum.GetNames(typeof(generateModeEnum)));
-            modeCB.SelectedIndex = modeCB.Items.Count - 1;
-        }
-
-        private void AnalysisForm_Load(object sender, EventArgs e)
-        {
-            resultsListBox.Items.Clear();
-            HeightTestChart.ChartAreas[0].AxisY.IsStartedFromZero = false;
-            HeightTestChart.ChartAreas[0].AxisX.IsStartedFromZero = false;
-            HeightTestChart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
-            initModeComboBox();
-        }
-
-        private void GenerateBtn_Click(object sender, EventArgs e)
-        {
-            columnFilter = Convert.ToInt32(filterColNumericUpDown.Value);
-            rowFilter = Convert.ToInt32(filterRowNumericUpDown.Value);
-
-            switch (generateMode)
+            if (item == null)
             {
-                case generateModeEnum.SingleReverse:
-                    singleReverseGenerate();
-                    break;
-
-                case generateModeEnum.SingleZtypePath:
-                    singleSandZtypeGenerate(generateMode);
-                    break;
-
-                case generateModeEnum.SingleStypePath:
-                    singleSandZtypeGenerate(generateMode);
-                    break;
-
-                case generateModeEnum.MultiSelect:
-                    multiselectGenerate();
-                    break;
-
-                default:
-                    break;
+                return false;
             }
-            HeightTestChart.ChartAreas[0].RecalculateAxesScale();
+            bool isIgnore = item.ToString().Contains(ignoreStr) || item.ToString().Contains(ignoreData);
+            return !isIgnore;
+        }
+
+        private Series newSeries(string name)
+        {
+            Series series = new Series
+            {
+                Name = name,
+                ChartType = SeriesChartType.FastLine,
+                BorderWidth = 4
+            };
+            return series;
         }
 
         private void multiselectGenerate()
@@ -144,6 +210,60 @@ namespace PlatformHeightTest
                         }
                         indexDataDict.Add(resultsListBox.Items.IndexOf(item), buf2);
                         HeightTestChart.Series.Add(series);
+                    }
+                }
+            }
+        }
+
+        private void multiselectWithReverseGenerate(bool isPositive)
+        {
+            var results = resultsListBox.SelectedItems;
+
+            if (results != null)
+            {
+                if (isPositive)
+                {
+                    HeightTestChart.Series.Clear();
+                    indexDataDict = new Dictionary<int, decimal[]>();
+
+                    foreach (var item in results)
+                    {
+                        if (resultsValidCheck(item))
+                        {
+                            var buf = item.ToString().Split(',');
+                            decimal[] buf2 = new decimal[buf.Length - columnFilter];
+                            var series = newSeries(buf[1] + "Positive");
+
+                            for (int i = columnFilter; i < buf.Length; i++)
+                            {
+                                buf2[i - columnFilter] = Convert.ToDecimal(buf[i]);
+                                series.Points.AddXY(i - columnFilter, Convert.ToDecimal(buf[i]));
+                            }
+
+                            indexDataDict.Add(resultsListBox.Items.IndexOf(item), buf2);
+                            HeightTestChart.Series.Add(series);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var item in results)
+                    {
+                        if (resultsValidCheck(item))
+                        {
+                            var buf = item.ToString().Split(',');
+                            decimal[] buf2 = new decimal[buf.Length - columnFilter];
+                            var series = newSeries(buf[1] + "Negative");
+
+                            for (int i = columnFilter; i < buf.Length; i++)
+                            {
+                                buf2[i - columnFilter] = Convert.ToDecimal(buf[i]);
+                                series.Points.AddXY((buf.Length - 1) - i, Convert.ToDecimal(buf[i]));
+                            }
+
+                            // indexDataDict.Add(resultsListBox.Items.IndexOf(item), buf2);
+                            HeightTestChart.Series.Add(series);
+                        }
                     }
                 }
             }
@@ -238,43 +358,5 @@ namespace PlatformHeightTest
             }
         }
 
-        private Series newSeries(string name)
-        {
-            Series series = new Series
-            {
-                Name = name,
-                ChartType = SeriesChartType.FastLine,
-                BorderWidth = 4
-            };
-            return series;
-        }
-
-        private bool resultsValidCheck(object item)
-        {
-            if (item == null)
-            {
-                return false;
-            }
-            bool isIgnore = item.ToString().Contains(ignoreStr) || item.ToString().Contains(ignoreData);
-            return !isIgnore;
-        }
-
-        private void RefreshBtn_Click(object sender, EventArgs e)
-        {
-            resultsListBox.Items.Clear();
-            readCSV(path);
-        }
-
-        private void modeCB_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (modeCB.SelectedIndex != -1)
-                generateMode = (generateModeEnum)modeCB.SelectedIndex;
-            resultsListBox.SelectionMode = SelectionMode.One;
-
-            if (generateMode == generateModeEnum.MultiSelect)
-            {
-                resultsListBox.SelectionMode = SelectionMode.MultiExtended;
-            }
-        }
     }
 }

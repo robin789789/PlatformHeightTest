@@ -35,7 +35,7 @@ namespace PlatformHeightTest
         private decimal catchOffsetHeight;
         private bool paintType; private double[] sortAryForColor;
         private Thread threadForForm;
-
+        private static AnalysisForm analysisform = null;
         #region Class
 
         private class ExtendFormUI
@@ -1576,8 +1576,22 @@ namespace PlatformHeightTest
 
         public void AnalysisBtn_Click(object sender, EventArgs e)
         {
-            AnalysisForm analysisForm = new AnalysisForm();
-            analysisForm.ShowDialog();
+            if (analysisform == null)
+            {
+                analysisform = new AnalysisForm();
+                analysisform.Show();
+                analysisform.Disposed += Analysisform_Disposed; ;
+            }
+            else
+            {
+                analysisform.WindowState = FormWindowState.Normal;
+                analysisform.BringToFront();
+            }
+        }
+
+        private void Analysisform_Disposed(object sender, EventArgs e)
+        {
+            analysisform = null;
         }
     }
 }

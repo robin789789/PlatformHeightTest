@@ -44,6 +44,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ListViewPanel = new System.Windows.Forms.Panel();
+            this.AnalysisBtn = new System.Windows.Forms.Button();
             this.CopyBtn = new System.Windows.Forms.Button();
             this.DeleteBtn = new System.Windows.Forms.Button();
             this.ExportBtn = new System.Windows.Forms.Button();
@@ -100,7 +101,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.Extend2Btn = new System.Windows.Forms.Button();
             this.SubtractBtn = new System.Windows.Forms.Button();
-            this.AnalysisBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.OKpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NGpictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpecNumericUpDown)).BeginInit();
@@ -282,6 +282,17 @@
             this.ListViewPanel.Name = "ListViewPanel";
             this.ListViewPanel.Size = new System.Drawing.Size(464, 432);
             this.ListViewPanel.TabIndex = 18;
+            // 
+            // AnalysisBtn
+            // 
+            this.AnalysisBtn.Font = new System.Drawing.Font("微軟正黑體", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.AnalysisBtn.Location = new System.Drawing.Point(77, 234);
+            this.AnalysisBtn.Name = "AnalysisBtn";
+            this.AnalysisBtn.Size = new System.Drawing.Size(77, 36);
+            this.AnalysisBtn.TabIndex = 6;
+            this.AnalysisBtn.Text = "Analysis";
+            this.AnalysisBtn.UseVisualStyleBackColor = true;
+            this.AnalysisBtn.Click += new System.EventHandler(this.AnalysisBtn_Click);
             // 
             // CopyBtn
             // 
@@ -854,16 +865,6 @@
             this.SubtractBtn.Text = "Subtract";
             this.SubtractBtn.UseVisualStyleBackColor = true;
             this.SubtractBtn.Click += new System.EventHandler(this.SubtractBtn_Click);
-            // 
-            // AnalysisBtn
-            // 
-            this.AnalysisBtn.Location = new System.Drawing.Point(77, 234);
-            this.AnalysisBtn.Name = "AnalysisBtn";
-            this.AnalysisBtn.Size = new System.Drawing.Size(77, 36);
-            this.AnalysisBtn.TabIndex = 6;
-            this.AnalysisBtn.Text = "Analysis";
-            this.AnalysisBtn.UseVisualStyleBackColor = true;
-            this.AnalysisBtn.Click += new System.EventHandler(this.AnalysisBtn_Click);
             // 
             // PlatformHeightTest
             // 
