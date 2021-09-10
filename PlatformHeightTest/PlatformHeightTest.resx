@@ -810,6 +810,29 @@
   <metadata name="ExcelContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>223, 17</value>
   </metadata>
+  <data name="AnalysisBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJ
+        TUUH5QkJBiEQb+B0XwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAOfSURBVFhH
+        xZfZy01RGIePeUyIDEm5MCSFC8kFuVMk8+xWouSCiD9AIplDxigpopQLuZMUMiVuSEqGlJAx8/Osb6/P
+        OuvbJ6cc/OrJ2Wu/6/29e613r/2pJGoD7aFVuPolx9o2/WxWa3Dcf1MZ1w7SHP421vypnFuVtyPkQR0K
+        0oRO7AR5URqbIy3Kec63gFT6NPvNhcnFQConOlZmrlkqrx3PzZ1vnlSaVj3AD7gG3cNVk/6ZubKAGxAL
+        +FvmMUe+zaGA62AB7lWjzb2/DI7CYTgAh2AaBMUV6ANObPST+1CnQZ+UjRDme3ELLCBVI8xd7s4wGtbA
+        G0gLCPIi7QHVKHNjve/DnYdv8ABaFBB7QDXC3Jh4UHWDY6DPGVhV/N4CQWkBJmyEeX9YAfvhLPjkV2EI
+        jIEjMA+CYgE9wYR/am4eu928kY8wE1KZI3gZcBP6QX68ep0XVMvcPXfZx8M7uA2z4STosRKiYo6qAnp5
+        kUjzHjAV1sEC8Ok0qdVwagp8hxNgXNzzDaCiuXmCvJk2odLc5tkEn8AYOQV9IVU0j6s3DJ6Bq3ABnoI5
+        fBBVZa7yAlwWA8aB762vzVq4DMYuhqjcXC0FDT8UPIH1oHELc5UWYKK4lO6f9zw61Wrw2qca5AAy1iKi
+        JsBzeAUWOhbsfGPKzN2OkNSDqDcYFLt9FLwAl3Mf3AVjY8GTwMRu1QAYDlfA+65YqjJz54YxJ9iE7m2o
+        qNAIeAzR9D0cBD8qNpmFbYOL8AgegnHe7wKqRcMViisdVs9JroAdH2X3elh4zy+Xb8BE8Fw3znP9JXjf
+        d/w+fAF7xt5RdZkrk+RvwSL4DK6MyxuVTtwMzt0KniHHi2t7R9VlrvICBsMdsJPnOICc4MS025eDc12p
+        kXAO3JrpYFxd5iotwIDdxZj7bRKbMjdXNt09MPZ18a/9MBDy2Frm4dqJ8S2YAW/BPR0KqszcwuwTXzOb
+        7hLsBd+ces3NEVbJAuK3wKe3mZaAqmXu/sY3xhXqCmWxtcwtXqrOAbfAz6ifSX9r8jtzVXe3F9K4KocF
+        2AMeKFEmSz+/yoS5iXIsL9S5zU+YKB7zVbIAT7w94MGyC3YWvyPbwe3ZkYyJcY57P4/Nczg3j5XKV/Av
+        Fgv5H4SDw31fCL73Xkc8AednY8YY63/p0vGYIx0Tx9Ics8C50S8o30Pl/pWNO5bvrSqLtRfyJlRVsV7k
+        QV7bLGVNVPYnmrH15PC384sCKpWf1Njs0NchCdkAAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

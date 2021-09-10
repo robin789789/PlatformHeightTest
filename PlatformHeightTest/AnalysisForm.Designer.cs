@@ -31,6 +31,7 @@ namespace PlatformHeightTest
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnalysisForm));
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.loadBtn = new System.Windows.Forms.Button();
             this.resultsListBox = new System.Windows.Forms.ListBox();
@@ -387,9 +388,9 @@ namespace PlatformHeightTest
             // 
             // lineToPointBtn
             // 
-            this.lineToPointBtn.Location = new System.Drawing.Point(1123, 21);
+            this.lineToPointBtn.Location = new System.Drawing.Point(1091, 20);
             this.lineToPointBtn.Name = "lineToPointBtn";
-            this.lineToPointBtn.Size = new System.Drawing.Size(131, 23);
+            this.lineToPointBtn.Size = new System.Drawing.Size(131, 34);
             this.lineToPointBtn.TabIndex = 19;
             this.lineToPointBtn.Text = "Line→Point";
             this.lineToPointBtn.UseVisualStyleBackColor = true;
@@ -412,6 +413,7 @@ namespace PlatformHeightTest
             this.Controls.Add(this.resultsListBox);
             this.Controls.Add(this.loadBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "AnalysisForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

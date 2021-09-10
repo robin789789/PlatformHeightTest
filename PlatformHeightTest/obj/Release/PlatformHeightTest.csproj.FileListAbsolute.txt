@@ -26,3 +26,4 @@ C:\Users\robin\OneDrive\桌面\PlatformHeightTest\PlatformHeightTest\obj\Release
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.csproj.ResolveComReference.cache
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.PropertyGridForm.resources
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.csprojAssemblyReference.cache
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.AnalysisForm.resources

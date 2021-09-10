@@ -44,7 +44,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ListViewPanel = new System.Windows.Forms.Panel();
-            this.AnalysisBtn = new System.Windows.Forms.Button();
             this.CopyBtn = new System.Windows.Forms.Button();
             this.DeleteBtn = new System.Windows.Forms.Button();
             this.ExportBtn = new System.Windows.Forms.Button();
@@ -66,6 +65,7 @@
             this.Tolerance = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Remark = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SelectBtn = new System.Windows.Forms.Button();
+            this.AnalysisBtn = new System.Windows.Forms.Button();
             this.ExtendBtn = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.PaintTypeCkb = new System.Windows.Forms.CheckBox();
@@ -119,7 +119,7 @@
             this.WatchPathBtn.Location = new System.Drawing.Point(9, 10);
             this.WatchPathBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.WatchPathBtn.Name = "WatchPathBtn";
-            this.WatchPathBtn.Size = new System.Drawing.Size(141, 32);
+            this.WatchPathBtn.Size = new System.Drawing.Size(119, 32);
             this.WatchPathBtn.TabIndex = 2;
             this.WatchPathBtn.Text = "Watch";
             this.WatchPathBtn.UseVisualStyleBackColor = true;
@@ -138,10 +138,10 @@
             // StopWatchBtn
             // 
             this.StopWatchBtn.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.StopWatchBtn.Location = new System.Drawing.Point(197, 11);
+            this.StopWatchBtn.Location = new System.Drawing.Point(134, 9);
             this.StopWatchBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StopWatchBtn.Name = "StopWatchBtn";
-            this.StopWatchBtn.Size = new System.Drawing.Size(141, 32);
+            this.StopWatchBtn.Size = new System.Drawing.Size(117, 32);
             this.StopWatchBtn.TabIndex = 6;
             this.StopWatchBtn.Text = "Stop Watch";
             this.StopWatchBtn.UseVisualStyleBackColor = true;
@@ -271,7 +271,6 @@
             // ListViewPanel
             // 
             this.ListViewPanel.BackColor = System.Drawing.Color.White;
-            this.ListViewPanel.Controls.Add(this.AnalysisBtn);
             this.ListViewPanel.Controls.Add(this.CopyBtn);
             this.ListViewPanel.Controls.Add(this.DeleteBtn);
             this.ListViewPanel.Controls.Add(this.ExportBtn);
@@ -282,17 +281,6 @@
             this.ListViewPanel.Name = "ListViewPanel";
             this.ListViewPanel.Size = new System.Drawing.Size(464, 432);
             this.ListViewPanel.TabIndex = 18;
-            // 
-            // AnalysisBtn
-            // 
-            this.AnalysisBtn.Font = new System.Drawing.Font("微軟正黑體", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.AnalysisBtn.Location = new System.Drawing.Point(77, 234);
-            this.AnalysisBtn.Name = "AnalysisBtn";
-            this.AnalysisBtn.Size = new System.Drawing.Size(77, 36);
-            this.AnalysisBtn.TabIndex = 6;
-            this.AnalysisBtn.Text = "Analysis";
-            this.AnalysisBtn.UseVisualStyleBackColor = true;
-            this.AnalysisBtn.Click += new System.EventHandler(this.AnalysisBtn_Click);
             // 
             // CopyBtn
             // 
@@ -475,6 +463,17 @@
             this.SelectBtn.UseVisualStyleBackColor = true;
             this.SelectBtn.Click += new System.EventHandler(this.SelectBtn_Click);
             // 
+            // AnalysisBtn
+            // 
+            this.AnalysisBtn.Font = new System.Drawing.Font("微軟正黑體", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.AnalysisBtn.Image = ((System.Drawing.Image)(resources.GetObject("AnalysisBtn.Image")));
+            this.AnalysisBtn.Location = new System.Drawing.Point(275, 9);
+            this.AnalysisBtn.Name = "AnalysisBtn";
+            this.AnalysisBtn.Size = new System.Drawing.Size(63, 51);
+            this.AnalysisBtn.TabIndex = 6;
+            this.AnalysisBtn.UseVisualStyleBackColor = true;
+            this.AnalysisBtn.Click += new System.EventHandler(this.AnalysisBtn_Click);
+            // 
             // ExtendBtn
             // 
             this.ExtendBtn.BackColor = System.Drawing.Color.Transparent;
@@ -563,9 +562,9 @@
             // GenerateBtn
             // 
             this.GenerateBtn.Font = new System.Drawing.Font("微軟正黑體", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.GenerateBtn.Location = new System.Drawing.Point(247, 53);
+            this.GenerateBtn.Location = new System.Drawing.Point(247, 69);
             this.GenerateBtn.Name = "GenerateBtn";
-            this.GenerateBtn.Size = new System.Drawing.Size(91, 61);
+            this.GenerateBtn.Size = new System.Drawing.Size(91, 45);
             this.GenerateBtn.TabIndex = 26;
             this.GenerateBtn.Text = "Calculate";
             this.GenerateBtn.UseVisualStyleBackColor = true;
@@ -873,6 +872,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1131, 739);
+            this.Controls.Add(this.AnalysisBtn);
             this.Controls.Add(this.SubtractBtn);
             this.Controls.Add(this.Extend2Btn);
             this.Controls.Add(this.offsetPanel);
