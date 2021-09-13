@@ -307,14 +307,14 @@ namespace PlatformHeightTest
                             }
 
                             // indexDataDict.Add(resultsListBox.Items.IndexOf(item), buf2);
-                            if (!indexDataDict.TryGetValue(resultsListBox.Items.IndexOf(item), out var foo))
+                            try
                             {
                                 HeightTestChart.Series.Add(series);
                             }
-                            else
+                            catch 
                             {
-                                MessageBox.Show(buf[1] + "Negative" + " is already exist.","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                            }
+                                MessageBox.Show(buf[1] + "Negative" + " is already exist.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }                    
                         }
                     }
                 }
