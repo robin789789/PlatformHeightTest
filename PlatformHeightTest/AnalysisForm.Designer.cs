@@ -29,8 +29,8 @@ namespace PlatformHeightTest
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnalysisForm));
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.loadBtn = new System.Windows.Forms.Button();
@@ -59,6 +59,7 @@ namespace PlatformHeightTest
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lineToPointBtn = new System.Windows.Forms.Button();
+            this.DisplayBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.filterRowNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterColNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HeightTestChart)).BeginInit();
@@ -79,7 +80,7 @@ namespace PlatformHeightTest
             // 
             this.loadBtn.Location = new System.Drawing.Point(22, 19);
             this.loadBtn.Name = "loadBtn";
-            this.loadBtn.Size = new System.Drawing.Size(99, 36);
+            this.loadBtn.Size = new System.Drawing.Size(113, 36);
             this.loadBtn.TabIndex = 0;
             this.loadBtn.Text = "Load CSV";
             this.loadBtn.UseVisualStyleBackColor = true;
@@ -94,7 +95,7 @@ namespace PlatformHeightTest
             this.resultsListBox.Name = "resultsListBox";
             this.resultsListBox.ScrollAlwaysVisible = true;
             this.resultsListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.resultsListBox.Size = new System.Drawing.Size(582, 454);
+            this.resultsListBox.Size = new System.Drawing.Size(1495, 184);
             this.resultsListBox.TabIndex = 1;
             // 
             // label1
@@ -109,6 +110,7 @@ namespace PlatformHeightTest
             // filterRowNumericUpDown
             // 
             this.filterRowNumericUpDown.Enabled = false;
+            this.filterRowNumericUpDown.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.filterRowNumericUpDown.Location = new System.Drawing.Point(122, 21);
             this.filterRowNumericUpDown.Maximum = new decimal(new int[] {
             999,
@@ -126,6 +128,7 @@ namespace PlatformHeightTest
             // 
             // filterColNumericUpDown
             // 
+            this.filterColNumericUpDown.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.filterColNumericUpDown.Location = new System.Drawing.Point(122, 55);
             this.filterColNumericUpDown.Maximum = new decimal(new int[] {
             5000,
@@ -161,9 +164,9 @@ namespace PlatformHeightTest
             // 
             // GenerateBtn
             // 
-            this.GenerateBtn.Location = new System.Drawing.Point(834, 51);
+            this.GenerateBtn.Location = new System.Drawing.Point(1254, 22);
             this.GenerateBtn.Name = "GenerateBtn";
-            this.GenerateBtn.Size = new System.Drawing.Size(251, 34);
+            this.GenerateBtn.Size = new System.Drawing.Size(251, 71);
             this.GenerateBtn.TabIndex = 6;
             this.GenerateBtn.Text = "Generate";
             this.GenerateBtn.UseVisualStyleBackColor = true;
@@ -171,13 +174,13 @@ namespace PlatformHeightTest
             // 
             // HeightTestChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.HeightTestChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.HeightTestChart.Legends.Add(legend2);
-            this.HeightTestChart.Location = new System.Drawing.Point(638, 104);
+            chartArea1.Name = "ChartArea1";
+            this.HeightTestChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.HeightTestChart.Legends.Add(legend1);
+            this.HeightTestChart.Location = new System.Drawing.Point(22, 294);
             this.HeightTestChart.Name = "HeightTestChart";
-            this.HeightTestChart.Size = new System.Drawing.Size(811, 454);
+            this.HeightTestChart.Size = new System.Drawing.Size(1498, 478);
             this.HeightTestChart.TabIndex = 7;
             this.HeightTestChart.Text = "chart1";
             // 
@@ -192,6 +195,7 @@ namespace PlatformHeightTest
             // 
             // MulityLinenumericUpDown
             // 
+            this.MulityLinenumericUpDown.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.MulityLinenumericUpDown.Location = new System.Drawing.Point(103, 29);
             this.MulityLinenumericUpDown.Maximum = new decimal(new int[] {
             6,
@@ -216,7 +220,7 @@ namespace PlatformHeightTest
             // 
             this.RefreshBtn.Location = new System.Drawing.Point(22, 60);
             this.RefreshBtn.Name = "RefreshBtn";
-            this.RefreshBtn.Size = new System.Drawing.Size(99, 38);
+            this.RefreshBtn.Size = new System.Drawing.Size(113, 38);
             this.RefreshBtn.TabIndex = 10;
             this.RefreshBtn.Text = "Refresh";
             this.RefreshBtn.UseVisualStyleBackColor = true;
@@ -238,10 +242,11 @@ namespace PlatformHeightTest
             // 
             // modeCB
             // 
+            this.modeCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.modeCB.FormattingEnabled = true;
-            this.modeCB.Location = new System.Drawing.Point(893, 22);
+            this.modeCB.Location = new System.Drawing.Point(886, 22);
             this.modeCB.Name = "modeCB";
-            this.modeCB.Size = new System.Drawing.Size(192, 23);
+            this.modeCB.Size = new System.Drawing.Size(206, 23);
             this.modeCB.TabIndex = 12;
             this.modeCB.SelectedIndexChanged += new System.EventHandler(this.modeCB_SelectedIndexChanged);
             // 
@@ -305,10 +310,11 @@ namespace PlatformHeightTest
             // 
             // xCountNumericUD
             // 
+            this.xCountNumericUD.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.xCountNumericUD.Location = new System.Drawing.Point(151, 19);
             this.xCountNumericUD.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.xCountNumericUD.Maximum = new decimal(new int[] {
-            500,
+            1500,
             0,
             0,
             0});
@@ -328,6 +334,7 @@ namespace PlatformHeightTest
             // 
             // yCountNumericUD
             // 
+            this.yCountNumericUD.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.yCountNumericUD.Location = new System.Drawing.Point(151, 52);
             this.yCountNumericUD.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.yCountNumericUD.Maximum = new decimal(new int[] {
@@ -342,7 +349,7 @@ namespace PlatformHeightTest
             0});
             this.yCountNumericUD.Name = "yCountNumericUD";
             this.yCountNumericUD.Size = new System.Drawing.Size(57, 25);
-            this.yCountNumericUD.TabIndex = 15;
+            this.yCountNumericUD.TabIndex = 16;
             this.yCountNumericUD.Value = new decimal(new int[] {
             2,
             0,
@@ -352,7 +359,7 @@ namespace PlatformHeightTest
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(831, 26);
+            this.label9.Location = new System.Drawing.Point(824, 26);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(44, 15);
             this.label9.TabIndex = 16;
@@ -368,7 +375,7 @@ namespace PlatformHeightTest
             this.groupBox2.Controls.Add(this.xCountNumericUD);
             this.groupBox2.Controls.Add(this.comboBox1);
             this.groupBox2.Controls.Add(this.comboBox2);
-            this.groupBox2.Location = new System.Drawing.Point(584, 7);
+            this.groupBox2.Location = new System.Drawing.Point(553, 7);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(241, 91);
             this.groupBox2.TabIndex = 17;
@@ -379,7 +386,7 @@ namespace PlatformHeightTest
             // 
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.MulityLinenumericUpDown);
-            this.groupBox3.Location = new System.Drawing.Point(360, 7);
+            this.groupBox3.Location = new System.Drawing.Point(347, 7);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(200, 91);
             this.groupBox3.TabIndex = 18;
@@ -388,7 +395,7 @@ namespace PlatformHeightTest
             // 
             // lineToPointBtn
             // 
-            this.lineToPointBtn.Location = new System.Drawing.Point(1091, 20);
+            this.lineToPointBtn.Location = new System.Drawing.Point(824, 59);
             this.lineToPointBtn.Name = "lineToPointBtn";
             this.lineToPointBtn.Size = new System.Drawing.Size(131, 34);
             this.lineToPointBtn.TabIndex = 19;
@@ -396,11 +403,22 @@ namespace PlatformHeightTest
             this.lineToPointBtn.UseVisualStyleBackColor = true;
             this.lineToPointBtn.Click += new System.EventHandler(this.lineToPointBtn_Click);
             // 
+            // DisplayBtn
+            // 
+            this.DisplayBtn.Location = new System.Drawing.Point(961, 59);
+            this.DisplayBtn.Name = "DisplayBtn";
+            this.DisplayBtn.Size = new System.Drawing.Size(131, 34);
+            this.DisplayBtn.TabIndex = 20;
+            this.DisplayBtn.Text = "Display";
+            this.DisplayBtn.UseVisualStyleBackColor = true;
+            this.DisplayBtn.Click += new System.EventHandler(this.displayForm_Click);
+            // 
             // AnalysisForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1461, 573);
+            this.ClientSize = new System.Drawing.Size(1529, 784);
+            this.Controls.Add(this.DisplayBtn);
             this.Controls.Add(this.lineToPointBtn);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -465,5 +483,6 @@ namespace PlatformHeightTest
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button lineToPointBtn;
+        private System.Windows.Forms.Button DisplayBtn;
     }
 }

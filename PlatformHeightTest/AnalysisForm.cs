@@ -23,7 +23,12 @@ namespace PlatformHeightTest
         private string path = string.Empty;
         private bool isPositive = true;
         private bool isLine = true;
-
+        private static Dictionary<string, bool> member;
+        public static Dictionary<string, bool> DisplayMember
+        {
+            get;
+            set;
+        }
         private enum generateModeEnum
         {
             SingleReverse,
@@ -46,6 +51,7 @@ namespace PlatformHeightTest
             HeightTestChart.ChartAreas[0].AxisX.IsStartedFromZero = false;
             HeightTestChart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             initModeComboBox();
+            chartZoom();
         }
 
         private void initModeComboBox()
@@ -59,7 +65,7 @@ namespace PlatformHeightTest
         {
             openFileDialog1.Title = "Select the HeightTest.csv";
             openFileDialog1.InitialDirectory = ".\\";
-            openFileDialog1.FileName="";
+            openFileDialog1.FileName = "";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 path = openFileDialog1.FileName;
@@ -131,6 +137,27 @@ namespace PlatformHeightTest
             HeightTestChart.ChartAreas[0].RecalculateAxesScale();
         }
 
+        private void lineToPointBtn_Click(object sender, EventArgs e)
+        {
+            if (isLine)
+            {
+                foreach (var item in HeightTestChart.Series)
+                {
+                    item.ChartType = SeriesChartType.Point;
+                }
+                isLine = false;
+            }
+            else
+            {
+                foreach (var item in HeightTestChart.Series)
+                {
+                    item.ChartType = SeriesChartType.FastLine;
+                }
+                isLine = true;
+            }
+        }
+
+
         #endregion
 
         private void readCSV(string path)
@@ -184,8 +211,8 @@ namespace PlatformHeightTest
                 Name = name,
                 ChartType = SeriesChartType.FastLine,
                 BorderWidth = 4,
-                IsVisibleInLegend=true,
-                IsValueShownAsLabel=true
+                IsVisibleInLegend = true,
+                IsValueShownAsLabel = true
             };
             return series;
         }
@@ -300,26 +327,6 @@ namespace PlatformHeightTest
             }
         }
 
-        private void lineToPointBtn_Click(object sender, EventArgs e)
-        {
-            if (isLine)
-            {
-                foreach (var item in HeightTestChart.Series)
-                {
-                    item.ChartType = SeriesChartType.Point;
-                }
-                isLine = false;
-            }
-            else
-            {
-                foreach (var item in HeightTestChart.Series)
-                {
-                    item.ChartType = SeriesChartType.FastLine;
-                }
-                isLine = true;
-            }
-        }
-
         private void singleSandZtypeGenerate(generateModeEnum mode)
         {
             var result = resultsListBox.SelectedItem;
@@ -382,5 +389,80 @@ namespace PlatformHeightTest
             }
         }
 
+        #region chartZoom
+
+        private void chartZoom()
+        {
+            HeightTestChart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            HeightTestChart.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
+            HeightTestChart.MouseWheel += HeightTestChart_MouseWheel;
+            HeightTestChart.MouseLeave += HeightTestChart_MouseLeave;
+            HeightTestChart.MouseEnter += HeightTestChart_MouseEnter;
+        }
+
+        private void HeightTestChart_MouseLeave(object sender, EventArgs e)
+        {
+            if (HeightTestChart.Focused) HeightTestChart.Parent.Focus();
+        }
+
+        private void HeightTestChart_MouseWheel(object sender, MouseEventArgs e)
+        {
+            var chart = (Chart)sender;
+            var xAxis = chart.ChartAreas[0].AxisX;
+            var yAxis = chart.ChartAreas[0].AxisY;
+
+            try
+            {
+                if (e.Delta < 0) // Scrolled down.
+                {
+                    xAxis.ScaleView.ZoomReset();
+                    yAxis.ScaleView.ZoomReset();
+                }
+                else if (e.Delta > 0) // Scrolled up.
+                {
+                    var xMin = xAxis.ScaleView.ViewMinimum;
+                    var xMax = xAxis.ScaleView.ViewMaximum;
+                    var yMin = yAxis.ScaleView.ViewMinimum;
+                    var yMax = yAxis.ScaleView.ViewMaximum;
+
+                    var posXStart = xAxis.PixelPositionToValue(e.Location.X) - (xMax - xMin) / 4;
+                    var posXFinish = xAxis.PixelPositionToValue(e.Location.X) + (xMax - xMin) / 4;
+                    var posYStart = yAxis.PixelPositionToValue(e.Location.Y) - (yMax - yMin) / 4;
+                    var posYFinish = yAxis.PixelPositionToValue(e.Location.Y) + (yMax - yMin) / 4;
+
+                    xAxis.ScaleView.Zoom(posXStart, posXFinish);
+                    yAxis.ScaleView.Zoom(posYStart, posYFinish);
+                }
+            }
+            catch { }
+        }
+
+        private void HeightTestChart_MouseEnter(object sender, EventArgs e)
+        {
+            if (!HeightTestChart.Focused) HeightTestChart.Focus();
+        }
+
+        #endregion
+
+        public void SeriesDisplay(string seriesName, bool isEnabled)
+        {
+            HeightTestChart.Series[seriesName].Enabled = isEnabled;
+        }
+
+        private void displayForm_Click(object sender, EventArgs e)
+        {
+            SeriesDisplayForm seriesDisplayForm = new SeriesDisplayForm();
+            member = new Dictionary<string, bool>();
+            foreach (var item in HeightTestChart.Series)
+            {
+                member.Add(item.Name, item.Enabled);
+            }
+            seriesDisplayForm.GenerateCheckListBox(member);
+            seriesDisplayForm.ShowDialog();
+            foreach (var item in DisplayMember)
+            {
+                SeriesDisplay(item.Key,item.Value);
+            }
+        }
     }
 }

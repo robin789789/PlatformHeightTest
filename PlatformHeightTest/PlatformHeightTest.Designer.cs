@@ -119,7 +119,7 @@
             this.WatchPathBtn.Location = new System.Drawing.Point(9, 10);
             this.WatchPathBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.WatchPathBtn.Name = "WatchPathBtn";
-            this.WatchPathBtn.Size = new System.Drawing.Size(119, 32);
+            this.WatchPathBtn.Size = new System.Drawing.Size(107, 32);
             this.WatchPathBtn.TabIndex = 2;
             this.WatchPathBtn.Text = "Watch";
             this.WatchPathBtn.UseVisualStyleBackColor = true;
@@ -141,7 +141,7 @@
             this.StopWatchBtn.Location = new System.Drawing.Point(134, 9);
             this.StopWatchBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StopWatchBtn.Name = "StopWatchBtn";
-            this.StopWatchBtn.Size = new System.Drawing.Size(117, 32);
+            this.StopWatchBtn.Size = new System.Drawing.Size(107, 32);
             this.StopWatchBtn.TabIndex = 6;
             this.StopWatchBtn.Text = "Stop Watch";
             this.StopWatchBtn.UseVisualStyleBackColor = true;
@@ -467,9 +467,9 @@
             // 
             this.AnalysisBtn.Font = new System.Drawing.Font("微軟正黑體", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.AnalysisBtn.Image = ((System.Drawing.Image)(resources.GetObject("AnalysisBtn.Image")));
-            this.AnalysisBtn.Location = new System.Drawing.Point(275, 9);
+            this.AnalysisBtn.Location = new System.Drawing.Point(247, 9);
             this.AnalysisBtn.Name = "AnalysisBtn";
-            this.AnalysisBtn.Size = new System.Drawing.Size(63, 51);
+            this.AnalysisBtn.Size = new System.Drawing.Size(91, 51);
             this.AnalysisBtn.TabIndex = 6;
             this.AnalysisBtn.UseVisualStyleBackColor = true;
             this.AnalysisBtn.Click += new System.EventHandler(this.AnalysisBtn_Click);

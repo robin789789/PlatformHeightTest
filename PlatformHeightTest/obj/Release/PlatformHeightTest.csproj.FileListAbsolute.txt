@@ -27,3 +27,4 @@ D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.PropertyGridForm.resources
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.csprojAssemblyReference.cache
 D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.AnalysisForm.resources
+D:\Users\User\Documents\GitHub\PlatformHeightTest\PlatformHeightTest\obj\Release\PlatformHeightTest.SeriesDisplayForm.resources

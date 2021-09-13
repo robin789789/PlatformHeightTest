@@ -87,6 +87,12 @@
     <Compile Include="AnalysisForm.Designer.cs">
       <DependentUpon>AnalysisForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SeriesDisplayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SeriesDisplayForm.Designer.cs">
+      <DependentUpon>SeriesDisplayForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlatformHeightTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +109,9 @@
     </Compile>
     <EmbeddedResource Include="AnalysisForm.resx">
       <DependentUpon>AnalysisForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SeriesDisplayForm.resx">
+      <DependentUpon>SeriesDisplayForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlatformHeightTest.resx">
       <DependentUpon>PlatformHeightTest.cs</DependentUpon>
