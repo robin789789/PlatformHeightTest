@@ -239,8 +239,15 @@ namespace PlatformHeightTest
                             buf2[i - columnFilter] = Convert.ToDecimal(buf[i]);
                             series.Points.AddXY(i - columnFilter, Convert.ToDecimal(buf[i]));
                         }
-                        indexDataDict.Add(resultsListBox.Items.IndexOf(item), buf2);
-                        HeightTestChart.Series.Add(series);
+                        if (!indexDataDict.TryGetValue(resultsListBox.Items.IndexOf(item), out var foo))
+                        {
+                            indexDataDict.Add(resultsListBox.Items.IndexOf(item), buf2);
+                            HeightTestChart.Series.Add(series);
+                        }
+                        else
+                        {
+                            MessageBox.Show(buf[0] + buf[1] + " is already exist.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                 }
             }
@@ -271,8 +278,15 @@ namespace PlatformHeightTest
                                 series.Points.AddXY(i - columnFilter, Convert.ToDecimal(buf[i]));
                             }
 
-                            indexDataDict.Add(resultsListBox.Items.IndexOf(item), buf2);
-                            HeightTestChart.Series.Add(series);
+                            if (!indexDataDict.TryGetValue(resultsListBox.Items.IndexOf(item), out var foo))
+                            {
+                                indexDataDict.Add(resultsListBox.Items.IndexOf(item), buf2);
+                                HeightTestChart.Series.Add(series);
+                            }
+                            else
+                            {
+                                MessageBox.Show(buf[1] + "Positive" + " is already exist.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
                     }
                 }
@@ -293,7 +307,14 @@ namespace PlatformHeightTest
                             }
 
                             // indexDataDict.Add(resultsListBox.Items.IndexOf(item), buf2);
-                            HeightTestChart.Series.Add(series);
+                            if (!indexDataDict.TryGetValue(resultsListBox.Items.IndexOf(item), out var foo))
+                            {
+                                HeightTestChart.Series.Add(series);
+                            }
+                            else
+                            {
+                                MessageBox.Show(buf[1] + "Negative" + " is already exist.","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                            }
                         }
                     }
                 }
